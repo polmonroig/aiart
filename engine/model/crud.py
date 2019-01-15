@@ -10,8 +10,8 @@ def upload_image_file(file, filename, content_type):
     """
     Upload the user uploaded file to Google Cloud Storage and retrieve
     its publicly accessible url.
-    :param file:
-    :param _filename:
+    :param file: file
+    :param filename: filename
     :param content_type:
     :return: public accessible url of image
     """
@@ -31,8 +31,8 @@ def submit():
     :return: jsonify(request.get_data())
     """
     # Read the file stream first so multiple functions can process the stream
-    filename = request.files.get('file').filename
-    content_type = request.files.get('file').content_type
+    # filename = request.files.get('file').filename
+    # content_type = request.files.get('file').content_type
     file_stream = request.files.get('file').read()
 
     # image_url, name = upload_image_file(file_stream, filename, content_type)
@@ -40,7 +40,14 @@ def submit():
     # Color Palette
     image = ImageUtils.string_to_image(file_stream)
     image_palette = ImagePipeline(image).get_palette(4).generate()[0]
-    color_palette = [image_palette[0], image_palette[1], image_palette[2], image_palette[3], image_palette[4], image_palette[5], image_palette[6], image_palette[7]]
+    color_palette = [image_palette[0], image_palette[1],
+                     image_palette[2], image_palette[3],
+                     image_palette[4], image_palette[5],
+                     image_palette[6], image_palette[7]]
+
+    # Datapoints (x, y, value, radius)
+    # where radius, x, y are proportional
+    # to the size of the screen
     datapoints = [
                 (0.1, 0.2, 100, 0.1),
                 (0.4, 0.9, 50, 0.2),
@@ -64,5 +71,3 @@ def submit():
     # database.create(data)
 
     return data
-
-
