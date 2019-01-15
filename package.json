@@ -1,0 +1,19 @@
+{
+  "name": "aiart",
+  "version": "1.0.0",
+  "description": "Intelligent Art Advisor",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-slim": "^0.3.0",
+    "slim": "0.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alan Monroig & Pol Monroig",
+  "license": "ISC"
+}

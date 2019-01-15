@@ -1,0 +1,139 @@
+// Add styles here you want to override
+
+// Message info for balance and color
+
+.message {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  .message-content-balance {
+    padding: 15px 35px;
+    display: inline-block;
+    margin-bottom: -20px;
+    border-radius: 20px;
+    text-align: left;
+    b{
+      font-weight: 700;
+    }
+  }
+  .message-content-color {
+    padding: 15px 35px;
+    display: inline-block;
+    margin-bottom: -20px;
+    border-radius: 20px;
+    text-align: left;
+    b{
+      font-weight: 700;
+    }
+  }
+  .message-wrong{
+    background-color: #fff9f0;
+    color: #594939;
+  }
+  .message-fixed{
+    background-color: #f0f9ff;
+    color: #2A4E7F;
+  }
+
+}
+
+// MENU LOGO
+
+.logo-element {
+  width: 40px;
+  height: 54px;
+  border-radius: 15px;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 20px;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+  img {
+    width: 75px;
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.logo-label {
+  display: inline-block;
+  width: 100px;
+  height: 36px;
+  vertical-align: middle;
+  position: relative;
+  margin-left: 20px;
+  transition: all 0.3s ease;
+  img {
+    width: 85px;
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.logo:hover {
+  .logo-element {
+    transform: translateX(7px);
+  }
+  .logo-label {
+    transform: translateX(3px);
+  }
+}
+
+.logo-w {
+  text-align: center;
+  padding: 14px 1rem 14px 1.7rem;
+  a {
+    display: inline-block;
+  }
+  .logo {
+    display: inline-block;
+  }
+  span {
+    vertical-align: middle;
+    display: inline-block;
+    color: $headings-color;
+    margin-left: 1rem;
+  }
+}
+
+// MOBILE LOGO
+.mm-logo {
+  vertical-align: middle;
+  text-align: left;
+  text-decoration: none;
+  img {
+    width: 40px;
+    display: inline-block;
+  }
+  span {
+    display: inline-block;
+    color: $body-color;
+    margin-left: 1rem;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+// TRANSITIONS
+.element-wrapper{
+  transition: all 1s linear;
+  display: block;
+}
+
+.hidden{
+  display: none;
+  opacity: 0;
+}
+
+// COPYRIGHT
+
+.copyright{
+  font-size: 15px;
+  text-align: center;
+  color: white;
+  padding: 20px;
+  opacity: 0.8;
+}

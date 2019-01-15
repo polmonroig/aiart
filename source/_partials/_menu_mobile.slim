@@ -1,0 +1,33 @@
+.menu-mobile.menu-activated-on-click.color-scheme-dark
+  .mm-logo-buttons-w
+    a.mm-logo href="index.html"
+      img src="img/logo_02.png" alt=""/
+      img src="img/logo_06.png" alt=""/
+    .mm-buttons
+      .content-panel-open
+        .os-icon.os-icon-grid-circles
+      .mobile-menu-trigger
+        .os-icon.os-icon-hamburger-menu-1
+  .menu-and-user
+    /!
+      ------------------
+      START - Mobile Menu List
+      ------------------
+    ul.main-menu
+      - menu_arr.each do |elem|
+        li[class="#{(elem['items'].count > 0) ? 'has-sub-menu' : ''} #{elem['class']}" data-target="#{elem['data-target']}" data-toggle="#{elem['data-toggle']}"]
+          a href="#{elem['href']}"
+            .icon-w
+              div[class="#{elem['icon']}"]
+            span #{elem['label']}
+          - if (elem['items'].count > 0)
+            ul.sub-menu
+              - elem['items'].each do |sub_elem|
+                li
+                  a href="#{sub_elem['href']}"
+                    == sub_elem['label']
+    /!
+      ------------------
+      END - Mobile Menu List
+      ------------------
+    include ../_partials/_content_upload_menu.slim

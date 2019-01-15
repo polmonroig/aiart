@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>aiart - Intelligent Art</title>
+    <meta charset="utf-8" />
+    <meta content="ie=edge" http-equiv="x-ua-compatible" />
+    <meta content="art composition advisor ai intelligent" name="keywords" />
+    <meta content="Pol Monroig and Alan Monroig" name="author" />
+    <meta content="Intelligent art advisor" name="description" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link href="favicon.png" rel="shortcut icon" />
+    <link href="apple-touch-icon.png" rel="apple-touch-icon" />
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet" type="text/css" />
+    <link href="bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <link href="bower_components/dropzone/dist/dropzone.css" rel="stylesheet" />
+    <link href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
+    <link href="bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet" />
+    <link href="bower_components/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet" />
+    <link href="bower_components/slick-carousel/slick/slick.css" rel="stylesheet" />
+    <link href="css/main.css?version=4.4.0" rel="stylesheet" />
+  </head>
+  <script src="/__/firebase/5.7.1/firebase-app.js"></script>
+  <script src="/__/firebase/5.7.1/firebase-auth.js"></script>
+  <script src="/__/firebase/5.7.1/firebase-database.js"></script>
+  <script src="/__/firebase/5.7.1/firebase-messaging.js"></script>
+  <script src="/__/firebase/5.7.1/firebase-storage.js"></script>
+  <script src="/__/firebase/5.7.1/firebase-firestore.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <body class="menu-position-side menu-side-left">
+    <div class="all-wrapper solid-bg-all">
+      <div class="search-with-suggestions-w">
+        <div class="search-with-suggestions-modal">
+          <div class="element-search">
+            <input class="search-suggest-input" placeholder="Start typing to search..." type="text">
+              <div class="close-search-suggestions">
+                <i class="os-icon os-icon-x"></i>
+              </div>
+            </input>
+          </div>
+          <div class="search-suggestions-group">
+            <div class="ssg-header">
+              <div class="ssg-icon">
+                <div class="os-icon os-icon-box"></div>
+              </div>
+              <div class="ssg-name">
+                Projects
+              </div>
+              <div class="ssg-info">
+                24 Total
+              </div>
+            </div>
+            <div class="ssg-content">
+              <div class="ssg-items ssg-items-boxed">
+                <a class="ssg-item" href="users_profile_big.html">
+                  <div class="item-media" style="background-image: url(img/company6.png)"></div>
+                  <div class="item-name">
+                    Integ<span>ration</span> with API
+                  </div>
+                </a><a class="ssg-item" href="users_profile_big.html">
+                  <div class="item-media" style="background-image: url(img/company7.png)"></div>
+                  <div class="item-name">
+                    Deve<span>lopm</span>ent Project
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="search-suggestions-group">
+            <div class="ssg-header">
+              <div class="ssg-icon">
+                <div class="os-icon os-icon-users"></div>
+              </div>
+              <div class="ssg-name">
+                Customers
+              </div>
+              <div class="ssg-info">
+                12 Total
+              </div>
+            </div>
+            <div class="ssg-content">
+              <div class="ssg-items ssg-items-list">
+                <a class="ssg-item" href="users_profile_big.html">
+                  <div class="item-media" style="background-image: url(img/avatar1.jpg)"></div>
+                  <div class="item-name">
+                    John Ma<span>yer</span>s
+                  </div>
+                </a><a class="ssg-item" href="users_profile_big.html">
+                  <div class="item-media" style="background-image: url(img/avatar2.jpg)"></div>
+                  <div class="item-name">
+                    Th<span>omas</span> Mullier
+                  </div>
+                </a><a class="ssg-item" href="users_profile_big.html">
+                  <div class="item-media" style="background-image: url(img/avatar3.jpg)"></div>
+                  <div class="item-name">
+                    Kim C<span>olli</span>ns
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="search-suggestions-group">
+            <div class="ssg-header">
+              <div class="ssg-icon">
+                <div class="os-icon os-icon-folder"></div>
+              </div>
+              <div class="ssg-name">
+                Files
+              </div>
+              <div class="ssg-info">
+                17 Total
+              </div>
+            </div>
+            <div class="ssg-content">
+              <div class="ssg-items ssg-items-blocks">
+                <a class="ssg-item" href="#">
+                  <div class="item-icon">
+                    <i class="os-icon os-icon-file-text"></i>
+                  </div>
+                  <div class="item-name">
+                    Work<span>Not</span>e.txt
+                  </div>
+                </a><a class="ssg-item" href="#">
+                  <div class="item-icon">
+                    <i class="os-icon os-icon-film"></i>
+                  </div>
+                  <div class="item-name">
+                    V<span>ideo</span>.avi
+                  </div>
+                </a><a class="ssg-item" href="#">
+                  <div class="item-icon">
+                    <i class="os-icon os-icon-database"></i>
+                  </div>
+                  <div class="item-name">
+                    User<span>Tabl</span>e.sql
+                  </div>
+                </a><a class="ssg-item" href="#">
+                  <div class="item-icon">
+                    <i class="os-icon os-icon-image"></i>
+                  </div>
+                  <div class="item-name">
+                    wed<span>din</span>g.jpg
+                  </div>
+                </a>
+              </div>
+              <div class="ssg-nothing-found">
+                <div class="icon-w">
+                  <i class="os-icon os-icon-eye-off"></i>
+                </div>
+                <span>No files were found. Try changing your query...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-w">
+        <!--------------------
+        START - Mobile Menu
+        -------------------->
+        <div class="menu-mobile menu-activated-on-click color-scheme-dark">
+          <div class="mm-logo-buttons-w">
+            <a class="mm-logo" href="index.html"><img alt="" src="img/logo_02.png" /><img alt="" src="img/logo_06.png" /></a>
+            <div class="mm-buttons">
+              <div class="content-panel-open">
+                <div class="os-icon os-icon-grid-circles"></div>
+              </div>
+              <div class="mobile-menu-trigger">
+                <div class="os-icon os-icon-hamburger-menu-1"></div>
+              </div>
+            </div>
+          </div>
+          <div class="menu-and-user">
+            <!--------------------
+            START - Mobile Menu List
+            -------------------->
+            <ul class="main-menu">
+              <li class=" " data-target=".modal-learn" data-toggle="modal">
+                <a href="#">
+                  <div class="icon-w">
+                    <div class="os-icon os-icon-search"></div>
+                  </div>
+                  <span>Learn more</span></a>
+              </li>
+              <li class=" " data-target=".modal-help" data-toggle="modal">
+                <a href="#">
+                  <div class="icon-w">
+                    <div class="os-icon os-icon-others-43"></div>
+                  </div>
+                  <span>Help</span></a>
+              </li>
+              <li class=" uploadicon" data-target="" data-toggle="">
+                <a href="#">
+                  <div class="icon-w">
+                    <div class="os-icon os-icon-documents-07"></div>
+                  </div>
+                  <span>Upload</span></a>
+              </li>
+            </ul>
+            <!--------------------
+            END - Mobile Menu List
+            -------------------->
+            <form action="#" class="dropzone dropzone-menu hidden" enctype="multipart/form-data" id="imageDropzoneMenu">
+              <div class="dz-message">
+                <div>
+                  <p>Drop a new image.</p>
+                </div>
+              </div>
+            </form>
+            <form action="#" class="dropzone dropzone-menu-button hidden" enctype="multipart/form-data" id="imageDropzoneMenuButton">
+              <div class="dz-message">
+                <div>
+                  <p>Drop a new image.</p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!--------------------
+        END - Mobile Menu
+        --------------------><!--------------------
+        START - Main Menu
+        -------------------->
+        <div class="menu-w color-scheme-dark color-style-bright menu-position-side menu-side-left menu-layout-full sub-menu-style-flyout sub-menu-color-bright selected-menu-color-light menu-activated-on-hover menu-has-selected-link">
+          <div class="logo-w">
+            <a class="logo" href="index.html">
+              <div class="logo-element">
+                <img alt="" src="img/logo_02.png" />
+              </div>
+              <div class="logo-label">
+                <img alt="" src="img/logo_06.png" />
+              </div>
+            </a>
+          </div>
+          <h1 class="menu-page-header">
+            Page Header
+          </h1>
+          <ul class="main-menu">
+            <li class=" " data-target=".modal-learn" data-toggle="modal">
+              <a href="#">
+                <div class="icon-w">
+                  <div class="os-icon os-icon-search"></div>
+                </div>
+                <span>Learn more</span></a>
+            </li>
+            <li class=" " data-target=".modal-help" data-toggle="modal">
+              <a href="#">
+                <div class="icon-w">
+                  <div class="os-icon os-icon-others-43"></div>
+                </div>
+                <span>Help</span></a>
+            </li>
+            <li class=" uploadicon" data-target="" data-toggle="">
+              <a href="#">
+                <div class="icon-w">
+                  <div class="os-icon os-icon-documents-07"></div>
+                </div>
+                <span>Upload</span></a>
+            </li>
+          </ul>
+          <form action="#" class="dropzone dropzone-menu hidden" enctype="multipart/form-data" id="imageDropzoneMenu">
+            <div class="dz-message">
+              <div>
+                <p>Drop a new image.</p>
+              </div>
+            </div>
+          </form>
+          <form action="#" class="dropzone dropzone-menu-button hidden" enctype="multipart/form-data" id="imageDropzoneMenuButton">
+            <div class="dz-message">
+              <div>
+                <p>Drop a new image.</p>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!--------------------
+        END - Main Menu
+        -------------------->
+        <div class="content-w">
+          <!--------------------
+          START - Top Bar
+          -------------------->
+          <div class="top-bar color-scheme-transparent">
+            <!--------------------
+            START - Top Menu Controls
+            -------------------->
+            <div class="top-menu-controls"><!--------------------
+              START - Settings Link in secondary top menu
+              -------------------->
+              <div class="top-icon top-settings os-dropdown-trigger os-dropdown-position-left">
+                <i class="os-icon os-icon-ui-46"></i>
+                <div class="os-dropdown">
+                  <div class="icon-w">
+                    <i class="os-icon os-icon-ui-46"></i>
+                  </div>
+                  <ul>
+                    <li>
+                      <a data-target=".modal-bug" data-toggle="modal" href="#"><i class="os-icon os-icon-robot-1"></i><span>Report a bug</span></a>
+                    </li>
+                    <li>
+                      <a class="help" data-target=".modal-feature" data-toggle="modal" href="#"><i class="os-icon os-icon-ui-44"></i><span>Feature request</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!--------------------
+              END - Settings Link in secondary top menu
+              -------------------->
+            </div>
+            <!--------------------
+            END - Top Menu Controls
+            -------------------->
+          </div>
+          <!--------------------
+          END - Top Bar
+          -------------------->
+          <div class="content-i">
+            <div class="content-box">
+              <!--START - Overview-->
+              <div class="element-wrapper">
+                <div class="user-profile compact">
+                  <div class="up-head-w" style="background-image:url(img/profile_bg1.jpg)">
+                    <div class="up-social">
+                      <a href="#"><i class="os-icon os-icon-twitter"></i></a><a href="#"><i class="os-icon os-icon-facebook"></i></a>
+                    </div>
+                    <div class="up-main-info">
+                      <h2 class="up-header">
+                        Overview
+                      </h2>
+                      <h6 class="up-sub-header">
+                        Results of aiart algorithm
+                      </h6>
+                    </div>
+                    <svg class="decor" width="842px" height="219px" viewBox="0 0 842 219" preserveAspectRatio="xMaxYMax meet" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="translate(-381.000000, -362.000000)" fill="#FFFFFF"><path class="decor-path" d="M1223,362 L1223,581 L381,581 C868.912802,575.666667 1149.57947,502.666667 1223,362 Z"></path></g></svg>
+                  </div>
+                  <div class="up-controls">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="value-pair">
+                          <div class="label">
+                            Status:
+                          </div>
+                          <div class="value badge badge-pill badge-success">
+                            Completed
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-6 text-right">
+                        <a class="btn btn-primary btn-sm" href=""><i class="os-icon os-icon-link-3"></i><span>Share results</span></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="up-contents">
+                    <div class="m-b">
+                      <div class="row m-b">
+                        <div class="col-sm-6 b-r b-b">
+                          <div class="el-tablo centered padded-v">
+                            <div class="value">
+                              75%
+                            </div>
+                            <div class="label">
+                              Balance Analysis
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6 b-b">
+                          <div class="el-tablo centered padded-v">
+                            <div class="value">
+                              82%
+                            </div>
+                            <div class="label">
+                              Color Harmony
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="padded">
+                        <div class="os-progress-bar primary">
+                          <div class="bar-labels">
+                            <div class="bar-label-left">
+                              <span>Balance scale</span><span class="positive">+10</span>
+                            </div>
+                            <div class="bar-label-right">
+                              <span class="info">72/100</span>
+                            </div>
+                          </div>
+                          <div class="bar-level-1" style="width: 100%">
+                            <div class="bar-level-2" style="width: 80%">
+                              <div class="bar-level-3" style="width: 30%"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="os-progress-bar primary">
+                          <div class="bar-labels">
+                            <div class="bar-label-left">
+                              <span>Color scale</span><span class="positive">+5</span>
+                            </div>
+                            <div class="bar-label-right">
+                              <span class="info">45/100</span>
+                            </div>
+                          </div>
+                          <div class="bar-level-1" style="width: 100%">
+                            <div class="bar-level-2" style="width: 30%">
+                              <div class="bar-level-3" style="width: 10%"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="os-progress-bar primary">
+                          <div class="bar-labels">
+                            <div class="bar-label-left">
+                              <span>Combined results</span><span class="negative">-12</span>
+                            </div>
+                            <div class="bar-label-right">
+                              <span class="info">74/100</span>
+                            </div>
+                          </div>
+                          <div class="bar-level-1" style="width: 100%">
+                            <div class="bar-level-2" style="width: 80%">
+                              <div class="bar-level-3" style="width: 60%"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--END - Review-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="display-type"></div>
+    </div>
+    <p class="copyright">
+      © Copyright 2018 - aiart
+    </p>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+    <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+    <script src="bower_components/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
+    <script src="bower_components/ckeditor/ckeditor.js"></script>
+    <script src="bower_components/bootstrap-validator/dist/validator.min.js"></script>
+    <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="bower_components/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+    <script src="bower_components/dropzone/dist/dropzone.js"></script>
+    <script src="bower_components/editable-table/mindmup-editabletable.js"></script>
+    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script src="bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
+    <script src="bower_components/tether/dist/js/tether.min.js"></script>
+    <script src="bower_components/slick-carousel/slick/slick.min.js"></script>
+    <script src="bower_components/bootstrap/js/dist/util.js"></script>
+    <script src="bower_components/bootstrap/js/dist/alert.js"></script>
+    <script src="bower_components/bootstrap/js/dist/button.js"></script>
+    <script src="bower_components/bootstrap/js/dist/carousel.js"></script>
+    <script src="bower_components/bootstrap/js/dist/collapse.js"></script>
+    <script src="bower_components/bootstrap/js/dist/dropdown.js"></script>
+    <script src="bower_components/bootstrap/js/dist/modal.js"></script>
+    <script src="bower_components/bootstrap/js/dist/tab.js"></script>
+    <script src="bower_components/bootstrap/js/dist/tooltip.js"></script>
+    <script src="bower_components/bootstrap/js/dist/popover.js"></script>
+    <script src="js/balance.js?version=4.4.0"></script>
+    <script src="js/color.js?version=4.4.0"></script>
+    <script src="js/main.js?version=4.4.0"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      
+      ga('create', 'UA-XXXXXXX-9', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <!--Google App Engine implementation-->
+    <script src="js/engine.js"></script>
+    <!--Dropzone custom functions-->
+    <script>
+      Dropzone.options.imageDropzone = {
+      url: "http://127.0.0.1:8080/submit",
+      method: "post",
+      withCredentials: false,
+      timeout: 30000,
+      parallelUploads: 2,
+      uploadMultiple: false,
+      maxFilesize: 7,
+      paramName: "file",
+      createImageThumbnails: true,
+      maxThumbnailFilesize: 10,
+      thumbnailWidth: document.getElementById("imageDropzone").offsetWidth*0.6,
+      thumbnailHeight: document.getElementById("imageDropzone").offsetHeight*0.6,
+      thumbnailMethod: 'crop',
+      resizeWidth: 300,
+      resizeHeight: null,
+      resizeMimeType: null,
+      resizeQuality: 0.8,
+      resizeMethod: 'contain',
+      filesizeBase: 1000,
+      maxFiles: 1,
+      params: {},
+      headers: null,
+      clickable: true,
+      ignoreHiddenFiles: true,
+      acceptedFiles: ".jpeg,.jpg,.png",
+      acceptedMimeTypes: null,
+      autoProcessQueue: true,
+      autoQueue: true,
+      addRemoveLinks: false,
+      previewsContainer: null,
+      hiddenInputContainer: "body",
+      capture: null,
+      renameFilename: null,
+      renameFile: null,
+      forceFallback: false,
+      accept: function(file, done) {
+        console.log("Uploading...");
+        done();
+      },
+      init: function() {
+        this.on("addedfile", function() {
+          if (this.files[1]!=null){
+            this.removeFile(this.files[0]);
+          }
+        });
+      
+        // Receives response from server
+        this.on("success", function(response) {
+            console.log("Uploaded!");
+            showImage(this.files[0],'color-image');
+            showImage(this.files[0],'balance-image');
+            processImage(JSON.parse(response.xhr.responseText));
+        });
+      }
+      };
+    </script>
+    <!--Dropzone Menu custom functions-->
+    <script>
+      Dropzone.options.imageDropzoneMenu = {
+      url: "http://127.0.0.1:8080/submit",
+      method: "post",
+      withCredentials: false,
+      timeout: 30000,
+      parallelUploads: 2,
+      uploadMultiple: false,
+      maxFilesize: 7,
+      paramName: "file",
+      createImageThumbnails: false,
+      maxThumbnailFilesize: 10,
+      thumbnailWidth: document.getElementById("imageDropzoneMenu").offsetWidth*0.6,
+      thumbnailHeight: document.getElementById("imageDropzoneMenu").offsetHeight*0.6,
+      thumbnailMethod: 'crop',
+      resizeWidth: 300,
+      resizeHeight: null,
+      resizeMimeType: null,
+      resizeQuality: 0.8,
+      resizeMethod: 'contain',
+      filesizeBase: 1000,
+      maxFiles: 1,
+      params: {},
+      headers: null,
+      clickable: true,
+      ignoreHiddenFiles: true,
+      acceptedFiles: ".jpeg,.jpg,.png",
+      acceptedMimeTypes: null,
+      autoProcessQueue: true,
+      autoQueue: true,
+      addRemoveLinks: false,
+      previewsContainer: null,
+      hiddenInputContainer: "body",
+      capture: null,
+      renameFilename: null,
+      renameFile: null,
+      forceFallback: false,
+      accept: function(file, done) {
+        console.log("Uploading...");
+        done();
+      },
+      init: function() {
+        this.on("addedfile", function() {
+          if (this.files[1]!=null){
+            this.removeFile(this.files[0]);
+          }
+          //showImage(this.files[0]);
+        });
+      
+        // Receives response from server
+        this.on("success", function(response) {
+            console.log("Uploaded!");
+            showImage(this.files[0],'color-image');
+            showImage(this.files[0],'balance-image');
+            processImage(JSON.parse(response.xhr.responseText));
+        });
+      }
+      };
+    </script>
+    <!--Dropzone Menu button custom functions-->
+    <script>
+      Dropzone.options.imageDropzoneMenuButton = {
+      url: "http://127.0.0.1:8080/submit",
+      method: "post",
+      withCredentials: false,
+      timeout: 30000,
+      parallelUploads: 2,
+      uploadMultiple: false,
+      maxFilesize: 7,
+      paramName: "file",
+      createImageThumbnails: false,
+      maxThumbnailFilesize: 10,
+      thumbnailMethod: 'crop',
+      resizeWidth: 300,
+      resizeHeight: null,
+      resizeMimeType: null,
+      resizeQuality: 0.8,
+      resizeMethod: 'contain',
+      filesizeBase: 1000,
+      maxFiles: 1,
+      params: {},
+      headers: null,
+      clickable: document.getElementsByClassName('uploadicon')[0],
+      ignoreHiddenFiles: true,
+      acceptedFiles: ".jpeg,.jpg,.png",
+      acceptedMimeTypes: null,
+      autoProcessQueue: true,
+      autoQueue: true,
+      addRemoveLinks: false,
+      previewsContainer: null,
+      hiddenInputContainer: "body",
+      capture: null,
+      renameFilename: null,
+      renameFile: null,
+      forceFallback: false,
+      accept: function(file, done) {
+        console.log("Uploading...");
+        done();
+      },
+      init: function() {
+        this.on("addedfile", function() {
+          if (this.files[1]!=null){
+            this.removeFile(this.files[0]);
+          }
+          //showImage(this.files[0]);
+        });
+      
+        // Receives response from server
+        this.on("success", function(response) {
+            console.log("Uploaded!");
+            showImage(this.files[0],'color-image');
+            showImage(this.files[0],'balance-image');
+            processImage(JSON.parse(response.xhr.responseText));
+        });
+      }
+      };
+    </script>
+  </body>
+</html>

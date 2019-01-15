@@ -1,0 +1,24 @@
+.modal.fade.bd-example-modal-lg.modal-feature aria-hidden="true" aria-labelledby="feature" role="dialog" tabindex="-1"
+  .modal-dialog.modal-lg
+    .modal-content
+      .modal-header
+        h5#exampleModalLabel.modal-title Request a Feature
+        button.close aria-label="Close" data-dismiss="modal" type="button"
+          span aria-hidden="true"  &times;
+      .modal-body
+        form.form-feature
+          .row
+            .col-sm-6
+              .form-group
+                label for=""  Name
+                input.form-control placeholder="John Doe" type="text" /
+            .col-sm-6
+              .form-group
+                label for=""  Email address (optional)
+                input.form-control placeholder=("Enter email") type="email" /
+          .form-group
+            label for=""  Describe the feature
+            textarea.form-control placeholder=("Description...") form="form-feature" rows="5" </textarea>
+      .modal-footer
+        button.btn.btn-secondary data-dismiss="modal" type="button"  Close
+        button.btn.btn-primary type="button"  Submit

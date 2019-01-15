@@ -1,0 +1,28 @@
+.element-wrapper id="balance-wrapper" class="hidden"
+	.balance-index
+		.balance-content-w
+			.balance-heatmap
+				canvas id="heatmap"
+				canvas id="heatmap-balanced"
+				.balance-image id="balance-image"
+			.balance-control
+			 	.filter-side
+					.filters-header
+			 			h4 Balance
+			 			.reset-filters
+							.value 75%
+
+					.filter-w
+						.message
+							.message-content-w
+								.message-content-balance class="message-wrong" Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!
+						h6.filter-header | Image overlay
+						.filter-body
+							.slider
+								input.ion-range-slider type="text"/
+
+					.filter-w
+						.filter-body
+							.button-div
+								button.mr-2.mb-2.btn.btn-primary.btn-rounded.colorwheel-btn type="button" onClick="balanceButton()" Balance Composition
+								button.mr-2.mb-2.btn.btn-outline-primary.btn-rounded.colorwheel-btn type="button" onClick="resetBalanceButton()" Reset

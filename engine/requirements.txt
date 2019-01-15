@@ -1,0 +1,7 @@
+Flask==0.11.1
+gunicorn==19.6.0
+google-cloud-firestore
+google-cloud-storage
+flask_cors
+opencv-python
+numpy

@@ -1,0 +1,230 @@
+script src="bower_components/jquery/dist/jquery.min.js"
+script src="bower_components/popper.js/dist/umd/popper.min.js"
+script src="bower_components/moment/moment.js"
+script src="bower_components/chart.js/dist/Chart.min.js"
+script src="bower_components/select2/dist/js/select2.full.min.js"
+script src="bower_components/jquery-bar-rating/dist/jquery.barrating.min.js"
+script src="bower_components/ckeditor/ckeditor.js"
+script src="bower_components/bootstrap-validator/dist/validator.min.js"
+script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"
+script src="bower_components/ion.rangeSlider/js/ion.rangeSlider.min.js"
+script src="bower_components/dropzone/dist/dropzone.js"
+script src="bower_components/editable-table/mindmup-editabletable.js"
+script src="bower_components/datatables.net/js/jquery.dataTables.min.js"
+script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"
+script src="bower_components/fullcalendar/dist/fullcalendar.min.js"
+script src="bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"
+script src="bower_components/tether/dist/js/tether.min.js"
+script src="bower_components/slick-carousel/slick/slick.min.js"
+
+// Bootstrap javascript
+// Uncomment files with functionality you want
+script src="bower_components/bootstrap/js/dist/util.js"
+script src="bower_components/bootstrap/js/dist/alert.js"
+script src="bower_components/bootstrap/js/dist/button.js"
+script src="bower_components/bootstrap/js/dist/carousel.js"
+script src="bower_components/bootstrap/js/dist/collapse.js"
+script src="bower_components/bootstrap/js/dist/dropdown.js"
+script src="bower_components/bootstrap/js/dist/modal.js"
+/ script src="bower_components/bootstrap/js/dist/scrollspy.js"
+script src="bower_components/bootstrap/js/dist/tab.js"
+script src="bower_components/bootstrap/js/dist/tooltip.js"
+script src="bower_components/bootstrap/js/dist/popover.js"
+
+- if defined? extra_js_files
+  - extra_js_files.each do |js_file|
+    script src="#{js_file}"
+
+script src="js/balance.js?version=#{template_version}"
+script src="js/color.js?version=#{template_version}"
+
+script src="js/main.js?version=#{template_version}"
+javascript:
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '#{google_analytics_id}', 'auto');
+  ga('send', 'pageview');
+
+/! Google App Engine implementation
+script src="js/engine.js"
+
+/! Dropzone custom functions
+javascript:
+
+  Dropzone.options.imageDropzone = {
+  url: "http://127.0.0.1:8080/submit",
+  method: "post",
+  withCredentials: false,
+  timeout: 30000,
+  parallelUploads: 2,
+  uploadMultiple: false,
+  maxFilesize: 7,
+  paramName: "file",
+  createImageThumbnails: true,
+  maxThumbnailFilesize: 10,
+  thumbnailWidth: document.getElementById("imageDropzone").offsetWidth*0.6,
+  thumbnailHeight: document.getElementById("imageDropzone").offsetHeight*0.6,
+  thumbnailMethod: 'crop',
+  resizeWidth: 300,
+  resizeHeight: null,
+  resizeMimeType: null,
+  resizeQuality: 0.8,
+  resizeMethod: 'contain',
+  filesizeBase: 1000,
+  maxFiles: 1,
+  params: {},
+  headers: null,
+  clickable: true,
+  ignoreHiddenFiles: true,
+  acceptedFiles: ".jpeg,.jpg,.png",
+  acceptedMimeTypes: null,
+  autoProcessQueue: true,
+  autoQueue: true,
+  addRemoveLinks: false,
+  previewsContainer: null,
+  hiddenInputContainer: "body",
+  capture: null,
+  renameFilename: null,
+  renameFile: null,
+  forceFallback: false,
+  accept: function(file, done) {
+    console.log("Uploading...");
+    done();
+  },
+  init: function() {
+    this.on("addedfile", function() {
+      if (this.files[1]!=null){
+        this.removeFile(this.files[0]);
+      }
+    });
+
+    // Receives response from server
+    this.on("success", function(response) {
+        console.log("Uploaded!");
+        showImage(this.files[0],'color-image');
+        showImage(this.files[0],'balance-image');
+        processImage(JSON.parse(response.xhr.responseText));
+    });
+  }
+  };
+
+/! Dropzone Menu custom functions
+javascript:
+  Dropzone.options.imageDropzoneMenu = {
+  url: "http://127.0.0.1:8080/submit",
+  method: "post",
+  withCredentials: false,
+  timeout: 30000,
+  parallelUploads: 2,
+  uploadMultiple: false,
+  maxFilesize: 7,
+  paramName: "file",
+  createImageThumbnails: false,
+  maxThumbnailFilesize: 10,
+  thumbnailWidth: document.getElementById("imageDropzoneMenu").offsetWidth*0.6,
+  thumbnailHeight: document.getElementById("imageDropzoneMenu").offsetHeight*0.6,
+  thumbnailMethod: 'crop',
+  resizeWidth: 300,
+  resizeHeight: null,
+  resizeMimeType: null,
+  resizeQuality: 0.8,
+  resizeMethod: 'contain',
+  filesizeBase: 1000,
+  maxFiles: 1,
+  params: {},
+  headers: null,
+  clickable: true,
+  ignoreHiddenFiles: true,
+  acceptedFiles: ".jpeg,.jpg,.png",
+  acceptedMimeTypes: null,
+  autoProcessQueue: true,
+  autoQueue: true,
+  addRemoveLinks: false,
+  previewsContainer: null,
+  hiddenInputContainer: "body",
+  capture: null,
+  renameFilename: null,
+  renameFile: null,
+  forceFallback: false,
+  accept: function(file, done) {
+    console.log("Uploading...");
+    done();
+  },
+  init: function() {
+    this.on("addedfile", function() {
+      if (this.files[1]!=null){
+        this.removeFile(this.files[0]);
+      }
+      //showImage(this.files[0]);
+    });
+
+    // Receives response from server
+    this.on("success", function(response) {
+        console.log("Uploaded!");
+        showImage(this.files[0],'color-image');
+        showImage(this.files[0],'balance-image');
+        processImage(JSON.parse(response.xhr.responseText));
+    });
+  }
+  };
+
+/! Dropzone Menu button custom functions
+javascript:
+  Dropzone.options.imageDropzoneMenuButton = {
+  url: "http://127.0.0.1:8080/submit",
+  method: "post",
+  withCredentials: false,
+  timeout: 30000,
+  parallelUploads: 2,
+  uploadMultiple: false,
+  maxFilesize: 7,
+  paramName: "file",
+  createImageThumbnails: false,
+  maxThumbnailFilesize: 10,
+  thumbnailMethod: 'crop',
+  resizeWidth: 300,
+  resizeHeight: null,
+  resizeMimeType: null,
+  resizeQuality: 0.8,
+  resizeMethod: 'contain',
+  filesizeBase: 1000,
+  maxFiles: 1,
+  params: {},
+  headers: null,
+  clickable: document.getElementsByClassName('uploadicon')[0],
+  ignoreHiddenFiles: true,
+  acceptedFiles: ".jpeg,.jpg,.png",
+  acceptedMimeTypes: null,
+  autoProcessQueue: true,
+  autoQueue: true,
+  addRemoveLinks: false,
+  previewsContainer: null,
+  hiddenInputContainer: "body",
+  capture: null,
+  renameFilename: null,
+  renameFile: null,
+  forceFallback: false,
+  accept: function(file, done) {
+    console.log("Uploading...");
+    done();
+  },
+  init: function() {
+    this.on("addedfile", function() {
+      if (this.files[1]!=null){
+        this.removeFile(this.files[0]);
+      }
+      //showImage(this.files[0]);
+    });
+
+    // Receives response from server
+    this.on("success", function(response) {
+        console.log("Uploaded!");
+        showImage(this.files[0],'color-image');
+        showImage(this.files[0],'balance-image');
+        processImage(JSON.parse(response.xhr.responseText));
+    });
+  }
+  };

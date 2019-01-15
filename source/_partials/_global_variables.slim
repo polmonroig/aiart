@@ -1,0 +1,114 @@
+- fonts_url = 'https://fonts.googleapis.com/css?family=Rubik:300,400,500'
+- google_analytics_id = 'UA-XXXXXXX-9'
+- template_version = '4.4.0'
+
+- unless defined? all_solid_bg
+  - all_solid_bg = true
+
+- unless defined? template_vars
+  - template_vars = []
+
+- unless defined? show_top_bar
+  - show_top_bar = true
+
+- unless defined? full_screen
+  - full_screen = true
+
+- unless defined? menu_has_selected_link
+  - menu_has_selected_link = true
+
+- unless defined? selected_link
+  - selected_link = 'index.html'
+
+- unless defined? show_demo_customizer
+  - show_demo_customizer = false
+
+/*
+  Setting default menu parameters, available values:
+
+    position:         side|top
+    side:             left|right
+    color_scheme:     dark|light
+    color_style:      bright|default|transparent
+    layout:           full|compact|mini
+    sub_menu_style:   inside|flyout|over
+    sub_menu_color:   bright|dark|light
+    selected_menu_color:   bright|dark|light
+    activated_on:     click|hover
+    show_logo_in_menu:     true|false
+    show_user_in_menu:     true|false
+    show_settings_in_menu: true|false
+    show_messages_in_menu: true|false
+    show_notifications_in_menu: true|false
+    show_search_in_menu: true|false
+    user_menu_popup_color_style:  bright|default|transparent|bright-alt
+
+- menu_settings = {'position' => 'side',
+                  'side' => 'left',
+                  'color_scheme' => 'light',
+                  'color_style' => 'transparent',
+                  'layout' => 'compact',
+                  'sub_menu_style' => 'over',
+                  'sub_menu_color' => 'bright',
+                  'selected_menu_color' => 'light',
+                  'activated_on' => 'hover',
+                  'show_logo_in_menu' => true,
+                  'show_user_in_menu' => true,
+                  'show_settings_in_menu' => true,
+                  'show_messages_in_menu' => true,
+                  'show_notifications_in_menu' => true,
+                  'show_search_in_menu' => true,
+                  'with_image' => false,
+                  'user_menu_popup_color_style' => 'bright'}
+// If custom_menu_settings are defined - override default settings
+- if defined? custom_menu_settings
+  - menu_settings = menu_settings.merge(custom_menu_settings)
+
+
+/*
+  Top Bar Default settings, available values:
+
+    color_scheme:           dark|bright|light
+    above_menu:             true|false
+    show_logo:              true|false
+    show_bank_selector:     true|false
+    show_crypto_selector:     true|false
+    show_support_selector:  true|false
+    show_menu:              true|false
+    show_user_info:         true|false
+    show_settings:          true|false
+    show_messages:          true|false
+    show_search:            true|false
+
+- top_bar_settings = {'color_scheme' => 'transparent',
+                      'above_menu' => false,
+                      'show_logo' => false,
+                      'show_bank_selector' => false,
+                      'show_crypto_selector' => false,
+                      'show_support_selector' => false,
+                      'show_menu' => false,
+                      'show_user_info' => true,
+                      'show_settings' => true,
+                      'show_messages' => true,
+                      'show_search' => true }
+
+// If custom_top_bar_settings are defined - override default settings
+- if defined? custom_top_bar_settings
+  - top_bar_settings = top_bar_settings.merge(custom_top_bar_settings)
+
+
+// MENU ITEMS ARRAY
+- menu_arr = [{ 'href' => '#' , 'class' => '', 'data-target' => '.modal-learn', 'data-toggle' => 'modal',
+              'icon' => 'os-icon os-icon-search',
+              'label' => 'Learn more',
+              'items' => []},
+
+              { 'href' => '#' , 'class' => '', 'data-target' => '.modal-help', 'data-toggle' => 'modal',
+              'icon' => 'os-icon os-icon-others-43',
+              'label' => 'Help',
+              'items' => []},
+
+              { 'href' => '#' , 'class' => 'uploadicon', 'data-target' => '', 'data-toggle' => '',
+              'icon' => 'os-icon os-icon-documents-07',
+              'label' => 'Upload',
+              'items' => []}]

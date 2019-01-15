@@ -1,0 +1,23 @@
+/!
+  ------------------
+  START - Settings Link in secondary top menu
+  ------------------
+- position_class = (defined?(is_top_bar) && is_top_bar) ? 'os-dropdown-position-left' : 'os-dropdown-position-right'
+div[class="top-icon top-settings os-dropdown-trigger #{position_class}"]
+  i.os-icon.os-icon-ui-46
+  .os-dropdown
+    .icon-w
+      i.os-icon.os-icon-ui-46
+    ul
+      li
+        a href="#" data-target=".modal-bug" data-toggle="modal"
+          i.os-icon.os-icon-robot-1
+          span Report a bug
+      li
+        a class="help" href="#" data-target=".modal-feature" data-toggle="modal"
+          i.os-icon.os-icon-ui-44
+          span Feature request
+/!
+  ------------------
+  END - Settings Link in secondary top menu
+  ------------------
