@@ -104,9 +104,9 @@ javascript:
     // Receives response from server
     this.on("success", function(response) {
         console.log("Uploaded!");
+        processImage(JSON.parse(response.xhr.responseText));
         showImage(this.files[0],'color-image');
         showImage(this.files[0],'balance-image');
-        processImage(JSON.parse(response.xhr.responseText));
     });
   }
   };
@@ -164,9 +164,9 @@ javascript:
     // Receives response from server
     this.on("success", function(response) {
         console.log("Uploaded!");
+        processImage(JSON.parse(response.xhr.responseText));
         showImage(this.files[0],'color-image');
         showImage(this.files[0],'balance-image');
-        processImage(JSON.parse(response.xhr.responseText));
     });
   }
   };
@@ -222,9 +222,9 @@ javascript:
     // Receives response from server
     this.on("success", function(response) {
         console.log("Uploaded!");
+        processImage(JSON.parse(response.xhr.responseText));
         showImage(this.files[0],'color-image');
         showImage(this.files[0],'balance-image');
-        processImage(JSON.parse(response.xhr.responseText));
     });
   }
   };

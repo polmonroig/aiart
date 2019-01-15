@@ -11,38 +11,63 @@
     margin-bottom: -20px;
     border-radius: 20px;
     text-align: left;
+    animation-name: fadeUp;
+    animation-duration: 0.5s;
+    animation-delay: 0.5s;
+    animation-fill-mode: both;
+    b{
+      font-weight: 700;
+    }
   }
 
   .message-content-balance {
+    transition: all 1s;
     padding: 15px 35px;
     width: 100%;
     display: inline-block;
     margin-bottom: -20px;
     border-radius: 20px;
     text-align: left;
+    animation-name: fadeUp;
+    animation-duration: 0.5s;
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
     b{
       font-weight: 700;
     }
   }
   .message-content-color {
+    transition: all 1s;
     padding: 15px 35px;
     width: 100%;
     display: inline-block;
     margin-bottom: -20px;
     border-radius: 20px;
     text-align: left;
+    animation-name: fadeUp;
+    animation-duration: 0.5s;
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
     b{
       font-weight: 700;
     }
   }
   .message-wrong{
-    background-color: #fff9f0;
+    transition: all 0.5s;
+    background-color: #fff5e7;
     color: #594939;
   }
   .message-fixed{
-    background-color: #f0f9ff;
+    transition: all 0.5s;
+    background-color: #e8f6ff;
     color: #2A4E7F;
   }
+}
+
+.center-image{
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
 }
 
 // MENU LOGO

@@ -200,20 +200,8 @@
             <!--------------------
             END - Mobile Menu List
             -------------------->
-            <form action="#" class="dropzone dropzone-menu hidden" enctype="multipart/form-data" id="imageDropzoneMenu">
-              <div class="dz-message">
-                <div>
-                  <p>Drop a new image.</p>
-                </div>
-              </div>
-            </form>
-            <form action="#" class="dropzone dropzone-menu-button hidden" enctype="multipart/form-data" id="imageDropzoneMenuButton">
-              <div class="dz-message">
-                <div>
-                  <p>Drop a new image.</p>
-                </div>
-              </div>
-            </form>
+            <form action="#" class="dropzone dropzone-menu hidden" enctype="multipart/form-data" id="imageDropzoneMenu"></form>
+            <form action="#" class="dropzone dropzone-menu-button hidden" enctype="multipart/form-data" id="imageDropzoneMenuButton"></form>
           </div>
         </div>
         <!--------------------
@@ -258,20 +246,8 @@
                 <span>Upload</span></a>
             </li>
           </ul>
-          <form action="#" class="dropzone dropzone-menu hidden" enctype="multipart/form-data" id="imageDropzoneMenu">
-            <div class="dz-message">
-              <div>
-                <p>Drop a new image.</p>
-              </div>
-            </div>
-          </form>
-          <form action="#" class="dropzone dropzone-menu-button hidden" enctype="multipart/form-data" id="imageDropzoneMenuButton">
-            <div class="dz-message">
-              <div>
-                <p>Drop a new image.</p>
-              </div>
-            </div>
-          </form>
+          <form action="#" class="dropzone dropzone-menu hidden" enctype="multipart/form-data" id="imageDropzoneMenu"></form>
+          <form action="#" class="dropzone dropzone-menu-button hidden" enctype="multipart/form-data" id="imageDropzoneMenuButton"></form>
         </div>
         <!--------------------
         END - Main Menu
@@ -529,9 +505,9 @@
         // Receives response from server
         this.on("success", function(response) {
             console.log("Uploaded!");
+            processImage(JSON.parse(response.xhr.responseText));
             showImage(this.files[0],'color-image');
             showImage(this.files[0],'balance-image');
-            processImage(JSON.parse(response.xhr.responseText));
         });
       }
       };
@@ -589,9 +565,9 @@
         // Receives response from server
         this.on("success", function(response) {
             console.log("Uploaded!");
+            processImage(JSON.parse(response.xhr.responseText));
             showImage(this.files[0],'color-image');
             showImage(this.files[0],'balance-image');
-            processImage(JSON.parse(response.xhr.responseText));
         });
       }
       };
@@ -647,9 +623,9 @@
         // Receives response from server
         this.on("success", function(response) {
             console.log("Uploaded!");
+            processImage(JSON.parse(response.xhr.responseText));
             showImage(this.files[0],'color-image');
             showImage(this.files[0],'balance-image');
-            processImage(JSON.parse(response.xhr.responseText));
         });
       }
       };

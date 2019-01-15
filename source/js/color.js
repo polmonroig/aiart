@@ -125,13 +125,23 @@ function harmonizeButton(){
   document.getElementsByClassName('message-content-color')[0].classList.remove('message-wrong');
   document.getElementsByClassName('message-content-color')[0].classList.add('message-fixed');
 
-  for(var i = 0; i<document.getElementsByClassName('color-original').length; i++){
-    document.getElementsByClassName('color-original')[i].classList.add('hidden');
-  }
 
-  for(var i = 0; i<document.getElementsByClassName('color-harmonized').length; i++){
-    document.getElementsByClassName('color-harmonized')[i].classList.remove('hidden');
-  }
+  document.getElementById('colorwheel').classList.add('colorwheel-anim-hide');
+
+  setTimeout(function() {
+    document.getElementById('colorwheel').classList.remove('colorwheel-anim-hide');
+    document.getElementById('colorwheel').classList.add('colorwheel-anim-show');
+
+    for(var i = 0; i<document.getElementsByClassName('color-original').length; i++){
+      document.getElementsByClassName('color-original')[i].classList.add('hidden');
+    }
+
+    for(var i = 0; i<document.getElementsByClassName('color-harmonized').length; i++){
+      document.getElementsByClassName('color-harmonized')[i].classList.remove('hidden');
+    }
+  }, 200);
+
+
 }
 
 function resetHarmonizeButton(){
@@ -140,6 +150,7 @@ function resetHarmonizeButton(){
   document.getElementsByClassName('message-content-color')[0].innerHTML = message;
   document.getElementsByClassName('message-content-color')[0].classList.add('message-wrong');
   document.getElementsByClassName('message-content-color')[0].classList.remove('message-fixed');
+  document.getElementById('colorwheel').classList.remove('colorwheel-anim-show');
 
   for(var i = 0; i<document.getElementsByClassName('color-original').length; i++){
     document.getElementsByClassName('color-original')[i].classList.remove('hidden');

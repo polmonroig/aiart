@@ -1,10 +1,23 @@
 //Process image
 function processImage(responseText){
 
-  var delayInMilliseconds = 1500; //1 second
+  // Reset visibility for animation
+  document.getElementsByClassName('balance-index')[0].classList.remove('balance-main-anim');
+  document.getElementsByClassName('color-index')[0].classList.remove('color-main-anim');
 
+  document.getElementsByClassName('balance-index')[0].classList.add('balance-main-anim-hide');
+  document.getElementsByClassName('color-index')[0].classList.add('color-main-anim-hide');
+
+  document.getElementById('upload-wrapper').classList.add('upload-main-anim-hide');
+
+  var delayInMilliseconds = 500;
   setTimeout(function() {
 
+    document.getElementById('color-wrapper').classList.add('hidden');
+    document.getElementById('balance-wrapper').classList.add('hidden');
+
+    document.getElementsByClassName('balance-index')[0].classList.remove('balance-main-anim-hide');
+    document.getElementsByClassName('color-index')[0].classList.remove('color-main-anim-hide');
     // Display and hide elements
     if(!document.getElementById('upload-wrapper').classList.contains("hidden")){
       document.getElementsByClassName('dropzone-menu')[0].classList.remove('hidden');
@@ -12,12 +25,19 @@ function processImage(responseText){
       document.getElementById('upload-wrapper').classList.add('hidden');
       document.getElementById('color-wrapper').classList.remove('hidden');
       document.getElementById('balance-wrapper').classList.remove('hidden');
+      document.getElementsByClassName('balance-index')[0].classList.add('balance-main-anim');
+      document.getElementsByClassName('color-index')[0].classList.add('color-main-anim');
+    }else{
+      document.getElementById('color-wrapper').classList.remove('hidden');
+      document.getElementById('balance-wrapper').classList.remove('hidden');
+      document.getElementsByClassName('balance-index')[0].classList.add('balance-main-anim');
+      document.getElementsByClassName('color-index')[0].classList.add('color-main-anim');
     }
 
     //Handle response text
     var colorPalette = responseText["color_palette"];
 
-    // HEATMAP PROCESS
+    // Heatmap
 
     var message = 'Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!';
     document.getElementsByClassName('message-content-balance')[0].innerHTML = message;
@@ -65,20 +85,42 @@ function processImage(responseText){
     heatmapBalanced.createHeatmap();
     document.getElementById('heatmap-balanced').classList.add('hidden');
 
+		document.getElementById('heatmap').classList.remove('hidden');
+		document.getElementById('heatmap-balanced').classList.add('hidden');
+
+		var message = 'Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!';
+		document.getElementsByClassName('message-content-balance')[0].innerHTML = message;
+		document.getElementsByClassName('message-content-balance')[0].classList.add('message-wrong');
+		document.getElementsByClassName('message-content-balance')[0].classList.remove('message-fixed');
+
 
     //COLOR PROCESS
 
-    var message = 'The color palette of the image is not ideal! check the harmnized verison to improve it';
-    document.getElementsByClassName('message-content-color')[0].innerHTML = message;
 
     createColorSamples(colorPalette[0], colorPalette[1], colorPalette[2], colorPalette[3], colorPalette[4], colorPalette[5], colorPalette[6], colorPalette[7]);
     createColorPalette(colorPalette[0], colorPalette[1], colorPalette[2], colorPalette[3], colorPalette[4], colorPalette[5], colorPalette[6], colorPalette[7]);
     console.log("Color processed");
 
+		var message = 'The color palette of the image is not ideal! check the harmnized verison to improve it';
+		document.getElementsByClassName('message-content-color')[0].innerHTML = message;
+		document.getElementsByClassName('message-content-color')[0].classList.add('message-wrong');
+		document.getElementsByClassName('message-content-color')[0].classList.remove('message-fixed');
+
+		document.getElementById('colorwheel').classList.remove('colorwheel-anim-show');
+
+		for(var i = 0; i<document.getElementsByClassName('color-original').length; i++){
+			document.getElementsByClassName('color-original')[i].classList.remove('hidden');
+		}
+
+		for(var i = 0; i<document.getElementsByClassName('color-harmonized').length; i++){
+			document.getElementsByClassName('color-harmonized')[i].classList.add('hidden');
+		}
+
     // Show tooltips of hex
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
     });
+
 
   }, delayInMilliseconds);
 }

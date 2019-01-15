@@ -31,6 +31,7 @@
 
 		.color-image{
 			width: 100%;
+			background-color: #f2f4f8;
 		}
 		.color-image img{
 			width: 100%;
@@ -181,7 +182,6 @@
 }
 
 .filter-w{
-
   .colorwheel-container {
     width: 100%;
     display: inline-block;
@@ -249,15 +249,45 @@
 
   .button-div{
     width: 100%;
-    height: 100px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+		margin-top: 32px;
 
     button{
     }
   }
 }
+
+.color-main-anim{
+	animation-name: fadeUp;
+	animation-duration: 0.5s;
+	animation-delay: 0s;
+	animation-fill-mode: both;
+}
+
+.color-main-anim-hide{
+	animation-name: fadeDown;
+	animation-duration: 0.5s;
+	animation-delay: 0s;
+	animation-fill-mode: both;
+}
+
+.colorwheel-anim-show{
+	animation-name: jumpStraightRotate;
+	animation-duration: 0.8s;
+	animation-delay: 0s;
+	animation-fill-mode: both;
+}
+
+.colorwheel-anim-hide{
+	animation-name: hideStraightRotate;
+	animation-duration: 0.2s;
+	animation-delay: 0s;
+	animation-fill-mode: both;
+}
+
 
 .tooltip{
   font-size: 12px;
