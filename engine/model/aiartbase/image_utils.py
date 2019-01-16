@@ -5,7 +5,7 @@ import numpy as np
 def string_to_image(file_stream):
     image_string = np.fromstring(file_stream, np.uint8)
     image = cv2.imdecode(image_string, cv2.IMREAD_COLOR)
-    return image
+    return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 
 def image_to_string(image, file_extension):

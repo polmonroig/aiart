@@ -1,7 +1,7 @@
-from engine.model import storage, database
+from model import storage, database
 from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
-from engine.model.ImagePipeline import ImagePipeline
-from engine.model.aiartbase import image_utils
+from model.aiartbase.base import BaseTransformer
+from model.aiartbase import image_utils
 
 crud = Blueprint('crud', __name__)
 
@@ -39,12 +39,9 @@ def submit():
 
     # Color Palette
     image = image_utils.string_to_image(file_stream)
-    image_pipeline = ImagePipeline(image)
-    image_palette = image_pipeline.get_palette(4).generate()[0]
-    color_palette = [image_palette[0], image_palette[1],
-                     image_palette[2], image_palette[3],
-                     image_palette[4], image_palette[5],
-                     image_palette[6], image_palette[7]]
+    image_pipeline = BaseTransformer(image)
+    image_pipeline.calculate_colors(4)
+    color_palette = image_pipeline.get_palette()
 
     # Image segments
     image_pipeline.segment()

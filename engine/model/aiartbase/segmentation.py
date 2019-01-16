@@ -35,11 +35,11 @@ class Segment:
         if x_diff < y_diff:
             self.radius = int(x_diff)
             self.ratio_x = 1
-            self.ratio_y = int(y_diff / x_diff)
+            self.ratio_y = y_diff / x_diff
         else:
             self.radius = int(y_diff)
             self.ratio_y = 1
-            self.ratio_x = int(x_diff / y_diff)
+            self.ratio_x = x_diff / y_diff
         self.x = int(x_diff) + b.min[0]
         self.y = int(y_diff) + b.min[1]
         self.intensity = 100

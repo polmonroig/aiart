@@ -1,8 +1,8 @@
 from skimage import segmentation, color
 from skimage.future import graph
 import numpy as np
-from engine.model.aiartbase.segmentation import Segment, Box
-from engine.model.aiartbase.color_mod import ColorGenerator
+from aiartbase.segmentation import Segment, Box
+from aiartbase.color_mod import ColorGenerator
 
 
 class BaseTransformer:
@@ -18,7 +18,7 @@ class BaseTransformer:
         if not isinstance(image, np.ndarray) or image.ndim != 3 or image.shape[2] != 3:
             raise Exception('`image` MUST be a numpy array '
                             'with 3 dimensions %s'.format(image))
-        
+
         # Image to save
         self.image = image
 
@@ -37,14 +37,10 @@ class BaseTransformer:
         Returns an instance of the palette class
         """
         if self.palette is None:
-
-            # Make a set with every color
             colors = []
             for i in range(self.height):
                 for j in range(self.width):
                     colors.append(self.image[i][j])
-
-            # Generate the color palette
             self.palette = ColorGenerator(colors, n_colors)
             self.palette.generate()
         else:
@@ -58,41 +54,42 @@ class BaseTransformer:
 
         return self.palette.palette_colors
 
-    def segment(self, compactness=40, n_segments=450,
-                connectivity=1, sigma=20, num_cuts=10):
+    def segment(self, compactness=50, n_segments=100,
+                connectivity=1, sigma=500, num_cuts=200):
 
         """
         Function responable of image segmentation
         """
+        if self.segments is None:
+            # Make segmentation slice
+            labels1 = segmentation.slic(self.image,
+                                        compactness=compactness,
+                                        n_segments=n_segments)
 
-        # Make segmentation slice
-        labels1 = segmentation.slic(self.image,
-                                    compactness=compactness,
-                                    n_segments=n_segments)
+            # Convert slice into rgb image based on avg
+            out1 = color.label2rgb(labels1, self.image, kind='avg')
 
-        # Convert slice into rgb image based on avg
-        out1 = color.label2rgb(labels1, self.image, kind='avg')
+            # Complete segmentation using graph cut
+            g = graph.rag_mean_color(self.image, labels1, mode='similarity', connectivity=connectivity, sigma=sigma)
+            labels = graph.cut_normalized(labels1, g, num_cuts=num_cuts)
 
-        # Complete segmentation using graph cut
-        g = graph.rag_mean_color(self.image, labels1, mode='similarity', connectivity=connectivity, sigma=sigma)
-        labels = graph.cut_normalized(labels1, g, num_cuts=num_cuts)
-
-        # Set boxes and calculate segments
-        self._set_boxes(labels)
+            image_segmentation = color.label2rgb(labels, self.image, kind='avg')
+            self._set_boxes(labels)
 
     def _set_boxes(self, labels):
         """
         Calculates every bounding box
         """
+        # Calculates the edge of every box
+
         boxes = {}
 
-        # Calculates the edge of every box
-        for i in range(0, self.height):
-            for j in range(0, self.width):
+        for i in range(0, labels.shape[0]):
+            for j in range(0, labels.shape[1]):
                 c = labels[i][j]
                 if boxes.get(c) is None:
                     boxes[c] = (Box(self.height, self.width))
-                    boxes[c].add([j, i])
+                boxes[c].add([j, i])
 
         self.segments = []
         for b in boxes:
