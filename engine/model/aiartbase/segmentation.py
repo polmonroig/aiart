@@ -1,4 +1,30 @@
 
+
+class Box:
+    """
+    This box class is a helper class
+    useful to classify the bounding boxes
+    """
+
+    def __init__(self, i, j):
+        self.min = [j, i]
+        self.max = [0, 0]
+        self.pixels = []
+        self.size = 0
+
+    def add(self, pixel):
+
+        # Update max and min values for the bounding box
+        if pixel[0] > self.max[0]: self.max[0] = pixel[0]
+        if pixel[0] < self.min[0]: self.min[0] = pixel[0]
+        if pixel[1] > self.max[1]: self.max[1] = pixel[1]
+        if pixel[1] < self.min[1]: self.min[1] = pixel[1]
+
+        # Add a new pixel inside this box
+        self.pixels.append(pixel)
+        self.size += 1
+
+
 class Segment:
     """
     Segment class that represents a segment in an image
@@ -33,6 +59,10 @@ class Segment:
         return self.y
 
     def get_radius(self):
+        """
+        Segment radius
+        :return: self.radius
+        """
         return self.radius
 
     def get_int(self):

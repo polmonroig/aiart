@@ -5,7 +5,6 @@ from google.cloud import storage
 import six
 from werkzeug import secure_filename
 from werkzeug.exceptions import BadRequest
-from model.ImagePipeline import ImagePipeline
 
 
 def _get_storage_client():

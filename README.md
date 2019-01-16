@@ -1,13 +1,10 @@
-# README #
+# AIART app developement #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+This repository containts the AIART app made 
+for google cloud, impemented with Python
 
 ### What is this repository for? ###
-
-* aiart image composition app project
 * Version 1
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
 ### How do I get set up? ###
 
 * Summary of set up
@@ -32,5 +29,5 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Who do I talk to? ###
 
-* Pol Monroig Company
+* Pol Monroig 
 * Alan Monroig

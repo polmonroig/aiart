@@ -1,8 +1,8 @@
 from skimage import segmentation, color
 from skimage.future import graph
-from Box import Box
-from Segment import Segment
-from ImagePalette import ImagePalette
+from engine.model.aiartbase.segmentation import Segment, Box
+from engine.model.ImagePalette import ImagePalette
+
 
 class ImagePipeline:
     """
