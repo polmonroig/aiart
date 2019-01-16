@@ -1,3 +1,4 @@
+"use strict";
 //Process image
 function processImage(responseText){
 
@@ -60,28 +61,35 @@ function processImage(responseText){
 
     for(var i = 0; i < responseText["datapoints"].length; ++i){
       var point = {
-          x: responseText["datapoints"][i][0],
-          y: responseText["datapoints"][i][1],
-          v: responseText["datapoints"][i][2],
-          r: responseText["datapoints"][i][3]
+					x: responseText["datapoints"][i][0],
+					y: responseText["datapoints"][i][1],
+					w: responseText["datapoints"][i][2],
+					sx: responseText["datapoints"][i][3],
+					sy: responseText["datapoints"][i][4]
         }
       datapoints.push(point);
+
     }
+
 
     for(var i = 0; i < responseText["datapoints_balanced"].length; ++i){
       var point = {
           x: responseText["datapoints_balanced"][i][0],
           y: responseText["datapoints_balanced"][i][1],
-          v: responseText["datapoints_balanced"][i][2],
-          r: responseText["datapoints_balanced"][i][3]
+          w: responseText["datapoints_balanced"][i][2],
+					sx: responseText["datapoints_balanced"][i][3],
+					sy: responseText["datapoints_balanced"][i][4]
         }
       datapoints_balanced.push(point);
-    }
 
-    const heatmap = new Heatmap(document.getElementById('heatmap'), datapoints, 0.08);
+    }
+		console.log(datapoints_balanced);
+		console.log(datapoints);
+
+    const heatmap = new Heatmap(document.getElementById('heatmap'), datapoints, 0.06);
     heatmap.createHeatmap();
 
-    const heatmapBalanced = new Heatmap(document.getElementById('heatmap-balanced'), datapoints_balanced, 0.08);
+    const heatmapBalanced = new Heatmap(document.getElementById('heatmap-balanced'), datapoints_balanced, 0.06);
     heatmapBalanced.createHeatmap();
     document.getElementById('heatmap-balanced').classList.add('hidden');
 

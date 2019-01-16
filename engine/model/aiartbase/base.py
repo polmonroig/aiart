@@ -1,8 +1,8 @@
 from skimage import segmentation, color
 from skimage.future import graph
 import numpy as np
-from aiartbase.segmentation import Segment, Box
-from aiartbase.color_mod import ColorGenerator
+from .segmentation import Segment, Box
+from .color_mod import ColorGenerator
 
 
 class BaseTransformer:
@@ -52,7 +52,7 @@ class BaseTransformer:
             raise Exception('Palette is not set '
                             'please refer to calculate_colors instead')
 
-        return self.palette.palette_colors
+        return self.palette.get_palette()
 
     def segment(self, compactness=50, n_segments=100,
                 connectivity=1, sigma=500, num_cuts=200):

@@ -30,19 +30,11 @@ class Segment:
     Segment class that represents a segment in an image
     """
     def __init__(self, b):
-        x_diff = (b.max[0] - b.min[0]) / 2
-        y_diff = (b.max[1] - b.min[1]) / 2
-        if x_diff < y_diff:
-            self.radius = int(x_diff)
-            self.ratio_x = 1
-            self.ratio_y = y_diff / x_diff
-        else:
-            self.radius = int(y_diff)
-            self.ratio_y = 1
-            self.ratio_x = x_diff / y_diff
-        self.x = int(x_diff) + b.min[0]
-        self.y = int(y_diff) + b.min[1]
-        self.intensity = 100
+        self.x_diff = (b.max[0] - b.min[0]) / 2
+        self.y_diff = (b.max[1] - b.min[1]) / 2
+        self.x = int(self.x_diff) + b.min[0]
+        self.y = int(self.y_diff) + b.min[1]
+        self.weight = 100
 
     def get_x(self):
         """
@@ -58,15 +50,8 @@ class Segment:
         """
         return self.y
 
-    def get_radius(self):
-        """
-        Segment radius
-        :return: self.radius
-        """
-        return self.radius
+    def get_weight(self):
+        return self.weight
 
-    def get_int(self):
-        return self.intensity
-
-    def get_ratio(self):
-        return self.ratio_x, self.ratio_y
+    def get_scale(self):
+        return self.x_diff, self.y_diff

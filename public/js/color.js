@@ -1,3 +1,4 @@
+"use strict";
 //Function to convert rgb format to a hsv color
 function rgb2hsv (rgb) {
     var rr, gg, bb,

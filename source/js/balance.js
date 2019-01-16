@@ -1,4 +1,5 @@
 // HEATMAP CLASS
+"use strict";
 
 class Heatmap{
 
@@ -65,23 +66,25 @@ class Heatmap{
     var gradientImage = this.gradientImage();
     heatCtx.filter = `blur(${this.blur*this.canvas.offsetWidth}px)`;
 
-    //
+    heatCtx.beginPath();
     // Fill Cells
     for (var i = 0; i < this.datapoints.length; i++) {
         var point = this.datapoints[i];
 
-        var gray = (255 * (point.v / maxValue)) | 0;
+        var gray = (255 * (point.w / maxValue)) | 0;
         var r = gradientImage[gray * 4 + 0];
         var g = gradientImage[gray * 4 + 1];
         var b = gradientImage[gray * 4 + 2];
         //var a = gradientImage[gray * 4 + 3];
 
-        // blurred - alpha circle to be blurred later
+				// Circle draw
+				heatCtx.moveTo(point.x*this.canvas.offsetWidth, point.y*this.canvas.offsetHeight);
         heatCtx.fillStyle = 'rgba( 0,0,0,' + (gray / 255) + ')';
-        heatCtx.beginPath();
-        heatCtx.arc(point.x*this.canvas.offsetWidth, point.y*this.canvas.offsetHeight, point.r*this.canvas.offsetWidth, 0, 2 * Math.PI);
-        heatCtx.fill();
+        heatCtx.ellipse(point.x*this.canvas.offsetWidth, point.y*this.canvas.offsetHeight, point.sx*this.canvas.offsetWidth, point.sy*this.canvas.offsetWidth, 0, 0, 2 * Math.PI);
+
     }
+
+		 heatCtx.fill();
 
     // Blur Canvas
     //stackBlurCanvasRGBA(this.canvas.id, 0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight, this.blur);

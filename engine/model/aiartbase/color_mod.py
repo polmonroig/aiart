@@ -1,4 +1,4 @@
-
+import numpy as np
 
 class ColorGenerator:
     """
@@ -32,7 +32,7 @@ class ColorGenerator:
             self.harmonized_palette = harmonizer.harmonize()
 
     def get_palette(self):
-        return self.palette_colors.append(self.harmonized_palette)
+        return np.append(self.palette_colors, self.harmonized_palette).reshape(-1, 3).tolist()
 
     def max_range(self):
         max_b = max_g = max_r = -1
@@ -67,5 +67,5 @@ class ColorHarmonizer:
 
     def harmonize(self):
         if self.harmonized_colors is None:
-            self.harmonized_colors = self.colors * 1.2
+            self.harmonized_colors = self.colors
         return self.harmonized_colors

@@ -44,27 +44,24 @@ def submit():
     color_palette = image_pipeline.get_palette()
 
     # Image segments
-    image_pipeline.segment()
+    image_pipeline.segment(sigma=500)
     segments = image_pipeline.get_segments()
 
     # Datapoints (x, y, value, radius)
     # where radius, x, y are proportional
     # to the size of the screen
-    datapoints = [
-                (0.1, 0.2, 100, 0.1),
-                (0.4, 0.9, 50, 0.2),
-                (0.5, 0.2, 80, 0.15),
-                (0.5, 0.3, 20, 0.1),
-                (0.8, 0.3, 80, 0.1)
-                ]
-    datapoints_balanced = [
-                (0.1, 0.2, 100, 0.1),
-                (0.4, 0.9, 50, 0.2),
-                (0.5, 0.2, 80, 0.15),
-                (0.5, 0.3, 20, 0.1),
-                (0.8, 0.3, 80, 0.1),
-                (0.7, 0.8, 80, 0.2)
-            ]
+
+    datapoints = []
+    datapoints_balanced = []
+    for seg in segments:
+        datapoints.append((seg.x / image_pipeline.width, seg.y / image_pipeline.height,
+                           seg.get_weight(), seg.get_scale()[0] / image_pipeline.width,
+                           seg.get_scale()[1] / image_pipeline.height))
+
+        datapoints_balanced.append((seg.x / image_pipeline.width, seg.y / image_pipeline.height,
+                                    seg.get_weight()/2, seg.get_scale()[0] / image_pipeline.width,
+                                    seg.get_scale()[1] / image_pipeline.height))
+
 
     # Create data for database
     data = jsonify(color_palette=color_palette, datapoints=datapoints, datapoints_balanced=datapoints_balanced)
