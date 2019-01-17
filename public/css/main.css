@@ -14144,13 +14144,23 @@ TODO Application
           margin-bottom: 0px; }
     .color-index .color-content-w .color-header {
       margin-bottom: 40px; }
-    .color-index .color-content-w .color-image {
+    .color-index .color-content-w .color-image-wrapper {
       width: 100%;
-      background-color: #f2f4f8; }
-    .color-index .color-content-w .color-image img {
-      width: 100%;
-      border-top-left-radius: 6px;
-      border-bottom-left-radius: 6px; }
+      position: relative; }
+      .color-index .color-content-w .color-image-wrapper .color-image {
+        width: 100%;
+        position: relative;
+        background-color: #f2f4f8;
+        z-index: 0; }
+        .color-index .color-content-w .color-image-wrapper .color-image img {
+          width: 100%;
+          border-top-left-radius: 6px;
+          border-bottom-left-radius: 6px; }
+      .color-index .color-content-w .color-image-wrapper canvas {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 2; }
     .color-index .color-content-w .color-control {
       padding: 30px 20px;
       border-radius: 6px;

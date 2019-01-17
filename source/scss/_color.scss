@@ -29,15 +29,30 @@
 			margin-bottom: 40px;
 		}
 
-		.color-image{
+		.color-image-wrapper{
 			width: 100%;
-			background-color: #f2f4f8;
+			position: relative;
+
+			.color-image{
+				width: 100%;
+				position: relative;
+				background-color: #f2f4f8;
+				z-index: 0;
+				img{
+					width: 100%;
+					border-top-left-radius: 6px;
+					border-bottom-left-radius: 6px;
+				}
+			}
+
+			canvas{
+				width: 100%;
+				position: absolute;
+				top: 0;
+				z-index: 2;
+			}
 		}
-		.color-image img{
-			width: 100%;
-			border-top-left-radius: 6px;
-      border-bottom-left-radius: 6px;
-		}
+
 
 		.color-thread {
 

@@ -3,10 +3,12 @@
 
 class Heatmap{
 
-  constructor(canvas, datapoints, blur=1){
+  constructor(canvas, datapoints, blur=0.04){
     this.canvas = canvas;
-    this.datapoints = datapoints;
-    this.blur = blur;
+		this.blur = blur;
+
+		// datapoints array oder: [0] = x   [1] = y   [2] = w   [3] = sx   [4] = sy
+		this.datapoints = datapoints;
 
     this.gradient = {
         0.0: "rgba(50,50,160,1)",
@@ -42,8 +44,8 @@ class Heatmap{
     var gradientImage = this.gradientImage();
 
     for (var i = 0; i < blurImageDataPlain.length; i += 4) {
-        var gray = blurImageDataPlain[i + channel];
 
+				var gray = blurImageDataPlain[i + channel];
         var r = gradientImage[gray * 4 + 0];
         var g = gradientImage[gray * 4 + 1];
         var b = gradientImage[gray * 4 + 2];
@@ -71,16 +73,16 @@ class Heatmap{
     for (var i = 0; i < this.datapoints.length; i++) {
         var point = this.datapoints[i];
 
-        var gray = (255 * (point.w / maxValue)) | 0;
+        var gray = (255 * (point[2] / maxValue)) | 0;
         var r = gradientImage[gray * 4 + 0];
         var g = gradientImage[gray * 4 + 1];
         var b = gradientImage[gray * 4 + 2];
         //var a = gradientImage[gray * 4 + 3];
 
 				// Circle draw
-				heatCtx.moveTo(point.x*this.canvas.offsetWidth, point.y*this.canvas.offsetHeight);
+				heatCtx.moveTo(point[0]*this.canvas.offsetWidth, point[1]*this.canvas.offsetHeight);
         heatCtx.fillStyle = 'rgba( 0,0,0,' + (gray / 255) + ')';
-        heatCtx.ellipse(point.x*this.canvas.offsetWidth, point.y*this.canvas.offsetHeight, point.sx*this.canvas.offsetWidth, point.sy*this.canvas.offsetWidth, 0, 0, 2 * Math.PI);
+        heatCtx.ellipse(point[0]*this.canvas.offsetWidth, point[1]*this.canvas.offsetHeight, point[3]*this.canvas.offsetWidth, point[4]*this.canvas.offsetWidth, 0, 0, 2 * Math.PI);
 
     }
 
@@ -89,7 +91,7 @@ class Heatmap{
     // Blur Canvas
     //stackBlurCanvasRGBA(this.canvas.id, 0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight, this.blur);
 
-    // Map Blurred canvas to heatmap
+    // Map blurred canvas to heatmap
     this.colorize(heatCtx, heatCtx, 3, this.canvas.offsetWidth, this.canvas.offsetHeight, true);
 
   }
@@ -134,7 +136,6 @@ $(function(){
           document.getElementById('balance-image').style.opacity = data['from']/100;
       },
       onChange: function (data) {
-          console.log(data);
           document.getElementById('balance-image').style.opacity = data['from']/100;
       },
     });

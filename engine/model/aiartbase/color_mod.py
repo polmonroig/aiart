@@ -1,6 +1,6 @@
 import numpy as np
-from aiartbase.quantization import VBox, boxes_iterator
-from aiartbase.sorting import MaxHeap
+from .quantization import VBox, boxes_iterator
+from .sorting import MaxHeap
 
 
 class ColorGenerator:

@@ -1,21 +1,22 @@
 .element-wrapper id="color-wrapper" class="hidden"
-  .color-index
-  	.color-content-w
-  		.color-image id="color-image"
-  		.color-control
-  		  .filter-side
-  		    .filters-header
-  		      h4 class="dropzone-click" Color Harmony
-  		      .reset-filters
-		          .value 82%
-
-  		    .filter-w
-              .message.self
-                .message-content-w
-                  .message-content-color class="message-wrong"
-              .colorwheel-container
-                #colorwheel
-                #palette
-              .button-div
-                button.mr-2.mb-2.btn.btn-primary.btn-rounded.colorwheel-btn type="button" onClick="harmonizeButton()"  Harmonize Palette
-                button.mr-2.mb-2.btn.btn-outline-primary.btn-rounded.colorwheel-btn type="button" onClick="resetHarmonizeButton()"  Reset
+	.color-index
+		.color-content-w
+			.color-image-wrapper
+				.color-image id="color-image"
+				canvas id="color-image-samples"
+			.color-control
+				.filter-side
+					.filters-header
+						h4 class="dropzone-click" Color Harmony
+						.reset-filters
+							.value 82%
+					.filter-w
+						.message.self
+							.message-content-w
+								.message-content-color class="message-wrong"
+						.colorwheel-container
+							#colorwheel
+							#palette
+						.button-div
+							button.mr-2.mb-2.btn.btn-primary.btn-rounded.colorwheel-btn type="button" onClick="harmonizeButton()"  Harmonize Palette
+							button.mr-2.mb-2.btn.btn-outline-primary.btn-rounded.colorwheel-btn type="button" onClick="resetHarmonizeButton()"  Reset
