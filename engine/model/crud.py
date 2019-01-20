@@ -94,7 +94,8 @@ def submit():
     # Create data for database
     data = jsonify(color_palette=color_palette, datapoints=datapoints,
                    datapoints_balanced=datapoints_balanced,
-                   image_data_messages=image_data_messages)
+                   image_data_messages=image_data_messages,
+                   color_positions=color_positions)
 
     # Post to database
     # database.create(data)
