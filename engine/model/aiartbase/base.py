@@ -57,6 +57,13 @@ class BaseTransformer:
 
         return self.palette.get_palette()
 
+    def get_harmonized_palette(self):
+        if self.palette is None:
+            raise Exception('Palette is not set '
+                            'please refer to calculate_colors instead')
+
+        return self.palette.get_harmonized_palette()
+
     @staticmethod
     def _eucledian_diff(arr_a, arr_b):
         if len(arr_a) != len(arr_b):
