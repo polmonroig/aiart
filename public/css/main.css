@@ -14269,24 +14269,46 @@ TODO Application
 .filter-w .colorwheel-container {
   width: 100%;
   display: inline-block;
-  text-align: center; }
+  text-align: center;
+  margin-top: 20px; }
   .filter-w .colorwheel-container #colorwheel {
-    display: inline-block;
-    background: url("../img/colorwheel.png") no-repeat center;
-    height: 202px;
-    width: 202px;
-    text-align: left;
-    position: relative;
-    margin-right: 20px; }
-    .filter-w .colorwheel-container #colorwheel button.colorsample {
+    background: url("../img/color_wheel_05x.png") no-repeat center;
+    background-size: 100%;
+    height: 270px;
+    width: 270px;
+    margin: 0 auto;
+    position: relative; }
+    .filter-w .colorwheel-container #colorwheel button.colorsample-container {
       position: absolute;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border-color: white;
-      border-style: solid;
-      border-width: 4px;
-      background-color: rgba(1, 1, 1, 0); }
+      width: 40px;
+      height: 40px;
+      border-style: none;
+      background: none; }
+      .filter-w .colorwheel-container #colorwheel button.colorsample-container .colorsample {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border-color: white;
+        border-style: solid;
+        border-width: 4px;
+        background-color: rgba(1, 1, 1, 0);
+        position: absolute;
+        left: 0;
+        top: 0; }
+    .filter-w .colorwheel-container #colorwheel .arrow-container {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: none; }
+      .filter-w .colorwheel-container #colorwheel .arrow-container .colorsample-arrow {
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-bottom: 55px solid white;
+        position: absolute;
+        left: 0;
+        bottom: 18px; }
   .filter-w .colorwheel-container #palette {
     height: 202px;
     width: 80px;

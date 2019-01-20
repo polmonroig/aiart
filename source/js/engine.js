@@ -37,7 +37,7 @@ function processImage(responseText){
 
     // Handle response text
     var colorPalette = responseText["color_palette"];
-    var colorPositions = [[0.1, 0.5], [0.5, 0.2], [0.7, 0.5], [0.8, 0.1]];
+    var colorPositions = responseText["color_positions"];
 		var datapoints = responseText["datapoints"];
 		var datapointsBalanced = responseText["datapoints_balanced"];
 
@@ -64,7 +64,7 @@ function processImage(responseText){
 		// Debugging log
 		console.log(datapoints);
 		console.log(datapointsBalanced);
-		console.log(colorPalette.slice(0, 4));
+		console.log(colorPalette.slice(0, 5));
 		console.log(colorPositions);
 
 		// Create heapmap
@@ -81,10 +81,9 @@ function processImage(responseText){
 		document.getElementById('color-image-samples').width = colorImageWidth;
 		document.getElementById('color-image-samples').height = colorImageHeight;
 
-    //Create color samples
+    // Create color samples
     createColorSamples(colorPalette);
-    createColorPalette(colorPalette);
-    createCanvasPalette(document.getElementById('color-image-samples'), colorPalette.slice(0, 4), colorPositions);
+    createCanvasPalette(document.getElementById('color-image-samples'), colorPalette.slice(0, 5), colorPositions);
     console.log("Color processed");
 
 		// Color UI

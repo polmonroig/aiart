@@ -50,11 +50,25 @@ function rgb2hex(rgb){
 
 //Function to convert rgb format to position
 function rgb2pos(rgb){
-	var colorwheel_size = 202;
-	var colorsample_size = 30;
+
+	var colorwheel_size = 270;
+	var colorsample_size = 40;
 	var hsv = rgb2hsv(rgb);
-	var top = ((Math.sin((hsv[0]+230) * Math.PI / 180) * hsv[2]) + 100) * colorwheel_size/100/2;
-	var left = ((Math.cos((hsv[0]+230) * Math.PI / 180) * hsv[2]) + 100) * colorwheel_size/100/2;
+	var top = ((Math.sin((hsv[0]+90) * Math.PI / 180) * hsv[1]) + 100) * colorwheel_size/100/2;
+	var left = ((Math.cos((hsv[0]+90) * Math.PI / 180) * hsv[1]) + 100) * colorwheel_size/100/2;
+	top = Math.trunc(top)-colorsample_size/2;
+	left = Math.trunc(left)-colorsample_size/2;
+	return [top, left];
+}
+
+function rgb2posSaturated(rgb){
+
+	var colorwheel_size = 270;
+	var colorsample_size = 40;
+	var hsv = rgb2hsv(rgb);
+	hsv[1] = hsv[1]+30 >= 95 ? 95 : hsv[1]+30;
+	var top = ((Math.sin((hsv[0]+90) * Math.PI / 180) * hsv[1]) + 100) * colorwheel_size/100/2;
+	var left = ((Math.cos((hsv[0]+90) * Math.PI / 180) * hsv[1]) + 100) * colorwheel_size/100/2;
 	top = Math.trunc(top)-colorsample_size/2;
 	left = Math.trunc(left)-colorsample_size/2;
 	return [top, left];
@@ -62,61 +76,31 @@ function rgb2pos(rgb){
 
 
 function createColorSamples(colorPalette){
+	var html = "";
 
-	var html = `
-		<button class="colorsample color-original" style="background: ${rgb2hex(colorPalette[0])}; top: ${rgb2pos(colorPalette[0])[0]}px; left:${rgb2pos(colorPalette[0])[1]}px;" data-placement="top" data-toggle="tooltip" title=${rgb2hex(colorPalette[0])}></button>
-		<button class="colorsample color-original" style="background: ${rgb2hex(colorPalette[1])}; top: ${rgb2pos(colorPalette[1])[0]}px; left:${rgb2pos(colorPalette[1])[1]}px; " data-placement="top" data-toggle="tooltip" title=${rgb2hex(colorPalette[1])}></button>
-		<button class="colorsample color-original" style="background: ${rgb2hex(colorPalette[2])}; top: ${rgb2pos(colorPalette[2])[0]}px; left:${rgb2pos(colorPalette[2])[1]}px; " data-placement="top" data-toggle="tooltip" title=${rgb2hex(colorPalette[2])}></button>
-		<button class="colorsample color-original" style="background: ${rgb2hex(colorPalette[3])}; top: ${rgb2pos(colorPalette[3])[0]}px; left:${rgb2pos(colorPalette[3])[1]}px;" data-placement="top" data-toggle="tooltip" title=${rgb2hex(colorPalette[3])}></button>
-    <button class="colorsample color-harmonized hidden" style="background: ${rgb2hex(colorPalette[4])}; top: ${rgb2pos(colorPalette[4])[0]}px; left:${rgb2pos(colorPalette[4])[1]}px;" data-placement="top" data-toggle="tooltip" title=${rgb2hex(colorPalette[4])}></button>
-		<button class="colorsample color-harmonized hidden" style="background: ${rgb2hex(colorPalette[5])}; top: ${rgb2pos(colorPalette[5])[0]}px; left:${rgb2pos(colorPalette[5])[1]}px; " data-placement="top" data-toggle="tooltip" title=${rgb2hex(colorPalette[5])}></button>
-		<button class="colorsample color-harmonized hidden" style="background: ${rgb2hex(colorPalette[6])}; top: ${rgb2pos(colorPalette[6])[0]}px; left:${rgb2pos(colorPalette[6])[1]}px; " data-placement="top" data-toggle="tooltip" title=${rgb2hex(colorPalette[6])}></button>
-		<button class="colorsample color-harmonized hidden" style="background: ${rgb2hex(colorPalette[7])}; top: ${rgb2pos(colorPalette[7])[0]}px; left:${rgb2pos(colorPalette[7])[1]}px;" data-placement="top" data-toggle="tooltip" title=${rgb2hex(colorPalette[7])}></button>
-	`;
+	// Create arrows
+	for(var i = 0; i < colorPalette.length/2; i++){
+		html += `
+						<div class="arrow-container color-original" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px; -webkit-transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg); transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg)">
+							<div class="colorsample-arrow" style="border-bottom-width: ${rgb2hsv(colorPalette[i])[1]+20}px"></div>
+						</div>
+						`
+	}
+
+	// Create color circles
+	for(var i = 0; i < colorPalette.length/2; i++){
+		html += `
+						<button class="colorsample-container color-original" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px;" data-placement="top" data-toggle="tooltip" title=${rgb2hex(colorPalette[i])}>
+							<div class="colorsample" style="background: ${rgb2hex(colorPalette[i])};"></div>
+						</button>
+							`
+	}
+
+	//class = "color-harmonized hidden"  Class of harmonized buttons
 
 	document.getElementById("colorwheel").innerHTML = html;
 }
 
-function createColorPalette(colorPalette){
-
-
-	var html = `
-    <div class="color-row color-original">
-      <button class="color-row-sample" style="background: ${rgb2hex(colorPalette[0])};"></button>
-      <div class="tooltip-fixed">${rgb2hex(colorPalette[0])}</div>
-    </div>
-    <div class="color-row color-original">
-      <button class="color-row-sample" style="background: ${rgb2hex(colorPalette[1])};"></button>
-      <div class="tooltip-fixed">${rgb2hex(colorPalette[1])}</div>
-    </div>
-    <div class="color-row color-original">
-      <button class="color-row-sample" style="background: ${rgb2hex(colorPalette[2])};"></button>
-      <div class="tooltip-fixed">${rgb2hex(colorPalette[2])}</div>
-    </div>
-    <div class="color-row color-original">
-      <button class="color-row-sample" style="background: ${rgb2hex(colorPalette[3])};"></button>
-      <div class="tooltip-fixed">${rgb2hex(colorPalette[3])}</div>
-    </div>
-    <div class="color-row color-harmonized hidden">
-      <button class="color-row-sample" style="background: ${rgb2hex(colorPalette[4])};"></button>
-      <div class="tooltip-fixed">${rgb2hex(colorPalette[4])}</div>
-    </div>
-    <div class="color-row color-harmonized hidden">
-      <button class="color-row-sample" style="background: ${rgb2hex(colorPalette[5])};"></button>
-      <div class="tooltip-fixed">${rgb2hex(colorPalette[5])}</div>
-    </div>
-    <div class="color-row color-harmonized hidden">
-      <button class="color-row-sample" style="background: ${rgb2hex(colorPalette[6])};"></button>
-      <div class="tooltip-fixed">${rgb2hex(colorPalette[6])}</div>
-    </div>
-    <div class="color-row color-harmonized hidden">
-      <button class="color-row-sample" style="background: ${rgb2hex(colorPalette[7])};"></button>
-      <div class="tooltip-fixed">${rgb2hex(colorPalette[7])}</div>
-    </div>
-	`;
-
-	document.getElementById("palette").innerHTML = html;
-}
 
 function createCanvasPalette(canvas, colorPalette, colorPositions, radius=0.05){
 

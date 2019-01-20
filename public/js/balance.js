@@ -3,7 +3,7 @@
 
 class Heatmap{
 
-  constructor(canvas, datapoints, blur=0.04){
+  constructor(canvas, datapoints, blur=0.08){
     this.canvas = canvas;
 		this.blur = blur;
 
@@ -66,7 +66,7 @@ class Heatmap{
 
     var maxValue = 100;
     var gradientImage = this.gradientImage();
-    heatCtx.filter = `blur(${this.blur*this.canvas.offsetWidth}px)`;
+    //heatCtx.filter = `blur(${this.blur*this.canvas.offsetWidth}px)`;
 
     heatCtx.beginPath();
     // Fill Cells
@@ -89,7 +89,7 @@ class Heatmap{
 		 heatCtx.fill();
 
     // Blur Canvas
-    //stackBlurCanvasRGBA(this.canvas.id, 0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight, this.blur);
+    stackBlurCanvasRGBA(this.canvas.id, 0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight, this.blur*this.canvas.offsetWidth);
 
     // Map blurred canvas to heatmap
     this.colorize(heatCtx, heatCtx, 3, this.canvas.offsetWidth, this.canvas.offsetHeight, true);

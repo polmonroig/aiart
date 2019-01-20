@@ -82,7 +82,7 @@ class BaseTransformer:
         for i in range(0, self.palette.n_colors):
             positions.append([0, 0])
             differences.append(self.INFINITY)
-        tmp_colors = self.palette.palette_colors.astype(np.float32).tolist()
+        tmp_colors = self.palette.palette_colors.astype(np.float32).reshape(-1, 3).tolist()
         i = 0
         while i < reduced_image.shape[0]:
             j = 0
@@ -91,8 +91,8 @@ class BaseTransformer:
                 for k in range(len(tmp_colors)):
                     diff = self._eucledian_diff(im_color, tmp_colors[k])
                     if diff < differences[k]:
-                        positions[k][0] = (i * resize_value) / self.height
-                        positions[k][1] = (j * resize_value) / self.width
+                        positions[k][1] = (i * resize_value) / self.height
+                        positions[k][0] = (j * resize_value) / self.width
                         differences[k] = diff
                 j += 1
             i += 1

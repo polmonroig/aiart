@@ -13,7 +13,7 @@ def image_to_string(image, file_extension):
 
 
 def hsv_palette(palette):
-    return cv2.cvtColor(palette.reshape(1, -1, 3), cv2.COLOR_RGB2HSV).reshape(-1, 3)
+    return cv2.cvtColor(palette.reshape(1, -1, 3).astype(np.uint8), cv2.COLOR_RGB2HSV).reshape(-1, 3)
 
 
 def image_resize(self, width=None, height=None, inter=cv2.INTER_AREA):
