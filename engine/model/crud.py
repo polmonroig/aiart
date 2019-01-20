@@ -56,11 +56,11 @@ def submit():
     for seg in segments:
         datapoints.append((seg.x / image_pipeline.width, seg.y / image_pipeline.height,
                            seg.get_weight(), seg.get_scale()[0] / image_pipeline.width,
-                           seg.get_scale()[1] / image_pipeline.height))
+                           seg.get_scale()[1] / image_pipeline.width))
 
         datapoints_balanced.append((seg.x / image_pipeline.width, seg.y / image_pipeline.height,
                                     seg.get_weight()/2, seg.get_scale()[0] / image_pipeline.width,
-                                    seg.get_scale()[1] / image_pipeline.height))
+                                    seg.get_scale()[1] / image_pipeline.width))
 
 
     # Create data for database
