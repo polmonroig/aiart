@@ -1,5 +1,10 @@
 "use strict";
 
+var colorPalette = [];
+var colorPositions = [];
+var datapoints = [];
+var datapointsBalanced = [];
+
 // Main function called by response text
 function processImage(responseText){
 
@@ -36,10 +41,10 @@ function processImage(responseText){
 
 
     // Handle response text
-    var colorPalette = responseText["color_palette"];
-    var colorPositions = responseText["color_positions"];
-		var datapoints = responseText["datapoints"];
-		var datapointsBalanced = responseText["datapoints_balanced"];
+    colorPalette = responseText["color_palette"];
+    colorPositions = responseText["color_positions"];
+		datapoints = responseText["datapoints"];
+		datapointsBalanced = responseText["datapoints_balanced"];
 
     // Heatmap UI
 		document.getElementById('heatmap').classList.remove('hidden');
@@ -64,8 +69,9 @@ function processImage(responseText){
 		// Debugging log
 		console.log(datapoints);
 		console.log(datapointsBalanced);
-		console.log(colorPalette.slice(0, 5));
+		console.log(colorPalette);
 		console.log(colorPositions);
+		console.log(responseText["image_data_messages"]);
 
 		// Create heapmap
     const heatmap = new Heatmap(document.getElementById('heatmap'), datapoints);
@@ -101,12 +107,6 @@ function processImage(responseText){
 		for(var i = 0; i<document.getElementsByClassName('color-harmonized').length; i++){
 			document.getElementsByClassName('color-harmonized')[i].classList.add('hidden');
 		}
-
-    // Show tooltips of hex
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-
 
   }, delayInMilliseconds);
 }

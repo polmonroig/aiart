@@ -217,6 +217,8 @@
         height: 40px;
 				border-style: none;
 				background: none;
+				-webkit-transition: all 1s;
+ 				transition: all 1s;
 
 				.colorsample{
 					width: 40px;
@@ -229,6 +231,8 @@
 					position: absolute;
 					left: 0;
 					top: 0;
+					-webkit-transition: all 1s;
+	 				transition: all 1s;
 				}
 
       }
@@ -237,6 +241,8 @@
 				width: 40px;
 				height: 40px;
 				background: none;
+				-webkit-transition: all 1s;
+ 				transition: all 1s;
 
 				.colorsample-arrow{
 					width: 0;
@@ -247,6 +253,8 @@
 					position: absolute;
 					left: 0;
 					bottom: 18px;
+					-webkit-transition: all 1s;
+	 				transition: all 1s;
 				}
 			}
     }
@@ -301,6 +309,19 @@
     button{
     }
   }
+}
+
+.hide-arrow-anim{
+	animation-name: hideArrow;
+	animation-duration: 1.5s;
+	animation-delay: 0s;
+	animation-fill-mode: both;
+}
+.show-arrow-anim{
+	animation-name: showArrow;
+	animation-duration: 0.5s;
+	animation-delay: 0s;
+	animation-fill-mode: both;
 }
 
 .color-main-anim{

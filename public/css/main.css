@@ -8122,6 +8122,22 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
     opacity: 0;
     transform: scale(0.6) rotate(-100deg); } }
 
+@keyframes hideArrow {
+  0% {
+    opacity: 1; }
+  25% {
+    opacity: 0; }
+  75% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
+@keyframes showArrow {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+
 .floated-chat-btn {
   animation-name: jumpUp;
   animation-duration: 0.5s; }
@@ -14283,7 +14299,9 @@ TODO Application
       width: 40px;
       height: 40px;
       border-style: none;
-      background: none; }
+      background: none;
+      -webkit-transition: all 1s;
+      transition: all 1s; }
       .filter-w .colorwheel-container #colorwheel button.colorsample-container .colorsample {
         width: 40px;
         height: 40px;
@@ -14294,12 +14312,16 @@ TODO Application
         background-color: rgba(1, 1, 1, 0);
         position: absolute;
         left: 0;
-        top: 0; }
+        top: 0;
+        -webkit-transition: all 1s;
+        transition: all 1s; }
     .filter-w .colorwheel-container #colorwheel .arrow-container {
       position: absolute;
       width: 40px;
       height: 40px;
-      background: none; }
+      background: none;
+      -webkit-transition: all 1s;
+      transition: all 1s; }
       .filter-w .colorwheel-container #colorwheel .arrow-container .colorsample-arrow {
         width: 0;
         height: 0;
@@ -14308,7 +14330,9 @@ TODO Application
         border-bottom: 55px solid white;
         position: absolute;
         left: 0;
-        bottom: 18px; }
+        bottom: 18px;
+        -webkit-transition: all 1s;
+        transition: all 1s; }
   .filter-w .colorwheel-container #palette {
     height: 202px;
     width: 80px;
@@ -14346,6 +14370,18 @@ TODO Application
   align-items: center;
   justify-content: center;
   margin-top: 32px; }
+
+.hide-arrow-anim {
+  animation-name: hideArrow;
+  animation-duration: 1.5s;
+  animation-delay: 0s;
+  animation-fill-mode: both; }
+
+.show-arrow-anim {
+  animation-name: showArrow;
+  animation-duration: 0.5s;
+  animation-delay: 0s;
+  animation-fill-mode: both; }
 
 .color-main-anim {
   animation-name: fadeUp;

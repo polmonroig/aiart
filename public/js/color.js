@@ -81,7 +81,7 @@ function createColorSamples(colorPalette){
 	// Create arrows
 	for(var i = 0; i < colorPalette.length/2; i++){
 		html += `
-						<div class="arrow-container color-original" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px; -webkit-transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg); transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg)">
+						<div class="arrow-container" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px; -webkit-transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg); transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg)">
 							<div class="colorsample-arrow" style="border-bottom-width: ${rgb2hsv(colorPalette[i])[1]+20}px"></div>
 						</div>
 						`
@@ -90,7 +90,7 @@ function createColorSamples(colorPalette){
 	// Create color circles
 	for(var i = 0; i < colorPalette.length/2; i++){
 		html += `
-						<button class="colorsample-container color-original" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px;" data-placement="top" data-toggle="tooltip" title=${rgb2hex(colorPalette[i])}>
+						<button class="colorsample-container" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px;" data-placement="top" data-toggle="tooltip" title=${rgb2hex(colorPalette[i])}>
 							<div class="colorsample" style="background: ${rgb2hex(colorPalette[i])};"></div>
 						</button>
 							`
@@ -99,6 +99,12 @@ function createColorSamples(colorPalette){
 	//class = "color-harmonized hidden"  Class of harmonized buttons
 
 	document.getElementById("colorwheel").innerHTML = html;
+
+	// Show tooltips of hex
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+
 }
 
 
@@ -135,21 +141,35 @@ function harmonizeButton(){
   document.getElementsByClassName('message-content-color')[0].classList.add('message-fixed');
 
 
-  document.getElementById('colorwheel').classList.add('colorwheel-anim-hide');
+		for(var i = 0; i < colorPalette.length/2; i++){
+			document.getElementsByClassName('colorsample-arrow')[i].classList.add('hide-arrow-anim');
 
-  setTimeout(function() {
-    document.getElementById('colorwheel').classList.remove('colorwheel-anim-hide');
-    document.getElementById('colorwheel').classList.add('colorwheel-anim-show');
+			document.getElementsByClassName('arrow-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i+5])[0]}px;
+																																		 left: ${rgb2posSaturated(colorPalette[i+5])[1]}px;
+																																		 -webkit-transform: rotate(${rgb2hsv(colorPalette[i+5])[0]}deg);
+																																		 transform: rotate(${rgb2hsv(colorPalette[i+5])[0]}deg)
+																																		`
 
-    for(var i = 0; i<document.getElementsByClassName('color-original').length; i++){
-      document.getElementsByClassName('color-original')[i].classList.add('hidden');
-    }
+			document.getElementsByClassName('colorsample-arrow')[i].style = `border-bottom-width: ${rgb2hsv(colorPalette[i+5])[1]+20}px;`
+			document.getElementsByClassName('colorsample-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i+5])[0]}px;
+																																					 left:${rgb2posSaturated(colorPalette[i+5])[1]}px;
+																																					 `
+			document.getElementsByClassName('colorsample-container')[i].title = `${rgb2hex(colorPalette[i+5])}`;
+			document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i+5])};`
 
-    for(var i = 0; i<document.getElementsByClassName('color-harmonized').length; i++){
-      document.getElementsByClassName('color-harmonized')[i].classList.remove('hidden');
-    }
-  }, 200);
+			document.getElementsByClassName('harmonize-btn')[0].disabled = true;
+			document.getElementsByClassName('harmonize-reset-btn')[0].disabled = false;
+		}
+		setTimeout(function() {
+			for(var i = 0; i < colorPalette.length/2; i++){
+				document.getElementsByClassName('colorsample-arrow')[i].classList.remove('hide-arrow-anim');
+			}
+		}, 800);
 
+		// Show tooltips of hex
+		$(document).ready(function(){
+			$('[data-toggle="tooltip"]').tooltip();
+		});
 
 }
 
@@ -161,11 +181,28 @@ function resetHarmonizeButton(){
   document.getElementsByClassName('message-content-color')[0].classList.remove('message-fixed');
   document.getElementById('colorwheel').classList.remove('colorwheel-anim-show');
 
-  for(var i = 0; i<document.getElementsByClassName('color-original').length; i++){
-    document.getElementsByClassName('color-original')[i].classList.remove('hidden');
-  }
+	for(var i = 0; i < colorPalette.length/2; i++){
+		document.getElementsByClassName('colorsample-arrow')[i].classList.add('hide-arrow-anim');
+		document.getElementsByClassName('arrow-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i])[0]}px;
+																																	 left: ${rgb2posSaturated(colorPalette[i])[1]}px;
+																																	 -webkit-transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg);
+																																	 transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg)
+																																	`
 
-  for(var i = 0; i<document.getElementsByClassName('color-harmonized').length; i++){
-    document.getElementsByClassName('color-harmonized')[i].classList.add('hidden');
-  }
+		document.getElementsByClassName('colorsample-arrow')[i].style = `border-bottom-width: ${rgb2hsv(colorPalette[i])[1]+20}px;`
+		document.getElementsByClassName('colorsample-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i])[0]}px;
+																																				 left:${rgb2posSaturated(colorPalette[i])[1]}px;
+																																				 `
+		document.getElementsByClassName('colorsample-container')[i].title = `${rgb2hex(colorPalette[i])}`;
+		document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i])};`
+
+		document.getElementsByClassName('harmonize-btn')[0].disabled = false;
+		document.getElementsByClassName('harmonize-reset-btn')[0].disabled = true;
+	}
+	setTimeout(function() {
+		for(var i = 0; i < colorPalette.length/2; i++){
+			document.getElementsByClassName('colorsample-arrow')[i].classList.remove('hide-arrow-anim');
+		}
+	}, 800);
+
 }
