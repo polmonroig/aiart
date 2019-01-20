@@ -3,12 +3,15 @@ from skimage.future import graph
 import numpy as np
 from .segmentation import Segment, Box
 from .color_mod import ColorGenerator
-
+from .image_utils import image_resize
+from math import sqrt
 
 class BaseTransformer:
     """
     This is the image class representation
     """
+
+    INFINITY = float('inf')
 
     def __init__(self, image):
         """
@@ -53,6 +56,41 @@ class BaseTransformer:
                             'please refer to calculate_colors instead')
 
         return self.palette.get_palette()
+
+    @staticmethod
+    def _eucledian_diff(arr_a, arr_b):
+        if len(arr_a) != len(arr_b):
+            raise Exception("Arrays have different lengths")
+        diff = 0.0
+        for a, b in zip(arr_a, arr_b):
+            diff += (b - a) ** 2
+
+        return sqrt(diff)
+
+    def get_color_positions(self):
+        resize_value = 2
+        reduced_image = image_resize(self.image, width=int(self.width / resize_value))
+        positions = []
+        differences = []
+        for i in range(0, self.palette.n_colors):
+            positions.append([0, 0])
+            differences.append(self.INFINITY)
+        tmp_colors = self.palette.palette_colors.astype(np.float32).tolist()
+        i = 0
+        while i < reduced_image.shape[0]:
+            j = 0
+            while j < reduced_image.shape[1]:
+                im_color = reduced_image[i][j]
+                for k in range(len(tmp_colors)):
+                    diff = self._eucledian_diff(im_color, tmp_colors[k])
+                    if diff < differences[k]:
+                        positions[k][0] = (i * resize_value) / self.height
+                        positions[k][1] = (j * resize_value) / self.width
+                        differences[k] = diff
+                j += 1
+            i += 1
+
+        return positions
 
     def segment(self, compactness=50, n_segments=100,
                 connectivity=1, sigma=500, num_cuts=200):
