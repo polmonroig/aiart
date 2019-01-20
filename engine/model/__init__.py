@@ -33,4 +33,10 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         See logs for full stacktrace.
         """.format(e), 500
 
+    @app.errorhandler(Exception)
+    def base_error(e):
+        return """
+            {}
+            """.format(e), 500
+
     return app

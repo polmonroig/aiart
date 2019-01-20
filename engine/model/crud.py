@@ -1,9 +1,51 @@
+# Load libraries
 from model import storage, database
 from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
 from model.aiartbase.base import BaseTransformer
 from model.aiartbase import image_utils
+from model.aiartbase import error_management as em
 
+# Constants
+MAX_IMAGE_SIZE = 200
+MIN_IMAGE_SIZE = 10
+
+# Global variables
 crud = Blueprint('crud', __name__)
+
+
+def process_image(file_stream, sigma, n_colors):
+
+    image_data_messages = [[], 0]
+
+    # Color Palette
+    image = image_utils.string_to_image(file_stream)
+    if image.shape[0] > MAX_IMAGE_SIZE or image.shape[1] > MAX_IMAGE_SIZE:
+        em.raise_incorrect_size()
+    if image.shape[0] <= MIN_IMAGE_SIZE or image.shape[1] <= MIN_IMAGE_SIZE:
+        em.raise_incorrect_size()
+    image_pipeline = BaseTransformer(image)
+    image_pipeline.calculate_colors(n_colors)
+    color_palette = image_pipeline.get_palette()
+
+    if image_utils.is_monochromatic(color_palette):
+        image_data_messages[2] += 1
+        image_data_messages[0].append("Warning: Image is Monochromatic")
+
+
+    # Image segments
+    image_pipeline.segment(sigma=sigma)
+    segments = image_pipeline.get_segments()
+    a = b = []
+    for seg in segments:
+        a.append((seg.x / image_pipeline.width, seg.y / image_pipeline.height,
+                  seg.get_weight(), seg.get_scale()[0] / image_pipeline.width,
+                  seg.get_scale()[1] / image_pipeline.width))
+
+        b.append((seg.x / image_pipeline.width, seg.y / image_pipeline.height,
+                  seg.get_weight()/2, seg.get_scale()[0] / image_pipeline.width,
+                  seg.get_scale()[1] / image_pipeline.width))
+
+    return color_palette, a, b, image_data_messages
 
 
 def upload_image_file(file, filename, content_type):
@@ -37,34 +79,22 @@ def submit():
 
     # image_url, name = upload_image_file(file_stream, filename, content_type)
 
-    # Color Palette
-    image = image_utils.string_to_image(file_stream)
-    image_pipeline = BaseTransformer(image)
-    image_pipeline.calculate_colors(4)
-    color_palette = image_pipeline.get_palette()
 
-    # Image segments
-    image_pipeline.segment(sigma=500)
-    segments = image_pipeline.get_segments()
+
 
     # Datapoints (x, y, value, radius)
     # where radius, x, y are proportional
     # to the size of the screen
 
-    datapoints = []
-    datapoints_balanced = []
-    for seg in segments:
-        datapoints.append((seg.x / image_pipeline.width, seg.y / image_pipeline.height,
-                           seg.get_weight(), seg.get_scale()[0] / image_pipeline.width,
-                           seg.get_scale()[1] / image_pipeline.width))
-
-        datapoints_balanced.append((seg.x / image_pipeline.width, seg.y / image_pipeline.height,
-                                    seg.get_weight()/2, seg.get_scale()[0] / image_pipeline.width,
-                                    seg.get_scale()[1] / image_pipeline.width))
+    color_palette, datapoints, datapoints_balanced, image_data_messages = process_image(file_stream,
+                                                                                        sigma=500,
+                                                                                        n_colors=5)
 
 
     # Create data for database
-    data = jsonify(color_palette=color_palette, datapoints=datapoints, datapoints_balanced=datapoints_balanced)
+    data = jsonify(color_palette=color_palette, datapoints=datapoints,
+                   datapoints_balanced=datapoints_balanced,
+                   image_data_messages=image_data_messages)
 
     # Post to database
     # database.create(data)
