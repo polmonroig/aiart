@@ -6,7 +6,7 @@ from model.aiartbase import image_utils
 from model.aiartbase import error_management as em
 
 # Constants
-MAX_IMAGE_SIZE = 200
+MAX_IMAGE_SIZE = 500
 MIN_IMAGE_SIZE = 10
 
 # Global variables
@@ -28,7 +28,7 @@ def process_image(file_stream, sigma, n_colors):
     color_palette = image_pipeline.get_palette()
 
     if image_utils.is_monochromatic(color_palette):
-        image_data_messages[2] += 1
+        image_data_messages[1] += 1
         image_data_messages[0].append("Warning: Image is Monochromatic")
 
 
