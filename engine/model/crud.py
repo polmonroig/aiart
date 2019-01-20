@@ -4,6 +4,7 @@ from flask import Blueprint, current_app, redirect, render_template, request, ur
 from model.aiartbase.base import BaseTransformer
 from model.aiartbase import image_utils
 from model.aiartbase import error_management as em
+from numpy import append
 
 # Constants
 MAX_IMAGE_SIZE = 5000
@@ -26,6 +27,7 @@ def process_image(file_stream, sigma, n_colors):
     image_pipeline = BaseTransformer(image)
     image_pipeline.calculate_colors(n_colors)
     color_palette = image_pipeline.get_palette()
+    harmonized_palette = image_pipeline.get_harmonized_palette()
 
     if image_utils.is_monochromatic(color_palette):
         image_data_messages.append("Warning: Image is Monochromatic")
@@ -46,6 +48,7 @@ def process_image(file_stream, sigma, n_colors):
                   seg.get_weight()/2, seg.get_scale()[0] / image_pipeline.width,
                   seg.get_scale()[1] / image_pipeline.width))
 
+    color_palette = append(color_palette, harmonized_palette).reshape(-1, 3).tolist()
     return color_palette, a, b, color_positions, image_data_messages
 
 

@@ -53,7 +53,10 @@ class ColorGenerator:
             self.harmonized_palette = harmonizer.harmonize()
 
     def get_palette(self):
-        return np.append(self.palette_colors, self.harmonized_palette).reshape(-1, 3).tolist()
+        return self.palette_colors
+
+    def get_harmonized_palette(self):
+        return self.harmonized_palette
 
 
 class ColorHarmonizer:
