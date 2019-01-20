@@ -6,7 +6,7 @@ from model.aiartbase import image_utils
 from model.aiartbase import error_management as em
 
 # Constants
-MAX_IMAGE_SIZE = 500
+MAX_IMAGE_SIZE = 5000
 MIN_IMAGE_SIZE = 10
 
 # Global variables

@@ -36,7 +36,7 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
     @app.errorhandler(Exception)
     def base_error(e):
         return """
-            {}
+            Application error: {}
             """.format(e), 500
 
     return app
