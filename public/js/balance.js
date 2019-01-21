@@ -66,7 +66,7 @@ class Heatmap{
 
     var maxValue = 100;
     var gradientImage = this.gradientImage();
-    //heatCtx.filter = `blur(${this.blur*this.canvas.offsetWidth}px)`;
+    //heatCtx.filter = `blur(${this.blur*this.canvas.offsetWidth}px)`; This blur is incompatible with retina display devices
 
     heatCtx.beginPath();
     // Fill Cells
@@ -89,7 +89,7 @@ class Heatmap{
 		 heatCtx.fill();
 
     // Blur Canvas
-    stackBlurCanvasRGBA(this.canvas.id, 0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight, this.blur*this.canvas.offsetWidth);
+    stackBlurCanvasRGBA(this.canvas.id, 0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight, this.blur*this.canvas.offsetWidth); // This blur is compatible with retina display devices
 
     // Map blurred canvas to heatmap
     this.colorize(heatCtx, heatCtx, 3, this.canvas.offsetWidth, this.canvas.offsetHeight, true);
@@ -99,8 +99,8 @@ class Heatmap{
 }
 
 function balanceButton(){
-  document.getElementById('heatmap').classList.add('hidden');
-  document.getElementById('heatmap-balanced').classList.remove('hidden');
+	const heatmapBalanced = new Heatmap(document.getElementById('heatmap'), datapointsBalanced);
+	heatmapBalanced.createHeatmap();
 
   var message = 'Image balanced! added an element on <b>bottom left</b> of canvas';
   setMessage('balance', 'success', message);
@@ -110,8 +110,8 @@ function balanceButton(){
 }
 
 function resetBalanceButton(){
-  document.getElementById('heatmap').classList.remove('hidden');
-  document.getElementById('heatmap-balanced').classList.add('hidden');
+	const heatmap = new Heatmap(document.getElementById('heatmap'), datapoints);
+	heatmap.createHeatmap();
 
   var message = 'Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!';
   setMessage('balance', 'wrong', message);

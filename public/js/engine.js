@@ -9,18 +9,23 @@ var datapointsBalanced = [];
 function processImage(responseText){
 
   // Reset visibility of wrappers for initial animation
-  document.getElementsByClassName('balance-index')[0].classList.remove('balance-main-anim');
+	document.getElementsByClassName('overview-index')[0].classList.remove('overview-main-anim');
+	document.getElementsByClassName('overview-index')[0].classList.add('overview-main-anim-hide');
+	document.getElementsByClassName('balance-index')[0].classList.remove('balance-main-anim');
+	document.getElementsByClassName('balance-index')[0].classList.add('balance-main-anim-hide');
   document.getElementsByClassName('color-index')[0].classList.remove('color-main-anim');
-  document.getElementsByClassName('balance-index')[0].classList.add('balance-main-anim-hide');
-  document.getElementsByClassName('color-index')[0].classList.add('color-main-anim-hide');
+	document.getElementsByClassName('color-index')[0].classList.add('color-main-anim-hide');
+
   document.getElementById('upload-wrapper').classList.add('upload-main-anim-hide');
 
 	// Delay functions to allow animation to complete
   var delayInMilliseconds = 500;
   setTimeout(function() {
 
-    document.getElementById('color-wrapper').classList.add('hidden');
-    document.getElementById('balance-wrapper').classList.add('hidden');
+		document.getElementById('overview-wrapper').classList.add('hidden');
+		document.getElementById('balance-wrapper').classList.add('hidden');
+		document.getElementById('color-wrapper').classList.add('hidden');
+    document.getElementsByClassName('overview-index')[0].classList.remove('overview-main-anim-hide');
     document.getElementsByClassName('balance-index')[0].classList.remove('balance-main-anim-hide');
     document.getElementsByClassName('color-index')[0].classList.remove('color-main-anim-hide');
 
@@ -28,13 +33,18 @@ function processImage(responseText){
       document.getElementsByClassName('dropzone-menu')[0].classList.remove('hidden');
       document.getElementsByClassName('dropzone-menu')[1].classList.remove('hidden');
       document.getElementById('upload-wrapper').classList.add('hidden');
+			document.getElementById('overview-wrapper').classList.remove('hidden');
+			document.getElementById('balance-wrapper').classList.remove('hidden');
       document.getElementById('color-wrapper').classList.remove('hidden');
-      document.getElementById('balance-wrapper').classList.remove('hidden');
+      document.getElementsByClassName('overview-index')[0].classList.add('overview-main-anim');
       document.getElementsByClassName('balance-index')[0].classList.add('balance-main-anim');
       document.getElementsByClassName('color-index')[0].classList.add('color-main-anim');
     }else{
-      document.getElementById('color-wrapper').classList.remove('hidden');
+      document.getElementById('overview-wrapper').classList.remove('hidden');
+			document.getElementById('balance-wrapper').classList.remove('hidden');
+			document.getElementById('color-wrapper').classList.remove('hidden');
       document.getElementById('balance-wrapper').classList.remove('hidden');
+      document.getElementsByClassName('overview-index')[0].classList.add('overview-main-anim');
       document.getElementsByClassName('balance-index')[0].classList.add('balance-main-anim');
       document.getElementsByClassName('color-index')[0].classList.add('color-main-anim');
     }
@@ -47,23 +57,18 @@ function processImage(responseText){
 		datapointsBalanced = responseText["datapoints_balanced"];
 
     // Heatmap UI
-		document.getElementById('heatmap').classList.remove('hidden');
-		document.getElementById('heatmap-balanced').classList.remove('hidden');
-
-
+		document.getElementsByClassName('balance-btn')[0].disabled = false;
+		document.getElementsByClassName('balance-reset-btn')[0].disabled = true;
 		var message = 'Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!';
 		setMessage('balance', 'wrong', message);
 
     document.getElementById('heatmap').classList.remove('hidden');
-    document.getElementById('heatmap-balanced').classList.remove('hidden');
 
 		// Set heatmap canvas inital size
 		var imageWidth = document.getElementById('balance-image').getElementsByTagName('img')[0].clientWidth;
 		var imageHeight = document.getElementById('balance-image').getElementsByTagName('img')[0].clientHeight;
     document.getElementById('heatmap').width = imageWidth;
     document.getElementById('heatmap').height = imageHeight;
-    document.getElementById('heatmap-balanced').width = imageWidth;
-    document.getElementById('heatmap-balanced').height = imageHeight;
 
 		// Debugging log
 		console.log(datapoints);
@@ -75,10 +80,6 @@ function processImage(responseText){
 		// Create heapmap
     const heatmap = new Heatmap(document.getElementById('heatmap'), datapoints);
     heatmap.createHeatmap();
-
-    const heatmapBalanced = new Heatmap(document.getElementById('heatmap-balanced'), datapointsBalanced);
-    heatmapBalanced.createHeatmap();
-		document.getElementById('heatmap-balanced').classList.add('hidden');
 
 		// Set image colorsamples canvas inital size
 		var colorImageWidth = document.getElementById('color-image').getElementsByTagName('img')[0].clientWidth;
@@ -92,6 +93,8 @@ function processImage(responseText){
     console.log("Color processed");
 
 		// Color UI
+		document.getElementsByClassName('harmonize-btn')[0].disabled = false;
+		document.getElementsByClassName('harmonize-reset-btn')[0].disabled = true;
 		var message = 'The color palette of the image is not ideal! check the harmonized verison to improve it';
 		setMessage('color', 'wrong', message);
 
@@ -99,7 +102,7 @@ function processImage(responseText){
   }, delayInMilliseconds);
 }
 
-//Load image
+//Load image from user
 function showImage(file, displayArea){
   var displayArea = document.getElementById(displayArea);
   var imageType = /image.*/;
@@ -120,9 +123,8 @@ function showImage(file, displayArea){
   }
 }
 
+// Sets the first found class element to the desired message
 function setMessage(section, type, message){
-
-	// Sets the first found class element to the desired message
 
 	document.getElementsByClassName('message-content-' + section)[0].innerHTML = message;
 	document.getElementsByClassName('message-content-' + section)[0].classList.add('message-'+ type == 'message-wrong' ? 'message-wrong' : 'message-success');

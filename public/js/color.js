@@ -78,10 +78,12 @@ function rgb2posSaturated(rgb){
 function createColorSamples(colorPalette){
 	var html = "";
 
+	// Setting onclick functionality to both arrow and button because Firefox does not detect the click of button properly
+
 	// Create arrows
 	for(var i = 0; i < colorPalette.length/2; i++){
 		html += `
-						<div class="arrow-container" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px; -webkit-transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg); transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg)">
+						<div class="arrow-container" title="${rgb2hex(colorPalette[i])}" onclick="copyToClipboard(this.title, ${i})" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px; -webkit-transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg); transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg)">
 							<div class="colorsample-arrow" style="border-bottom-width: ${rgb2hsv(colorPalette[i])[1]+20}px"></div>
 						</div>
 						`
@@ -90,20 +92,18 @@ function createColorSamples(colorPalette){
 	// Create color circles
 	for(var i = 0; i < colorPalette.length/2; i++){
 		html += `
-						<button class="colorsample-container" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px;" data-placement="top" data-toggle="tooltip" title=${rgb2hex(colorPalette[i])}>
+						<button id="colorsample-${i}" class="colorsample-container" value="${rgb2hex(colorPalette[i])}" onclick="copyToClipboard(this.value, ${i})" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px;">
 							<div class="colorsample" style="background: ${rgb2hex(colorPalette[i])};"></div>
 						</button>
 							`
 	}
 
-	//class = "color-harmonized hidden"  Class of harmonized buttons
+	// Create color tooltips
+	for(var i = 0; i < colorPalette.length/2; i++){
+		html += `<div id="tooltip-${i}" class="tooltip-hex" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px;">${rgb2hex(colorPalette[i])}</div>`
+	}
 
 	document.getElementById("colorwheel").innerHTML = html;
-
-	// Show tooltips of hex
-	$(document).ready(function(){
-		$('[data-toggle="tooltip"]').tooltip();
-	});
 
 }
 
@@ -152,7 +152,13 @@ function harmonizeButton(){
 			document.getElementsByClassName('colorsample-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i+5])[0]}px;
 																																					 left:${rgb2posSaturated(colorPalette[i+5])[1]}px;
 																																					 `
-			document.getElementsByClassName('colorsample-container')[i].title = `${rgb2hex(colorPalette[i+5])}`;
+
+			document.getElementsByClassName('tooltip-hex')[i].style = `top: ${rgb2posSaturated(colorPalette[i+5])[0]}px;
+																																					 left:${rgb2posSaturated(colorPalette[i+5])[1]}px;
+																																					 `
+			document.getElementsByClassName('tooltip-hex')[i].innerHTML = `${rgb2hex(colorPalette[i+5])}`;
+			document.getElementsByClassName('colorsample-container')[i].value = `${rgb2hex(colorPalette[i+5])}`;
+			document.getElementsByClassName('arrow-container')[i].title = `${rgb2hex(colorPalette[i+5])}`;
 			document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i+5])};`
 
 			document.getElementsByClassName('harmonize-btn')[0].disabled = true;
@@ -163,11 +169,6 @@ function harmonizeButton(){
 				document.getElementsByClassName('colorsample-arrow')[i].classList.remove('hide-arrow-anim');
 			}
 		}, 800);
-
-		// Show tooltips of hex
-		$(document).ready(function(){
-			$('[data-toggle="tooltip"]').tooltip();
-		});
 
 }
 
@@ -189,7 +190,12 @@ function resetHarmonizeButton(){
 		document.getElementsByClassName('colorsample-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i])[0]}px;
 																																				 left:${rgb2posSaturated(colorPalette[i])[1]}px;
 																																				 `
-		document.getElementsByClassName('colorsample-container')[i].title = `${rgb2hex(colorPalette[i])}`;
+		document.getElementsByClassName('tooltip-hex')[i].style = `top: ${rgb2posSaturated(colorPalette[i])[0]}px;
+																															 left:${rgb2posSaturated(colorPalette[i])[1]}px;
+																															`
+		document.getElementsByClassName('tooltip-hex')[i].innerHTML = `${rgb2hex(colorPalette[i])}`;
+		document.getElementsByClassName('colorsample-container')[i].value = `${rgb2hex(colorPalette[i])}`;
+		document.getElementsByClassName('arrow-container')[i].title = `${rgb2hex(colorPalette[i])}`;
 		document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i])};`
 
 		document.getElementsByClassName('harmonize-btn')[0].disabled = false;
@@ -199,6 +205,28 @@ function resetHarmonizeButton(){
 		for(var i = 0; i < colorPalette.length/2; i++){
 			document.getElementsByClassName('colorsample-arrow')[i].classList.remove('hide-arrow-anim');
 		}
+	}, 800);
+
+}
+
+// Copies passed value to the clipboard, it creates a temporary input
+function copyToClipboard(value, elementIndex){
+
+	var tempInput = document.createElement("input");
+	tempInput.style = "position: absolute; left: -1000px; top: -1000px";
+	tempInput.value = value;
+	document.body.appendChild(tempInput);
+	tempInput.select();
+	document.execCommand("copy");
+	document.body.removeChild(tempInput);
+	console.log("Copied: "+value);
+	var tooltipValue = document.getElementById('tooltip-'+elementIndex).innerHTML;
+	document.getElementById('tooltip-'+elementIndex).innerHTML = 'Copied to clipboard!';
+	document.getElementById('colorsample-'+elementIndex).classList.add('colorsample-clicked');
+
+	setTimeout(function() {
+		document.getElementById('tooltip-'+elementIndex).innerHTML = tooltipValue;
+		document.getElementById('colorsample-'+elementIndex).classList.remove('colorsample-clicked');
 	}, 800);
 
 }

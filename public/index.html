@@ -305,22 +305,8 @@
   </div>
 </div>
 <!--END - Upload--><!--START - Overview-->
-<div class="element-wrapper" style="display: none">
-  <div class="user-profile compact">
-    <div class="up-head-w" style="background-image:url(img/profile_bg1.jpg)">
-      <div class="up-social">
-        <a href="#"><i class="os-icon os-icon-twitter"></i></a><a href="#"><i class="os-icon os-icon-facebook"></i></a>
-      </div>
-      <div class="up-main-info">
-        <h2 class="up-header">
-          Overview
-        </h2>
-        <h6 class="up-sub-header">
-          Results of aiart algorithm
-        </h6>
-      </div>
-      <svg class="decor" width="842px" height="219px" viewBox="0 0 842 219" preserveAspectRatio="xMaxYMax meet" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="translate(-381.000000, -362.000000)" fill="#FFFFFF"><path class="decor-path" d="M1223,362 L1223,581 L381,581 C868.912802,575.666667 1149.57947,502.666667 1223,362 Z"></path></g></svg>
-    </div>
+<div class="element-wrapper hidden" id="overview-wrapper">
+  <div class="compact overview-index">
     <div class="up-controls">
       <div class="row">
         <div class="col-sm-6">
@@ -418,7 +404,7 @@
   <div class="balance-index">
     <div class="balance-content-w">
       <div class="balance-heatmap">
-        <canvas id="heatmap"></canvas><canvas id="heatmap-balanced"></canvas>
+        <canvas id="heatmap"></canvas>
         <div class="balance-image" id="balance-image"></div>
       </div>
       <div class="balance-control">
@@ -488,6 +474,8 @@
             <div class="colorwheel-container">
               <div id="colorwheel"></div>
             </div>
+          </div>
+          <div class="filter-w">
             <div class="button-div">
               <button class="mr-2 mb-2 btn btn-primary btn-rounded colorwheel-btn harmonize-btn" onClick="harmonizeButton()" type="button"> Harmonize Palette</button><button class="mr-2 mb-2 btn btn-outline-primary btn-rounded colorwheel-btn harmonize-reset-btn" disabled type="button" onClick="resetHarmonizeButton()">Reset</button>
             </div>
