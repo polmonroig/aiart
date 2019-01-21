@@ -136,9 +136,7 @@ function createCanvasPalette(canvas, colorPalette, colorPositions, radius=0.05){
 function harmonizeButton(){
 
   var message = 'Color harmonized! check the new color palette and improve your image.';
-  document.getElementsByClassName('message-content-color')[0].innerHTML = message;
-  document.getElementsByClassName('message-content-color')[0].classList.remove('message-wrong');
-  document.getElementsByClassName('message-content-color')[0].classList.add('message-fixed');
+  setMessage('color', 'success', message);
 
 
 		for(var i = 0; i < colorPalette.length/2; i++){
@@ -176,9 +174,7 @@ function harmonizeButton(){
 function resetHarmonizeButton(){
 
   var message = 'The color palette of the image is not ideal! check the harmnized verison to improve it';
-  document.getElementsByClassName('message-content-color')[0].innerHTML = message;
-  document.getElementsByClassName('message-content-color')[0].classList.add('message-wrong');
-  document.getElementsByClassName('message-content-color')[0].classList.remove('message-fixed');
+	setMessage('color', 'wrong', message);
   document.getElementById('colorwheel').classList.remove('colorwheel-anim-show');
 
 	for(var i = 0; i < colorPalette.length/2; i++){

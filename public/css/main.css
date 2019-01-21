@@ -16049,7 +16049,7 @@ Contents:
     transition: all 0.5s;
     background-color: #fff5e7;
     color: #594939; }
-  .message .message-fixed {
+  .message .message-success {
     transition: all 0.5s;
     background-color: #e8f6ff;
     color: #2A4E7F; }

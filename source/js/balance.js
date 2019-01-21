@@ -103,9 +103,10 @@ function balanceButton(){
   document.getElementById('heatmap-balanced').classList.remove('hidden');
 
   var message = 'Image balanced! added an element on <b>bottom left</b> of canvas';
-  document.getElementsByClassName('message-content-balance')[0].innerHTML = message;
-  document.getElementsByClassName('message-content-balance')[0].classList.remove('message-wrong');
-  document.getElementsByClassName('message-content-balance')[0].classList.add('message-fixed');
+  setMessage('balance', 'success', message);
+
+	document.getElementsByClassName('balance-btn')[0].disabled = true;
+	document.getElementsByClassName('balance-reset-btn')[0].disabled = false;
 }
 
 function resetBalanceButton(){
@@ -113,9 +114,10 @@ function resetBalanceButton(){
   document.getElementById('heatmap-balanced').classList.add('hidden');
 
   var message = 'Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!';
-  document.getElementsByClassName('message-content-balance')[0].innerHTML = message;
-  document.getElementsByClassName('message-content-balance')[0].classList.add('message-wrong');
-  document.getElementsByClassName('message-content-balance')[0].classList.remove('message-fixed');
+  setMessage('balance', 'wrong', message);
+
+	document.getElementsByClassName('balance-btn')[0].disabled = false;
+	document.getElementsByClassName('balance-reset-btn')[0].disabled = true;
 }
 
 

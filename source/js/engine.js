@@ -50,10 +50,9 @@ function processImage(responseText){
 		document.getElementById('heatmap').classList.remove('hidden');
 		document.getElementById('heatmap-balanced').classList.remove('hidden');
 
+
 		var message = 'Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!';
-		document.getElementsByClassName('message-content-balance')[0].innerHTML = message;
-		document.getElementsByClassName('message-content-balance')[0].classList.add('message-wrong');
-		document.getElementsByClassName('message-content-balance')[0].classList.remove('message-fixed');
+		setMessage('balance', 'wrong', message);
 
     document.getElementById('heatmap').classList.remove('hidden');
     document.getElementById('heatmap-balanced').classList.remove('hidden');
@@ -93,7 +92,8 @@ function processImage(responseText){
     console.log("Color processed");
 
 		// Color UI
-		resetHarmonizeButton();
+		var message = 'The color palette of the image is not ideal! check the harmonized verison to improve it';
+		setMessage('color', 'wrong', message);
 
 
   }, delayInMilliseconds);
@@ -118,4 +118,13 @@ function showImage(file, displayArea){
       }
       reader.readAsDataURL(file);
   }
+}
+
+function setMessage(section, type, message){
+
+	// Sets the first found class element to the desired message
+
+	document.getElementsByClassName('message-content-' + section)[0].innerHTML = message;
+	document.getElementsByClassName('message-content-' + section)[0].classList.add('message-'+ type == 'message-wrong' ? 'message-wrong' : 'message-success');
+	document.getElementsByClassName('message-content-' + section)[0].classList.remove('message-' + type == 'message-wrong' ? 'message-success' : 'message-wrong');
 }
