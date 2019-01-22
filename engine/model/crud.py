@@ -18,8 +18,7 @@ def process_image(file_stream, sigma, n_colors):
 
     messages = {"error": {"composition": [], "color": []},
                 "warning": {"composition": [], "color": []},
-                "success": {"composition": [], "color": []},
-                "size": [0, 0, 0]}
+                "success": {"composition": [], "color": []}}
 
     # Color Palette
     image = image_utils.string_to_image(file_stream)
