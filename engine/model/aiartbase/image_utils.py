@@ -35,6 +35,13 @@ def image_resize(self, width=None, height=None, inter=cv2.INTER_AREA):
     return self
 
 
+def composition_level(x):
+    if x <= 2000:
+        return 100
+    else:
+        return 100 / (x - 2000)**(1/16)
+
+
 def is_monochromatic(pal):
     tmp = hsv_palette(pal)
     low_sat = True

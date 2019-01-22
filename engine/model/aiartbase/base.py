@@ -5,6 +5,8 @@ from .segmentation import Segment, Box
 from .color_mod import ColorGenerator
 from .image_utils import image_resize
 from math import sqrt
+from .image_utils import composition_level
+
 
 class BaseTransformer:
     """
@@ -36,6 +38,8 @@ class BaseTransformer:
         self.palette = None
 
         self.n_segments = 0
+
+        self.balance = 0
 
     def calculate_colors(self, n_colors):
         """
@@ -136,17 +140,25 @@ class BaseTransformer:
                 c = labels[i][j]
                 if boxes.get(c) is None:
                     boxes[c] = (Box(self.height, self.width))
-                boxes[c].add([j, i])
+                boxes[c].add([j, i], self.image[i, j])
 
         self.segments = []
+        force = {'x': 0, 'y': 0, 'mod': 0}
         for b in boxes:
             if boxes[b].max != [self.height, self.width] and boxes[b].min != [0, 0]:
                 self.segments.append(Segment(boxes[b]))
-
+                w = boxes[b].weight
+                force['x'] += w['x']
+                force['y'] += w['y']
         self.n_segments = len(self.segments)
+        force['mod'] = sqrt(force['x'] ** 2 + force['y'] ** 2)
+        self.balance = composition_level(force['mod'])
 
     def get_segments(self):
         if self.segments is None:
             raise Exception('Segments are not set '
                             'please refer to segment instead')
         return self.segments
+
+    def composition(self):
+        return self.balance

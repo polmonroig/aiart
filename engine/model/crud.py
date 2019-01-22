@@ -6,9 +6,6 @@ from model.aiartbase import image_utils
 from model.aiartbase import error_management as em
 from numpy import append
 
-# Constants
-MAX_IMAGE_SIZE = 5000
-MIN_IMAGE_SIZE = 10
 
 # Global variables
 crud = Blueprint('crud', __name__)
@@ -21,9 +18,9 @@ def process_image(file_stream, sigma, n_colors):
 
     # Color Palette
     image = image_utils.string_to_image(file_stream)
-    if image.shape[0] > MAX_IMAGE_SIZE or image.shape[1] > MAX_IMAGE_SIZE:
+    if image.shape[0] > em.MAX_IMAGE_SIZE or image.shape[1] > em.MAX_IMAGE_SIZE:
         em.raise_incorrect_size()
-    if image.shape[0] <= MIN_IMAGE_SIZE or image.shape[1] <= MIN_IMAGE_SIZE:
+    if image.shape[0] <= em.MIN_IMAGE_SIZE or image.shape[1] <= em.MIN_IMAGE_SIZE:
         em.raise_incorrect_size()
     image_pipeline = BaseTransformer(image)
     image_pipeline.calculate_colors(n_colors)
@@ -56,7 +53,9 @@ def process_image(file_stream, sigma, n_colors):
         messages['composition']['type'] = 'error'
         messages['composition']['message'] = em.NO_SEGMENTS
 
-    return color_palette, a, b, color_positions, messages
+    score = [int(image_pipeline.composition()), 0]
+
+    return color_palette, a, b, color_positions, messages, score
 
 
 def upload_image_file(file, filename, content_type):
@@ -97,14 +96,14 @@ def submit():
     # where radius, x, y are proportional
     # to the size of the screen
 
-    color_palette, datapoints, datapoints_balanced, color_positions, messages = \
+    color_palette, datapoints, datapoints_balanced, color_positions, messages, score = \
         process_image(file_stream, sigma=500, n_colors=5)
 
 
     # Create data for database
     data = jsonify(color_palette=color_palette, datapoints=datapoints,
                    datapoints_balanced=datapoints_balanced,
-                   messages=messages,
+                   messages=messages, score=score,
                    color_positions=color_positions)
 
     # Post to database
