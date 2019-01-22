@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from .shared_variables import saturation_margin, hue_margin
 
 
 def string_to_image(file_stream):
@@ -36,13 +37,10 @@ def image_resize(self, width=None, height=None, inter=cv2.INTER_AREA):
 
 def is_monochromatic(pal):
     tmp = hsv_palette(pal)
-    hue_margin = 35
     low_sat = True
     low_hue = True
-    sat_margin = 50
     for i, palette_color in enumerate(tmp):
-        print(palette_color[1])
-        if palette_color[1] > sat_margin:
+        if palette_color[1] > saturation_margin:
             low_sat = False
         for j, cmp_palette_color in enumerate(tmp):
             if i != j:

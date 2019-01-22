@@ -5,6 +5,7 @@ from model.aiartbase.base import BaseTransformer
 from model.aiartbase import image_utils
 from model.aiartbase import error_management as em
 from numpy import append
+from model.aiartbase.shared_variables import MONOCHROMATIC, NO_SEGMENTS
 
 # Constants
 MAX_IMAGE_SIZE = 5000
@@ -32,7 +33,7 @@ def process_image(file_stream, sigma, n_colors):
     harmonized_palette = image_pipeline.get_harmonized_palette()
 
     if image_utils.is_monochromatic(color_palette):
-        messages['warning']['color'].append("Warning: image is monochromatic")
+        messages['error']['color'].append(MONOCHROMATIC)
 
     color_positions = image_pipeline.get_color_positions()
 
@@ -51,6 +52,10 @@ def process_image(file_stream, sigma, n_colors):
                   seg.get_scale()[1] / image_pipeline.width))
 
     color_palette = append(color_palette, harmonized_palette).reshape(-1, 3).tolist()
+
+    if image_pipeline.n_segments == 0:
+        messages['error']['composition'].append(NO_SEGMENTS)
+
     return color_palette, a, b, color_positions, messages
 
 

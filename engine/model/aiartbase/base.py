@@ -35,6 +35,8 @@ class BaseTransformer:
         # image Palette
         self.palette = None
 
+        self.n_segments = 0
+
     def calculate_colors(self, n_colors):
         """
         Returns an instance of the palette class
@@ -140,6 +142,8 @@ class BaseTransformer:
         for b in boxes:
             if boxes[b].max != [self.height, self.width] and boxes[b].min != [0, 0]:
                 self.segments.append(Segment(boxes[b]))
+
+        self.n_segments = len(self.segments)
 
     def get_segments(self):
         if self.segments is None:
