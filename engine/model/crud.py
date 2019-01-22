@@ -5,6 +5,7 @@ from model.aiartbase.base import BaseTransformer
 from model.aiartbase import image_utils
 from model.aiartbase import error_management as em
 from numpy import append
+from random import randint
 
 
 # Global variables
@@ -14,7 +15,7 @@ crud = Blueprint('crud', __name__)
 def process_image(file_stream, sigma, n_colors):
 
     messages = {"composition": {"type": 'success', "message": em.COMPOSITION_SUCCESS},
-                "color": {"type": 'warning', "message": em.TEST_WARNING}}
+                "color": {"type": 'warning', "message": em.COLOR_WARNING}}
 
     # Color Palette
     image = image_utils.string_to_image(file_stream)
@@ -53,7 +54,7 @@ def process_image(file_stream, sigma, n_colors):
         messages['composition']['type'] = 'error'
         messages['composition']['message'] = em.NO_SEGMENTS
 
-    score = [int(image_pipeline.composition()), 0]
+    score = [int(image_pipeline.composition()), randint(5, 70)]
 
     return color_palette, a, b, color_positions, messages, score
 
