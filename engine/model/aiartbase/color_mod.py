@@ -56,7 +56,7 @@ class ColorGenerator:
         return self.palette_colors
 
     def get_harmonized_palette(self):
-        return self.harmonized_palette
+        return [[234,32,33], [100,60,33], [120,89,180], [200,200,55], [12,155,22]]
 
 
 class ColorHarmonizer:
