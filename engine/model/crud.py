@@ -16,7 +16,10 @@ crud = Blueprint('crud', __name__)
 
 def process_image(file_stream, sigma, n_colors):
 
-    image_data_messages = []
+    messages = {"error": {"composition": [], "color": []},
+                "warning": {"composition": [], "color": []},
+                "success": {"composition": [], "color": []},
+                "size": [0, 0, 0]}
 
     # Color Palette
     image = image_utils.string_to_image(file_stream)
@@ -30,7 +33,7 @@ def process_image(file_stream, sigma, n_colors):
     harmonized_palette = image_pipeline.get_harmonized_palette()
 
     if image_utils.is_monochromatic(color_palette):
-        image_data_messages.append("Warning: Image is Monochromatic")
+        messages['color']['warning'].append("Warning: Image is Monochromatic")
 
     color_positions = image_pipeline.get_color_positions()
 
@@ -49,7 +52,7 @@ def process_image(file_stream, sigma, n_colors):
                   seg.get_scale()[1] / image_pipeline.width))
 
     color_palette = append(color_palette, harmonized_palette).reshape(-1, 3).tolist()
-    return color_palette, a, b, color_positions, image_data_messages
+    return color_palette, a, b, color_positions, messages
 
 
 def upload_image_file(file, filename, content_type):
@@ -90,14 +93,14 @@ def submit():
     # where radius, x, y are proportional
     # to the size of the screen
 
-    color_palette, datapoints, datapoints_balanced, color_positions, image_data_messages = \
+    color_palette, datapoints, datapoints_balanced, color_positions, messages = \
         process_image(file_stream, sigma=500, n_colors=5)
 
 
     # Create data for database
     data = jsonify(color_palette=color_palette, datapoints=datapoints,
                    datapoints_balanced=datapoints_balanced,
-                   image_data_messages=image_data_messages,
+                   messages=messages,
                    color_positions=color_positions)
 
     # Post to database
