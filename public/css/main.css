@@ -16084,7 +16084,7 @@ Contents:
     animation-fill-mode: both; }
     .message .message-content-color b {
       font-weight: 700; }
-  .message .message-wrong {
+  .message .message-warning {
     transition: all 0.5s;
     background-color: #fff5e7;
     color: #594939; }

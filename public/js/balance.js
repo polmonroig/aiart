@@ -107,6 +107,8 @@ function balanceButton(){
 
 	document.getElementsByClassName('balance-btn')[0].disabled = true;
 	document.getElementsByClassName('balance-reset-btn')[0].disabled = false;
+
+	setScore('balance', score[0], 100);
 }
 
 function resetBalanceButton(){
@@ -114,10 +116,12 @@ function resetBalanceButton(){
 	heatmap.createHeatmap();
 
   var message = 'Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!';
-  setMessage('balance', 'wrong', message);
+  setMessage('balance', 'warning', message);
 
 	document.getElementsByClassName('balance-btn')[0].disabled = false;
 	document.getElementsByClassName('balance-reset-btn')[0].disabled = true;
+
+	setScore('balance', 100, score[0]);
 }
 
 

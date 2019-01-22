@@ -39,8 +39,9 @@ def is_monochromatic(pal):
     hue_margin = 35
     low_sat = True
     low_hue = True
-    sat_margin = 5
+    sat_margin = 50
     for i, palette_color in enumerate(tmp):
+        print(palette_color[1])
         if palette_color[1] > sat_margin:
             low_sat = False
         for j, cmp_palette_color in enumerate(tmp):

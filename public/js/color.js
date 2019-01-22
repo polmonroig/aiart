@@ -170,12 +170,13 @@ function harmonizeButton(){
 			}
 		}, 800);
 
+		setScore('color', score[1], 100);
 }
 
 function resetHarmonizeButton(){
 
   var message = 'The color palette of the image is not ideal! check the harmnized verison to improve it';
-	setMessage('color', 'wrong', message);
+	setMessage('color', 'warning', message);
   document.getElementById('colorwheel').classList.remove('colorwheel-anim-show');
 
 	for(var i = 0; i < colorPalette.length/2; i++){
@@ -207,6 +208,7 @@ function resetHarmonizeButton(){
 		}
 	}, 800);
 
+	setScore('color', 100, score[1]);
 }
 
 // Copies passed value to the clipboard, it creates a temporary input
