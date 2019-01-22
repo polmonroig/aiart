@@ -55,6 +55,9 @@ def process_image(file_stream, sigma, n_colors):
         messages['composition']['message'] = em.NO_SEGMENTS
 
     score = [int(image_pipeline.composition()), randint(5, 70)]
+    if score[0] < 100 and  messages['composition']['type'] != 'error':
+        messages['composition']['type'] = 'warning'
+        messages['composition']['type'] = em.COMPOSITION_WARNING
 
     return color_palette, a, b, color_positions, messages, score
 
