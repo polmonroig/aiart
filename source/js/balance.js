@@ -102,8 +102,7 @@ function balanceButton(){
 	const heatmapBalanced = new Heatmap(document.getElementById('heatmap'), datapointsBalanced);
 	heatmapBalanced.createHeatmap();
 
-  var message = 'Image balanced! added an element on <b>bottom left</b> of canvas';
-  setMessage('balance', 'success', message);
+  setMessage('balance', 'success', messageList[7]);
 
 	document.getElementsByClassName('balance-btn')[0].disabled = true;
 	document.getElementsByClassName('balance-reset-btn')[0].disabled = false;
@@ -115,8 +114,7 @@ function resetBalanceButton(){
 	const heatmap = new Heatmap(document.getElementById('heatmap'), datapoints);
 	heatmap.createHeatmap();
 
-  var message = 'Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!';
-  setMessage('balance', 'warning', message);
+  setMessage('balance',messages['composition']['type'], messageList[messages['composition']['message']]);
 
 	document.getElementsByClassName('balance-btn')[0].disabled = false;
 	document.getElementsByClassName('balance-reset-btn')[0].disabled = true;
