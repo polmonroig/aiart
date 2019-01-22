@@ -9,18 +9,18 @@
 					.filters-header
 			 			h4 Balance
 			 			.reset-filters
-							.value.balance-score 75%
+							.value.balance-score 0%
 
 					.filter-w
 						.message
 							.message-content-w
-								.message-content-balance class="message-warning" Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!
+								.message-content-balance class="message-warning"
 						h6.filter-header Image overlay
 						.filter-body
 							.slider
 								input.overlay-slider type="text"/
 
-					.filter-w
+					.filter-w.button-balance-w
 						.button-div
 							button.mr-2.mb-2.btn.btn-primary.btn-rounded.colorwheel-btn.balance-btn type="button" onClick="balanceButton()" Balance Composition
 							<button class="mr-2 mb-2 btn btn-outline-primary btn-rounded colorwheel-btn balance-reset-btn" disabled type="button" onClick="resetBalanceButton()"> Reset</button>

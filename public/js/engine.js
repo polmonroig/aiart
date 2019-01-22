@@ -7,6 +7,18 @@ var datapointsBalanced = [];
 var messages = [];
 var score = [];
 
+var messageList = [
+	'Congratulations! the color palette of your image is harmonic.',
+	'Great! The composition of your image is balanced.',
+	'Your image is monocromatic (or almost) so the color palette cannot be evaluated!',
+	'The segmentation algorithm did not find any identifieable points of attention in your image.',
+	'The segmentation algorithm found to many areas of attention in your image.',
+	'The color palette of the image is not ideal! check the harmonized verison to improve it.',
+	'Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!',
+	'Image balanced! added an element on your canvas',
+	'Color harmonized! check the new color palette and improve your image.',
+	];
+
 // Main function called by response text
 function processImage(responseText){
 
@@ -57,25 +69,10 @@ function processImage(responseText){
     colorPositions = responseText["color_positions"];
 		datapoints = responseText["datapoints"];
 		datapointsBalanced = responseText["datapoints_balanced"];
-		messages = responseText["image_data_messages"];
+		messages = responseText["messages"];
 		score = [70, 56];
 
-		setScore('balance', score[0]);
-		setScore('color', score[1]);
-
-    // Heatmap UI
-		document.getElementsByClassName('balance-btn')[0].disabled = false;
-		document.getElementsByClassName('balance-reset-btn')[0].disabled = true;
-		var message = 'Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!';
-		setMessage('balance', 'warning', message);
-
-    document.getElementById('heatmap').classList.remove('hidden');
-
-		// Set heatmap canvas inital size
-    document.getElementById('heatmap').width = document.getElementById('balance-image').getElementsByTagName('img')[0].clientWidth;
-    document.getElementById('heatmap').height = document.getElementById('balance-image').getElementsByTagName('img')[0].clientHeight;
-
-		// Debugging log
+		//Debugging log
 		console.log(datapoints);
 		console.log(datapointsBalanced);
 		console.log(colorPalette);
@@ -83,23 +80,64 @@ function processImage(responseText){
 		console.log(messages);
 		console.log(score);
 
-		// Create heapmap
-    const heatmap = new Heatmap(document.getElementById('heatmap'), datapoints);
-    heatmap.createHeatmap();
+		// Check if there are no balance error messages
+		if(messages['composition']['type'] != 'error'){
 
-		// Set image colorsamples canvas inital size
-		document.getElementById('color-image-samples').width = document.getElementById('color-image').getElementsByTagName('img')[0].clientWidth;
-		document.getElementById('color-image-samples').height = document.getElementById('color-image').getElementsByTagName('img')[0].clientHeight;
+			setScore('balance', score[0]);
 
-    // Create color samples
-    createColorSamples(colorPalette);
-    createCanvasPalette(document.getElementById('color-image-samples'), colorPalette.slice(0, 5), colorPositions);
+			//Set message
+			setMessage('balance', messages['composition']['type'], messageList[messages['composition']['message']]);
 
-		// Color UI
-		document.getElementsByClassName('harmonize-btn')[0].disabled = false;
-		document.getElementsByClassName('harmonize-reset-btn')[0].disabled = true;
-		var message = 'The color palette of the image is not ideal! check the harmonized verison to improve it';
-		setMessage('color', 'warning', message);
+			// Heatmap UI
+			document.getElementsByClassName('balance-btn')[0].disabled = false;
+			document.getElementsByClassName('balance-reset-btn')[0].disabled = true;
+
+			document.getElementById('heatmap').classList.remove('hidden');
+
+			// Set heatmap canvas inital size
+			document.getElementById('heatmap').width = document.getElementById('balance-image').getElementsByTagName('img')[0].clientWidth;
+			document.getElementById('heatmap').height = document.getElementById('balance-image').getElementsByTagName('img')[0].clientHeight;
+
+			// Create heapmap
+			const heatmap = new Heatmap(document.getElementById('heatmap'), datapoints);
+			heatmap.createHeatmap();
+
+			if(messages['composition']['type'] == 'success'){
+				document.getElementsByClassName('button-balance-w')[0].classList.add('hidden');
+			}
+		}else{
+			setScore('balance', 0);
+			document.getElementById('balance-wrapper').classList.add('hidden');
+		}
+
+		// Check if there are no color error messages
+		if(messages['color']['type'] != 'error'){
+
+			setScore('color', score[1]);
+
+			// Set message
+			setMessage('color', messages['color']['type'], messageList[messages['color']['message']]);
+
+			// Set image colorsamples canvas inital size
+			document.getElementById('color-image-samples').width = document.getElementById('color-image').getElementsByTagName('img')[0].clientWidth;
+			document.getElementById('color-image-samples').height = document.getElementById('color-image').getElementsByTagName('img')[0].clientHeight;
+
+	    // Create color samples
+	    createColorSamples(colorPalette);
+	    createCanvasPalette(document.getElementById('color-image-samples'), colorPalette.slice(0, 5), colorPositions);
+
+			// Color UI
+			document.getElementsByClassName('harmonize-btn')[0].disabled = false;
+			document.getElementsByClassName('harmonize-reset-btn')[0].disabled = true;
+
+			if(messages['color']['type'] == 'success'){
+				document.getElementsByClassName('button-color-w')[0].classList.add('hidden');
+			}
+
+		}else{
+			setScore('color', 0);
+			document.getElementById('color-wrapper').classList.add('hidden');
+		}
 
 
   }, delayInMilliseconds);
@@ -134,6 +172,7 @@ function setMessage(section, type, message){
 	document.getElementsByClassName('message-content-' + section)[0].classList.remove('message-' + type == 'message-warning' ? 'message-success' : 'message-warning');
 }
 
+// Sets score information on HTML UI and animates the numbers
 function setScore(section, localScore, newScore=-1){
 
 	var documentOverviewScore = document.getElementsByClassName(section+'-overview-score')[0];
@@ -175,6 +214,16 @@ function setScore(section, localScore, newScore=-1){
 			increment.classList.remove('positive');
 			increment.classList.add('negative');
 		}
+	}else if(localScore == 0){
+		documentOverviewScore.innerHTML = '-';
+		documentScore.innerHTML = '-';
+		increment.innerHTML = '+0';
+		info.innerHTML = '0/100';
+		barLevel2.style.width = '0%';
+		barLevel3.style.width = '0%';
+
+		increment.classList.remove('negative');
+		increment.classList.add('positive');
 	}else{
 		documentOverviewScore.innerHTML = localScore+'%';
 		documentScore.innerHTML = localScore+'%';

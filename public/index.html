@@ -168,7 +168,7 @@
         <div class="row m-b">
           <div class="col-sm-6 b-r b-b">
             <div class="el-tablo centered padded-v">
-              <div class="value color-overview-score">
+              <div class="value balance-overview-score">
                 0%
               </div>
               <div class="label">
@@ -178,7 +178,7 @@
           </div>
           <div class="col-sm-6 b-b">
             <div class="el-tablo centered padded-v">
-              <div class="value balance-overview-score">
+              <div class="value color-overview-score">
                 0%
               </div>
               <div class="label">
@@ -239,16 +239,14 @@
             </h4>
             <div class="reset-filters">
               <div class="value balance-score">
-                75%
+                0%
               </div>
             </div>
           </div>
           <div class="filter-w">
             <div class="message">
               <div class="message-content-w">
-                <div class="message-content-balance message-warning">
-                  Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!
-                </div>
+                <div class="message-content-balance message-warning"></div>
               </div>
             </div>
             <h6 class="filter-header">
@@ -260,7 +258,7 @@
               </div>
             </div>
           </div>
-          <div class="filter-w">
+          <div class="filter-w button-balance-w">
             <div class="button-div">
               <button class="mr-2 mb-2 btn btn-primary btn-rounded colorwheel-btn balance-btn" onClick="balanceButton()" type="button">Balance Composition</button><button class="mr-2 mb-2 btn btn-outline-primary btn-rounded colorwheel-btn balance-reset-btn" disabled type="button" onClick="resetBalanceButton()"> Reset</button>
             </div>
@@ -280,12 +278,12 @@
       <div class="color-control">
         <div class="filter-side">
           <div class="filters-header">
-            <h4 class="dropzone-click">
+            <h4>
               Color Harmony
             </h4>
             <div class="reset-filters">
               <div class="value color-score">
-                82%
+                0%
               </div>
             </div>
           </div>
@@ -300,7 +298,7 @@
             </div>
           </div>
           <div class="filter-w">
-            <div class="button-div">
+            <div class="button-div button-color-w">
               <button class="mr-2 mb-2 btn btn-primary btn-rounded colorwheel-btn harmonize-btn" onClick="harmonizeButton()" type="button"> Harmonize Palette</button><button class="mr-2 mb-2 btn btn-outline-primary btn-rounded colorwheel-btn harmonize-reset-btn" disabled type="button" onClick="resetHarmonizeButton()">Reset</button>
             </div>
           </div>
@@ -693,7 +691,6 @@
         // Receives response from server
         this.on("success", function(response) {
             console.log("Uploaded!");
-                    console.log(response.xhr.responseText);
             processImage(JSON.parse(response.xhr.responseText));
             showImage(this.files[0],'color-image');
             showImage(this.files[0],'balance-image');
