@@ -17,9 +17,8 @@ crud = Blueprint('crud', __name__)
 
 def process_image(file_stream, sigma, n_colors):
 
-    messages = {"error": {"composition": [], "color": []},
-                "warning": {"composition": [], "color": []},
-                "success": {"composition": [], "color": []}}
+    messages = {"composition": {"type": '', "message": ''},
+                "color": {"type": '', "message": ''}}
 
     # Color Palette
     image = image_utils.string_to_image(file_stream)
@@ -33,7 +32,8 @@ def process_image(file_stream, sigma, n_colors):
     harmonized_palette = image_pipeline.get_harmonized_palette()
 
     if image_utils.is_monochromatic(color_palette):
-        messages['error']['color'].append(MONOCHROMATIC)
+        messages['color']['type'] = 'error'
+        messages['color']['message'] = MONOCHROMATIC
 
     color_positions = image_pipeline.get_color_positions()
 
@@ -54,7 +54,8 @@ def process_image(file_stream, sigma, n_colors):
     color_palette = append(color_palette, harmonized_palette).reshape(-1, 3).tolist()
 
     if image_pipeline.n_segments == 0:
-        messages['error']['composition'].append(NO_SEGMENTS)
+        messages['composition']['type'] = 'error'
+        messages['composition']['message'] = NO_SEGMENTS
 
     return color_palette, a, b, color_positions, messages
 
