@@ -1,4 +1,4 @@
-from sandbox.aiartbase.image_utils import color_weight
+from .image_utils import color_weight
 from math import sqrt, atan, cos, sin, degrees
 
 

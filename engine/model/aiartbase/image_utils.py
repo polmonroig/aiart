@@ -42,6 +42,12 @@ def composition_level(x):
         return 100 / (x - 2000)**(1/16)
 
 
+def color_weight(rgb_color):
+    hsv_color = hsv_palette(np.array(rgb_color))
+    h = hsv_color[0][0]
+    return 0.8 + 0.4 * ((hsv_color[0][2]/255.0 + hsv_color[0][1]/255.0 + h/255.0) / 3)
+
+
 def is_monochromatic(pal):
     tmp = hsv_palette(pal)
     low_sat = True
