@@ -1,6 +1,15 @@
 # Constants
 MAX_IMAGE_SIZE = 200
 MIN_IMAGE_SIZE = 10
+# Error messages
+MONOCHROMATIC = 2
+NO_SEGMENTS = 3
+MANY_SEGMENTS = 4
+# Warnings
+TEST_WARNING = 5
+# Success
+COLOR_SUCCESS = 0
+COMPOSITION_SUCCESS = 1
 
 
 def raise_incorrect_size():

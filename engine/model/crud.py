@@ -5,7 +5,6 @@ from model.aiartbase.base import BaseTransformer
 from model.aiartbase import image_utils
 from model.aiartbase import error_management as em
 from numpy import append
-from model.aiartbase.shared_variables import MONOCHROMATIC, NO_SEGMENTS, COLOR_SUCCESS, COMPOSITION_SUCCESS
 
 # Constants
 MAX_IMAGE_SIZE = 5000
@@ -17,8 +16,8 @@ crud = Blueprint('crud', __name__)
 
 def process_image(file_stream, sigma, n_colors):
 
-    messages = {"composition": {"type": 'Success', "message": COMPOSITION_SUCCESS},
-                "color": {"type": 'Success', "message": COLOR_SUCCESS}}
+    messages = {"composition": {"type": 'success', "message": em.COMPOSITION_SUCCESS},
+                "color": {"type": 'warning', "message": em.TEST_WARNING}}
 
     # Color Palette
     image = image_utils.string_to_image(file_stream)
@@ -33,7 +32,7 @@ def process_image(file_stream, sigma, n_colors):
 
     if image_utils.is_monochromatic(color_palette):
         messages['color']['type'] = 'error'
-        messages['color']['message'] = MONOCHROMATIC
+        messages['color']['message'] = em.MONOCHROMATIC
 
     color_positions = image_pipeline.get_color_positions()
 
@@ -55,7 +54,7 @@ def process_image(file_stream, sigma, n_colors):
 
     if image_pipeline.n_segments == 0:
         messages['composition']['type'] = 'error'
-        messages['composition']['message'] = NO_SEGMENTS
+        messages['composition']['message'] = em.NO_SEGMENTS
 
     return color_palette, a, b, color_positions, messages
 
