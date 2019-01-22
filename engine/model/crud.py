@@ -33,7 +33,7 @@ def process_image(file_stream, sigma, n_colors):
     harmonized_palette = image_pipeline.get_harmonized_palette()
 
     if image_utils.is_monochromatic(color_palette):
-        messages['color']['warning'].append("Warning: Image is Monochromatic")
+        messages['color']['warning'].append("Warning: image is monochromatic")
 
     color_positions = image_pipeline.get_color_positions()
 

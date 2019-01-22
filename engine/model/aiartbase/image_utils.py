@@ -37,8 +37,8 @@ def image_resize(self, width=None, height=None, inter=cv2.INTER_AREA):
 def is_monochromatic(pal):
     tmp = hsv_palette(pal)
     hue_margin = 35
-    sat_margin = 5
     low_sat = False
+    sat_margin = 5
     for i, palette_color in enumerate(tmp):
         if palette_color[1] > sat_margin:
             low_sat = True
