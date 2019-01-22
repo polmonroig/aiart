@@ -3,7 +3,7 @@
 
 class Heatmap{
 
-  constructor(canvas, datapoints, blur=0.08){
+  constructor(canvas, datapoints, blur=0.07){
     this.canvas = canvas;
 		this.blur = blur;
 
@@ -134,13 +134,13 @@ $(function(){
       type: "single",
       min: 0,
       max: 100,
-      from: 15,
+      from: 85,
       step: 1,
       onStart: function (data) {
-          document.getElementById('balance-image').style.opacity = data['from']/100;
+          document.getElementById('heatmap').style.opacity = data['from']/100;
       },
       onChange: function (data) {
-          document.getElementById('balance-image').style.opacity = data['from']/100;
+          document.getElementById('heatmap').style.opacity = data['from']/100;
       },
     });
   }

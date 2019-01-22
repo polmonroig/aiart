@@ -18,14 +18,6 @@ html
     - all_wrapper_class += defined?(all_solid_bg) ? ' solid-bg-all' : ''
 
     div[class="#{all_wrapper_class}"]
-      //- if top_bar_settings['above_menu']
-        include ../_partials/_top_bar.slim
-      //- if defined? show_onboarding
-        //include ../_partials/onboarding/_onboarding_modal.slim
-      //- if defined? show_onboarding_large
-        //include ../_partials/onboarding/_onboarding_modal_large.slim
-      //- if true
-        include ../_partials/_search_with_suggestions.slim
       .layout-w
         /!
           ------------------
@@ -46,13 +38,6 @@ html
           END - Main Menu
           ------------------
         .content-w
-          / Top bar
-          //- if !top_bar_settings['above_menu']
-            include ../_partials/_top_bar.slim
-          / Breadcrumbs
-          - unless defined?(no_breadcrumbs)
-            include ../_partials/_breadcrumbs.slim
-
           - if defined? content_panel_file
             .content-panel-toggler
               i.os-icon.os-icon-grid-squares-22

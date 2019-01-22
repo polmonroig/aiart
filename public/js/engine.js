@@ -10,11 +10,11 @@ var score = [];
 var messageList = [
 	'Congratulations! the color palette of your image is harmonic.',
 	'Great! The composition of your image is balanced.',
-	'Your image is monocromatic (or almost) so the color palette cannot be evaluated!',
+	'Your image is monochromatic (or almost) so the color palette cannot be evaluated!',
 	'The segmentation algorithm did not find any identifieable points of attention in your image.',
 	'The segmentation algorithm found to many areas of attention in your image.',
-	'The color palette of the image is not ideal! check the harmonized verison to improve it.',
 	'Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!',
+	'The color palette of the image is not ideal! check the harmonized verison to improve it.',
 	'Image balanced! added an element on your canvas',
 	'Color harmonized! check the new color palette and improve your image.',
 	];
@@ -70,7 +70,7 @@ function processImage(responseText){
 		datapoints = responseText["datapoints"];
 		datapointsBalanced = responseText["datapoints_balanced"];
 		messages = responseText["messages"];
-		score = [70, 56];
+		score = responseText["score"];
 
 		//Debugging log
 		console.log(datapoints);
@@ -89,6 +89,7 @@ function processImage(responseText){
 			setMessage('balance', messages['composition']['type'], messageList[messages['composition']['message']]);
 
 			// Heatmap UI
+			document.getElementsByClassName('button-balance-w')[0].classList.remove('hidden');
 			document.getElementsByClassName('balance-btn')[0].disabled = false;
 			document.getElementsByClassName('balance-reset-btn')[0].disabled = true;
 
@@ -118,6 +119,11 @@ function processImage(responseText){
 			// Set message
 			setMessage('color', messages['color']['type'], messageList[messages['color']['message']]);
 
+			// Color UI
+			document.getElementsByClassName('button-color-w')[0].classList.remove('hidden');
+			document.getElementsByClassName('harmonize-btn')[0].disabled = false;
+			document.getElementsByClassName('harmonize-reset-btn')[0].disabled = true;
+
 			// Set image colorsamples canvas inital size
 			document.getElementById('color-image-samples').width = document.getElementById('color-image').getElementsByTagName('img')[0].clientWidth;
 			document.getElementById('color-image-samples').height = document.getElementById('color-image').getElementsByTagName('img')[0].clientHeight;
@@ -125,10 +131,6 @@ function processImage(responseText){
 	    // Create color samples
 	    createColorSamples(colorPalette);
 	    createCanvasPalette(document.getElementById('color-image-samples'), colorPalette.slice(0, 5), colorPositions);
-
-			// Color UI
-			document.getElementsByClassName('harmonize-btn')[0].disabled = false;
-			document.getElementsByClassName('harmonize-reset-btn')[0].disabled = true;
 
 			if(messages['color']['type'] == 'success'){
 				document.getElementsByClassName('button-color-w')[0].classList.add('hidden');

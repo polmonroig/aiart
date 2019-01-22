@@ -109,6 +109,7 @@ javascript:
         processImage(JSON.parse(response.xhr.responseText));
         showImage(this.files[0],'color-image');
         showImage(this.files[0],'balance-image');
+				this.element.appendChild(Dropzone.createElement("<div class=\"dz-default dz-message\"><span>" + this.options.dictDefaultMessage + "</span></div>"));
     });
   }
   };
@@ -169,6 +170,7 @@ javascript:
         processImage(JSON.parse(response.xhr.responseText));
         showImage(this.files[0],'color-image');
         showImage(this.files[0],'balance-image');
+				this.element.appendChild(Dropzone.createElement("<div class=\"dz-default dz-message\"><span>" + this.options.dictDefaultMessage + "</span></div>"));
     });
   }
   };
@@ -227,6 +229,7 @@ javascript:
         processImage(JSON.parse(response.xhr.responseText));
         showImage(this.files[0],'color-image');
         showImage(this.files[0],'balance-image');
+				this.element.appendChild(Dropzone.createElement("<div class=\"dz-default dz-message\"><span>" + this.options.dictDefaultMessage + "</span></div>"));
     });
   }
   };
