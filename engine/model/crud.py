@@ -5,7 +5,7 @@ from model.aiartbase.base import BaseTransformer
 from model.aiartbase import image_utils
 from model.aiartbase import error_management as em
 from numpy import append
-from model.aiartbase.shared_variables import MONOCHROMATIC, NO_SEGMENTS
+from model.aiartbase.shared_variables import MONOCHROMATIC, NO_SEGMENTS, COLOR_SUCCESS, COMPOSITION_SUCCESS
 
 # Constants
 MAX_IMAGE_SIZE = 5000
@@ -17,8 +17,8 @@ crud = Blueprint('crud', __name__)
 
 def process_image(file_stream, sigma, n_colors):
 
-    messages = {"composition": {"type": '', "message": ''},
-                "color": {"type": '', "message": ''}}
+    messages = {"composition": {"type": 'Success', "message": COMPOSITION_SUCCESS},
+                "color": {"type": 'Success', "message": COLOR_SUCCESS}}
 
     # Color Palette
     image = image_utils.string_to_image(file_stream)
