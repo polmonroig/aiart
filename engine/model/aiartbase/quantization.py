@@ -1,5 +1,18 @@
 import numpy as np
 from copy import deepcopy
+from math import radians
+
+
+
+# Templates
+i = [[0, 18]]
+V = [[0, 93.6]]
+L = [[0, 18], [99, 178.2]]  # diff = 90
+I = [[0, 18], [189, 207]]  # diff = 180
+T = [[0, 180]]
+Y = [[0, 93.6], [226.8, 244.8]]  # diff = 180
+X = [[0, 93.6], [226.8, 320.4]]  # diff = 180
+templates = [i, V, L, I, T, Y, X]
 
 
 class VBox:
@@ -135,3 +148,18 @@ def get_pos(arr, left, right, x, c):
             return get_pos(arr, m + 1, right, x, c)
 
     return left
+
+
+def get_closest_hue(template, degree, hue):
+    closest_hue = [hue + radians(180), 0]
+    for zone in template:
+        a = radians(zone[0] + degree)
+        b = radians(zone[1] + degree)
+        if a <= hue <= b:
+            return 0, 0
+        if abs(a - hue) < closest_hue[0]:
+            closest_hue = [abs(a - hue), a]
+        if abs(b - hue) < closest_hue[0]:
+            closest_hue = [abs(b - hue), b]
+
+    return closest_hue

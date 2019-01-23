@@ -162,3 +162,6 @@ class BaseTransformer:
 
     def composition(self):
         return self.balance
+
+    def harmony(self):
+        return self.palette.harmony

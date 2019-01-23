@@ -3,7 +3,7 @@ from model import storage, database
 from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
 from model.aiartbase.base import BaseTransformer
 from model.aiartbase import image_utils
-from model.aiartbase import error_management as em
+from .aiartbase import error_management as em
 from numpy import append
 from random import randint
 
@@ -14,8 +14,8 @@ crud = Blueprint('crud', __name__)
 
 def process_image(file_stream, sigma, n_colors):
 
-    messages = {"composition": {"type": 'success', "message": em.COMPOSITION_SUCCESS},
-                "color": {"type": 'warning', "message": em.COLOR_WARNING}}
+    messages = {"composition": {"type": em.SUCCESS_TYPE, "message": em.COMPOSITION_SUCCESS},
+                "color": {"type": em.SUCCESS_TYPE, "message": em.COLOR_SUCCESS}}
 
     # Color Palette
     image = image_utils.string_to_image(file_stream)
@@ -29,7 +29,7 @@ def process_image(file_stream, sigma, n_colors):
     harmonized_palette = image_pipeline.get_harmonized_palette()
 
     if image_utils.is_monochromatic(color_palette):
-        messages['color']['type'] = 'error'
+        messages['color']['type'] = em.ERROR_TYPE
         messages['color']['message'] = em.MONOCHROMATIC
 
     color_positions = image_pipeline.get_color_positions()
@@ -51,13 +51,17 @@ def process_image(file_stream, sigma, n_colors):
     color_palette = append(color_palette, harmonized_palette).reshape(-1, 3).tolist()
 
     if image_pipeline.n_segments == 0:
-        messages['composition']['type'] = 'error'
+        messages['composition']['type'] = em.ERROR_TYPE
         messages['composition']['message'] = em.NO_SEGMENTS
 
-    score = [int(image_pipeline.composition()), randint(5, 70)]
-    if score[0] < 100 and  messages['composition']['type'] != 'error':
-        messages['composition']['type'] = 'warning'
+    score = [int(image_pipeline.composition()), int(image_pipeline.harmony())]
+    if score[0] < 100 and messages['composition']['type'] != em.ERROR_TYPE:
+        messages['composition']['type'] = em.WARNING_TYPE
         messages['composition']['message'] = em.COMPOSITION_WARNING
+
+    if score[1] < 100 and messages['color']['type'] != em.ERROR_TYPE:
+        messages['color']['type'] = em.WARNING_TYPE
+        messages['color']['message'] = em.COLOR_WARNING
 
     return color_palette, a, b, color_positions, messages, score
 

@@ -17,6 +17,10 @@ def hsv_palette(palette):
     return cv2.cvtColor(palette.reshape(1, -1, 3).astype(np.uint8), cv2.COLOR_RGB2HSV).reshape(-1, 3)
 
 
+def rgb_palette(palette):
+    return cv2.cvtColor(palette.reshape(1, -1, 3).astype(np.uint8), cv2.COLOR_HSV2RGB).reshape(-1, 3).astype(np.int32)
+
+
 def image_resize(self, width=None, height=None, inter=cv2.INTER_AREA):
     # initialize the dimensions of the image to be resized and
     # grab the image size
@@ -40,6 +44,14 @@ def composition_level(x):
         return 100
     else:
         return 100 / (x - 2000)**(1/16)
+
+
+def harmony_level(x):
+    tmp = 100 - x * 100
+    if tmp <= 0:
+        return 0
+    else:
+        return tmp
 
 
 def color_weight(rgb_color):
