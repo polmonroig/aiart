@@ -142,24 +142,24 @@ function harmonizeButton(){
 		for(var i = 0; i < colorPalette.length/2; i++){
 			document.getElementsByClassName('colorsample-arrow')[i].classList.add('hide-arrow-anim');
 
-			document.getElementsByClassName('arrow-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i+5])[0]}px;
-																																		 left: ${rgb2posSaturated(colorPalette[i+5])[1]}px;
-																																		 -webkit-transform: rotate(${rgb2hsv(colorPalette[i+5])[0]}deg);
-																																		 transform: rotate(${rgb2hsv(colorPalette[i+5])[0]}deg)
+			document.getElementsByClassName('arrow-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[0]}px;
+																																		 left: ${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[1]}px;
+																																		 -webkit-transform: rotate(${rgb2hsv(colorPalette[i+(colorPalette.length/2)])[0]}deg);
+																																		 transform: rotate(${rgb2hsv(colorPalette[i+(colorPalette.length/2)])[0]}deg)
 																																		`
 
-			document.getElementsByClassName('colorsample-arrow')[i].style = `border-bottom-width: ${rgb2hsv(colorPalette[i+5])[1]+20}px;`
-			document.getElementsByClassName('colorsample-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i+5])[0]}px;
-																																					 left:${rgb2posSaturated(colorPalette[i+5])[1]}px;
+			document.getElementsByClassName('colorsample-arrow')[i].style = `border-bottom-width: ${rgb2hsv(colorPalette[i+(colorPalette.length/2)])[1]+20}px;`
+			document.getElementsByClassName('colorsample-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[0]}px;
+																																					 left:${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[1]}px;
 																																					 `
 
-			document.getElementsByClassName('tooltip-hex')[i].style = `top: ${rgb2posSaturated(colorPalette[i+5])[0]}px;
-																																					 left:${rgb2posSaturated(colorPalette[i+5])[1]}px;
+			document.getElementsByClassName('tooltip-hex')[i].style = `top: ${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[0]}px;
+																																					 left:${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[1]}px;
 																																					 `
-			document.getElementsByClassName('tooltip-hex')[i].innerHTML = `${rgb2hex(colorPalette[i+5])}`;
-			document.getElementsByClassName('colorsample-container')[i].value = `${rgb2hex(colorPalette[i+5])}`;
-			document.getElementsByClassName('arrow-container')[i].title = `${rgb2hex(colorPalette[i+5])}`;
-			document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i+5])};`
+			document.getElementsByClassName('tooltip-hex')[i].innerHTML = `${rgb2hex(colorPalette[i+(colorPalette.length/2)])}`;
+			document.getElementsByClassName('colorsample-container')[i].value = `${rgb2hex(colorPalette[i+(colorPalette.length/2)])}`;
+			document.getElementsByClassName('arrow-container')[i].title = `${rgb2hex(colorPalette[i+(colorPalette.length/2)])}`;
+			document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i+(colorPalette.length/2)])};`
 
 			document.getElementsByClassName('harmonize-btn')[0].disabled = true;
 			document.getElementsByClassName('harmonize-reset-btn')[0].disabled = false;
