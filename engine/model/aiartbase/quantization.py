@@ -12,7 +12,7 @@ I = [[0, 18], [189, 207]]  # diff = 180
 T = [[0, 180]]
 Y = [[0, 93.6], [226.8, 244.8]]  # diff = 180
 X = [[0, 93.6], [226.8, 320.4]]  # diff = 180
-templates = [i, V, L, I, T, Y, X]
+templates = [i, V, L, I, Y, X]
 
 
 class VBox:

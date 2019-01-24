@@ -8,7 +8,7 @@ class Box:
     useful to classify the bounding boxes
     """
 
-    GRAVITY = 0.1
+    GRAVITY = 0.001
 
     def __init__(self, i, j):
         self.min = [j, i]

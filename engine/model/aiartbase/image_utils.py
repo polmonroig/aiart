@@ -40,18 +40,22 @@ def image_resize(self, width=None, height=None, inter=cv2.INTER_AREA):
 
 
 def composition_level(x):
-    if x <= 2000:
+    if x <= 20:
         return 100
     else:
-        return 100 / (x - 2000)**(1/16)
+        x = 100 - (x - 20) / 10
+        if x < 0:
+            return 0
+        else:
+            return x
 
 
 def harmony_level(x):
-    tmp = 100 - x * 100
-    if tmp <= 0:
+    l = 100 - x * 5
+    if l <= 0:
         return 0
     else:
-        return tmp
+        return l
 
 
 def color_weight(rgb_color):

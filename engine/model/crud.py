@@ -109,7 +109,7 @@ def submit():
     # to the size of the screen
 
     color_palette, datapoints, datapoints_balanced, color_positions, messages, score = \
-        process_image(file_stream, sigma=500, n_colors=5)
+        process_image(file_stream, sigma=500, n_colors=10)
 
 
     # Create data for database
