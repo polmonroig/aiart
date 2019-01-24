@@ -105,7 +105,7 @@ class ColorGenerator:
             self.merge_similar()
             harmonizer = ColorHarmonizer(self.palette_colors.reshape(1, -1, 3))
             self.palette_colors = self.palette_colors.reshape(-1, 3)
-            self.harmonized_palette = harmonizer.harmonize().reshape(1, 3)
+            self.harmonized_palette = harmonizer.harmonize().reshape(-1, 3)
             self.harmony = harmony_level(harmonizer.harmony)
 
     def get_palette(self):
@@ -144,8 +144,8 @@ class ColorHarmonizer:
             for degree in range(360):
                 current_harmony = [0, np.zeros(self.colors.shape[1])]
                 for it, col in enumerate(hsv_palette(self.colors)):
-                    sat = radians((col[1] * 100) / 255)
-                    hue = radians((col[0] * 360) / 255)
+                    sat = radians((col[1] * 255) / 100)
+                    hue = radians((col[0] * 255) / 360)
                     closest_hue = get_closest_hue(template, degree, hue)
                     current_harmony[0] += sat * closest_hue[0]
                     current_harmony[1][it] = closest_hue[1]

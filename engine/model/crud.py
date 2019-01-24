@@ -54,6 +54,10 @@ def process_image(file_stream, sigma, n_colors):
         messages['composition']['type'] = em.ERROR_TYPE
         messages['composition']['message'] = em.NO_SEGMENTS
 
+    if image_pipeline.n_segments > 15:
+        messages['composition']['type'] = em.ERROR_TYPE
+        messages['composition']['message'] = em.MANY_SEGMENTS
+
     score = [int(image_pipeline.composition()), int(image_pipeline.harmony())]
     if score[0] < 100 and messages['composition']['type'] != em.ERROR_TYPE:
         messages['composition']['type'] = em.WARNING_TYPE
