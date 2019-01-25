@@ -208,7 +208,7 @@ class BaseTransformer:
                             'please refer to segment instead')
         balanced = self.get_segments()
         weight = 100
-        if self.segment_ratio < MAX_SEGMENT_RATIO:
+        if self.segment_ratio >= MAX_SEGMENT_RATIO:
             weight = -weight
         radius, pos_x, pos_y = self.get_balance_attributes()
         balanced.append((pos_x / self.width, pos_y / self.height,

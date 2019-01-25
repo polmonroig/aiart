@@ -134,6 +134,8 @@
   .value {
     display: inline-block;
     @include text-small-caps();
+		line-height: 18px;
+		font-size: 13px;
   }
 }
 .value-pair + .value-pair {
@@ -154,4 +156,16 @@
 	animation-duration: 0.5s;
 	animation-delay: 0s;
 	animation-fill-mode: both;
+}
+
+.os-progress-bar .bar-level-1, .os-progress-bar .bar-level-2, .os-progress-bar .bar-level-3{
+	height: 10px;
+}
+
+.os-progress-bar .bar-labels span{
+	font-size: 17px;
+}
+
+.el-tablo .label{
+	font-size: 13px;
 }

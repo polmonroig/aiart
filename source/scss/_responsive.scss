@@ -188,16 +188,46 @@ Contents:
   .support-index .support-tickets {
     flex: 0 0 390px;
   }
+	body,
+	body.auth-wrapper .all-wrapper {
+		padding: 0px;
+	}
+	//Color and Balance
+	.balance-index {
+		.balance-content-w{
+			display: block;
+
+			.balance-heatmap canvas{
+				border-top-left-radius: 6px;
+				border-top-right-radius: 6px;
+				border-bottom-left-radius: 0px;
+			}
+		}
+	}
+	.color-index {
+		.color-content-w{
+			display: block;
+
+			.color-image img{
+				border-top-left-radius: 6px;
+				border-top-right-radius: 6px;
+				border-bottom-left-radius: 0px;
+			}
+		}
+	}
+
+
+	.element-wrapper {
+		.element-actions {
+			float: none;
+			margin-bottom: 20px;
+			&.actions-only {
+				float: right;
+				margin-bottom: 0;
+			}
+		}
+	}
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -437,453 +467,34 @@ Contents:
 
 
 
-
-
-
-
-
-
-
-
-/* #8.  Tablets and phones  (< 1024px) */
-@media (max-width: 1024px){
-  .invoice-w {
-    padding: 50px;
-  }
-  .ae-list-w {
-    flex: 0 0 230px;
-  }
-  .ae-list-w .ae-list .ae-item {
-    padding: 15px;
-  }
-  .table th, .table td {
-    padding: 0.7rem 0.5rem;
-  }
-  .content-w {
-    border-radius: 0px!important;
-  }
-  .menu-w {
-    display: none!important;
-  }
-  //Color and Balance
-  .balance-index {
-    .balance-content-w{
-      display: block;
-
-      .balance-heatmap canvas{
-  			border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
-        border-bottom-left-radius: 0px;
-  		}
-    }
-  }
-  .color-index {
-    .color-content-w{
-      display: block;
-
-      .color-image img{
-  			border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
-        border-bottom-left-radius: 0px;
-  		}
-    }
-  }
-
-  .dropzone-menu{
-    min-height: 20px;
-    margin: 10px;
-    background-color: rgba(0,0,0,0.2);
-    color: white;
-
-    h4{
-      color: white;
-      font-size: 10px;
-
-    }
-  }
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* #9.  Tablets (768px - 1024px) */
-@media (min-width: 768px) and (max-width: 1024px){
-
-  // Top Secondary Menu
-
-  .top-bar {
-    .logo-w {
-      display: none;
-    }
-    .fs-extra-info {
-      display: none;
-    }
-  }
-
-
-  // Element Wrapper
-  .element-wrapper {
-    padding-bottom: 2rem;
-  }
-
-
-  // Element Balances
-  .element-balances {
-    justify-content: space-between;
-  }
-
-
-  // FULL CHAT
-  .full-chat-w {
-    .full-chat-right {
-      display: none;
-    }
-    .chat-content-w .chat-content {
-      padding: 30px;
-    }
-  }
-
-  .top-bar {
-    padding: 0px;
-    > ul {
-      white-space: nowrap;
-      li a {
-        padding: 15px 10px;
-        margin: 0px 10px;
-      }
-    }
-    &.with-overflow {
-      overflow: visible;
-    }
-  }
-  .nav.upper.nav-tabs .nav-link {
-    margin-right: 0.7rem;
-    padding-bottom: 10px;
-    font-size: $font-size-base * 0.8;
-  }
-
-  .display-type {
-    content: "tablet";
-  }
-  .content-box {
-    padding: 1.5rem;
-  }
-  .padded {
-    padding: 0.3rem 0.8rem;
-  }
-  .element-box, .invoice-w, .big-error-w {
-    padding: 1rem 1rem;
-  }
-  .element-box .os-tabs-controls, .invoice-w .os-tabs-controls, .big-error-w .os-tabs-controls {
-    margin-left: -1rem;
-    margin-right: -1rem;
-  }
-  .layout-w {
-    flex-direction: row;
-  }
-  .menu-mobile {
-    width: $mobile-menu-tablet-width;
-    display: table-cell;
-    .menu-and-user {
-      display: block;
-    }
-    ul.sub-menu {
-      padding: 1rem 1.5rem;
-    }
-    .mobile-menu-magic {
-      display: none;
-    }
-    .logged-user-w {
-      padding: 1rem;
-      text-align: center;
-      .avatar-w img {
-        width: 35px;
-      }
-      .logged-user-info-w {
-        display: none;
-      }
-    }
-    ul.main-menu {
-      padding: 1rem 0px;
-      & > li.has-sub-menu > a:before {
-        display: none;
-      }
-    }
-    .mm-logo-buttons-w {
-      text-align: center;
-      justify-content: center;
-      .mm-buttons {
-        display: none;
-      }
-      .mm-logo {
-        display: block;
-        text-align: center;
-        span {
-          display: none;
-        }
-      }
-    }
-    &.color-scheme-dark {
-      ul.main-menu > li > a > span {
-        color: rgba(255,255,255,0.2);
-      }
-      ul.sub-menu {
-        background-color: $sub-menu-dark-bg-color;
-        &:before {
-          border-right-color: #203c9b;
-        }
-      }
-    }
-  }
-
-  .menu-mobile ul.main-menu > li > a > span {
-    position: absolute;
-    top: 10px;
-    left: $mobile-menu-tablet-width + 20px;
-    color: rgba(0,0,0,0.2);
-    font-size: $font-size-base * 1.7;
-    font-weight: $font-weight-bold;
-    display: none;
-    white-space: nowrap;
-    z-index: 1000;
-    padding: 0px;
-  }
-  .menu-mobile {
-    ul.main-menu li {
-      position: relative;
-    }
-    ul.main-menu > li {
-      .icon-w {
-        padding: 20px 5px;
-      }
-    }
-    ul.sub-menu {
-      position: absolute;
-      top: 0px;
-      left: $mobile-menu-tablet-width;
-      background-color: #fff;
-      min-width: 220px;
-      z-index: 999;
-      list-style: none;
-      padding: 20px 15px;
-      padding-top: 50px;
-      box-shadow: 0px 5px 30px rgba(0,0,0,0.1);
-      li {
-        padding: 10px 10px;
-      }
-    }
-  }
-
-  .menu-mobile .main-menu {
-    li > a:hover > span {
-      display: block;
-    }
-  }
-  .menu-mobile .has-sub-menu.active {
-    .icon-w {
-      color: $body-color;
-    }
-    .sub-menu {
-      display: block;
-    }
-  }
-
-  // USER PROFILE
-  .overview-index {
-    .up-header {
-      font-size: $h1-font-size;
-    }
-    .up-sub-header {
-      font-size: $h6-font-size;
-    }
-  }
-
-  // TODO APP
-  .todo-app-w {
-    .todo-sidebar {
-      padding: 30px;
-      flex: 0 0 280px;
-      .todo-sidebar-section {
-        padding: 10px;
-      }
-    }
-    .todo-content {
-      padding: 30px;
-    }
-  }
-
-  .dropzone-menu{
-    display: none;
-  }
-  .uploadicon{
-    display: block;
-  }
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* #10. Phones & Vertical Tablets (<= 768px) */
-@media (max-width: 768px){
-  .element-balances.mobile-full-width {
-    > .balance {
-      flex: 1;
-      padding: 0px;
-      margin-bottom: 30px;
-      text-align: center;
-    }
-    > .balance-table {
-      flex: 1;
-      padding: 0px;
-      text-align: center;
-    }
-  }
-  .os-tabs-w {
-    .os-tabs-controls {
-      margin-bottom: 1rem;
-    }
-    .os-tabs-complex {
-      .nav-item {
-        flex: 1;
-        .nav-link {
-          border-right: 0px;
-          border-top: 1px solid rgba(0,0,0,0.05);
-          text-align: center;
-          padding: 15px;
-        }
-        &:first-child {
-          .nav-link {
-            border-top: none;
-          }
-        }
-      }
-    }
-  }
-  // TODO APP
-  .todo-app-w {
-    .todo-sidebar {
-      padding: 30px 20px 20px 45px;
-      .todo-sidebar-section {
-        padding: 10px 0px;
-      }
-      .todo-sidebar-section-toggle {
-        left: -22px;
-      }
-      .todo-sidebar-section-header {
-        font-size: $h5-font-size;
-      }
-      .todo-sidebar-section-sub-section, ul.projects-list {
-        padding-left: 10px;
-      }
-    }
-    .todo-content {
-      padding: 30px;
-      .all-tasks-w {
-        padding-left: 5px;
-      }
-      .tasks-header-w {
-        padding-left: 20px;
-        .tasks-header-toggler {
-          left: -5px;
-        }
-      }
-      .todo-content-header {
-        font-size: $h5-font-size;
-      }
-      .all-tasks-w {
-        padding-top: 0px;
-        padding-right: 0px;
-      }
-      .tasks-list li.draggable-task {
-        padding-right: 10px;
-      }
-    }
-  }
-
-  // Support tickets
-  .support-index .support-tickets {
-    flex: 0 0 100%;
-    margin-right: 0px;
-    padding-right: 0px;
-    border-right: 0px;
-  }
-  .support-index .support-ticket-content-w {
-    display: none;
-  }
-
-  .support-index {
-    .support-ticket-content-w .support-ticket-content {
-      padding: 10px 5px;
-    }
-    .support-ticket-content-w.folded-info .support-ticket-content {
-      padding: 10px 5px;
-    }
-    &.show-ticket-content {
-      position: relative;
-      .support-ticket-content-w {
-        display: block;
-        flex: 1;
-      }
-      .support-tickets {
-        display: none;
-      }
-      .support-ticket-content-w .support-ticket-content .back-to-index {
-        display: block;
-        position: absolute;
-        top: 0px;
-        left: 10px;
-      }
-      .support-ticket-content-w .support-ticket-content .show-ticket-info {
-        position: absolute;
-        top: 0px;
-        right: 10px;
-      }
-    }
-  }
-  .support-index .support-ticket-content-w .support-ticket-content .support-ticket-content-header {
-    flex-direction: column;
-    padding-top: 0px;
-    padding-top: 20px;
-    .show-ticket-info {
-      padding-top: 0px;
-    }
-    .ticket-header {
-      padding-top: 20px;
-      border-top: 1px solid rgba(0,0,0,0.07);
-    }
-  }
-
-  .menu-mobile ul.main-menu > li.uploadicon{
-    display: none;
-  }
-}
-
-
-
-
 /* #11. Phones (< 767px) */
-@media (max-width: 767px){
+@media (max-width: 1025px){
+	.menu-w {
+		display: none!important;
+	}
+	//Color and Balance
+	.balance-index {
+		.balance-content-w{
+			display: block;
+
+			.balance-heatmap canvas{
+				border-top-left-radius: 6px;
+				border-top-right-radius: 6px;
+				border-bottom-left-radius: 0px;
+			}
+		}
+	}
+	.color-index {
+		.color-content-w{
+			display: block;
+
+			.color-image img{
+				border-top-left-radius: 6px;
+				border-top-right-radius: 6px;
+				border-bottom-left-radius: 0px;
+			}
+		}
+	}
 
   .layout-w {
     flex-direction: column;
@@ -996,64 +607,6 @@ Contents:
     }
   }
 
-
-  // TODO APP
-  .todo-app-w {
-    display: block;
-    .todo-sidebar {
-      padding: 30px 15px 20px 40px;
-      flex: 1;
-      .todo-sidebar-section {
-        padding: 10px 0px;
-      }
-      .todo-sidebar-section-toggle {
-        left: -22px;
-      }
-      .todo-sidebar-section-header {
-        font-size: $h5-font-size;
-      }
-      .todo-sidebar-section-sub-section, ul.projects-list {
-        padding-left: 10px;
-      }
-    }
-    .todo-content {
-      padding: 30px 20px;
-      .todo-content-header {
-        font-size: $h5-font-size;
-      }
-      .all-tasks-w {
-        padding-top: 0px;
-        padding-right: 0px;
-      }
-      .tasks-list li.draggable-task {
-        padding-right: 10px;
-      }
-    }
-  }
-
-
-  // Chat
-  .full-chat-w .full-chat-i {
-    display: block;
-  }
-
-  // Projects
-  .projects-list .project-head {
-    padding: 20px 30px;
-    display: block;
-    text-align: center;
-    .project-users {
-      text-align: center;
-      margin-top: 2rem;
-    }
-  }
-  .projects-list .project-info {
-    padding: 20px 30px;
-    .el-tablo {
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-  }
   .display-type {
     content: "phone";
   }
@@ -1164,15 +717,6 @@ Contents:
     }
     .up-sub-header {
       font-size: $h6-font-size;
-    }
-    .up-controls {
-      text-align: center;
-      .value-pair {
-        margin-bottom: 1rem;
-      }
-      .text-right {
-        text-align: center!important;
-      }
     }
   }
 
