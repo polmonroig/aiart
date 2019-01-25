@@ -1,5 +1,6 @@
 from .image_utils import color_weight
 from math import sqrt, atan, cos, sin, degrees
+from .shared_variables import GRAVITY
 
 
 class Box:
@@ -7,8 +8,6 @@ class Box:
     This box class is a helper class
     useful to classify the bounding boxes
     """
-
-    GRAVITY = 0.001
 
     def __init__(self, i, j):
         self.min = [j, i]
@@ -82,7 +81,7 @@ class Box:
         if self.empty():
             raise Exception("The box is empty")
         if self._weight is None:
-            f = sqrt(pow(self.x, 2) + pow(self.y, 2)) * self.mass * self.GRAVITY
+            f = sqrt(pow(self.x, 2) + pow(self.y, 2)) * self.mass * GRAVITY
             self._weight = self.set_weight_dir(f)
         return self._weight
 

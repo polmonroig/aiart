@@ -3,9 +3,9 @@ from skimage.future import graph
 import numpy as np
 from .segmentation import Segment, Box
 from .color_mod import ColorGenerator
-from .image_utils import image_resize
-from math import sqrt
-from .image_utils import composition_level
+from .image_utils import image_resize, composition_level
+from math import sqrt, pi, atan, cos, sin
+from .shared_variables import MAX_SEGMENT_RATIO, GRAVITY
 
 
 class BaseTransformer:
@@ -40,6 +40,10 @@ class BaseTransformer:
         self.n_segments = 0
 
         self.balance = 0
+
+        self.segment_ratio = 0
+
+        self.force = {}
 
     def calculate_colors(self, n_colors):
         """
@@ -134,7 +138,7 @@ class BaseTransformer:
         # Calculates the edge of every box
 
         boxes = {}
-
+        segments_size = 0
         for i in range(0, labels.shape[0]):
             for j in range(0, labels.shape[1]):
                 c = labels[i][j]
@@ -143,22 +147,74 @@ class BaseTransformer:
                 boxes[c].add([j, i], self.image[i, j])
 
         self.segments = []
-        force = {'x': 0, 'y': 0, 'mod': 0}
+        self.force = {'x': 0, 'y': 0, 'mod': 0}
         for b in boxes:
             if boxes[b].max != [self.height, self.width] and boxes[b].min != [0, 0]:
+                segments_size += boxes[b].size
                 self.segments.append(Segment(boxes[b]))
                 w = boxes[b].weight
-                force['x'] += w['x']
-                force['y'] += w['y']
+                self.force['x'] += w['x']
+                self.force['y'] += w['y']
+        self.segment_ratio = (segments_size / (self.width * self.height)) * 100
         self.n_segments = len(self.segments)
-        force['mod'] = sqrt(force['x'] ** 2 + force['y'] ** 2)
-        self.balance = composition_level(force['mod'])
+        self.force['mod'] = sqrt(self.force['x'] ** 2 + self.force['y'] ** 2)
+        if self.segment_ratio < MAX_SEGMENT_RATIO:
+            self.force['x'] = -self.force['x']
+            self.force['y'] = -self.force['y']
+        self.balance = composition_level(self.force['mod'])
+
+    def get_balance_attributes(self):
+        # Generates sample image with bounding boxes
+        div = 2
+        f = int(sqrt((self.width / div) ** 2 + (self.height / div) ** 2)) / 2
+        weight_dir = {"x": 0, "y": 0}
+        angle_x = angle_y = 0
+        if self.force['x'] == 0:
+            angle_x = 0
+            angle_y = 1
+        elif not (self.force['x'] == self.force['y'] == 0):
+            angle = atan(self.force['y'] / float(self.force['x']))
+            angle_x = cos(angle)
+            angle_y = sin(angle)
+            # print("Angle: ", degrees(angle))
+        weight_dir['x'] = f * angle_x
+        weight_dir['y'] = f * angle_y
+        if (self.force['x'] < 0 and weight_dir['x'] > 0) or (self.force['x'] > 0 and weight_dir['x'] < 0):
+            weight_dir['x'] = -weight_dir['x']
+        if (self.force['y'] < 0 and weight_dir['y'] > 0) or (self.force['y'] > 0 and weight_dir['y'] < 0):
+            weight_dir['y'] = -weight_dir['y']
+
+        mass = self.force['mod'] / (f * GRAVITY)
+        size = mass
+        radius = sqrt(mass / pi)
+        pos_x = weight_dir['x'] + self.width / 2
+        pos_y = self.height / 2 - weight_dir['y']
+        return radius, pos_x, pos_y
 
     def get_segments(self):
         if self.segments is None:
             raise Exception('Segments are not set '
                             'please refer to segment instead')
-        return self.segments
+        a = []
+        for seg in self.segments:
+            a.append((seg.x / self.width, seg.y / self.height,
+                      seg.get_weight(), seg.get_scale()[0] / self.width,
+                      seg.get_scale()[1] / self.width))
+        return a
+
+    def get_balanced_segments(self):
+        if self.segments is None:
+            raise Exception('Segments are not set '
+                            'please refer to segment instead')
+        balanced = self.get_segments()
+        weight = 100
+        if self.segment_ratio < MAX_SEGMENT_RATIO:
+            weight = -weight
+        radius, pos_x, pos_y = self.get_balance_attributes()
+        balanced.append((pos_x / self.width, pos_y / self.height,
+                        weight, radius / self.width,
+                        radius / self.width))
+        return balanced
 
     def composition(self):
         return self.balance

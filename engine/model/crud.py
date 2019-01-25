@@ -5,7 +5,6 @@ from model.aiartbase.base import BaseTransformer
 from model.aiartbase import image_utils
 from .aiartbase import error_management as em
 from numpy import append
-from random import randint
 
 
 # Global variables
@@ -37,19 +36,11 @@ def process_image(file_stream, sigma, n_colors):
     # Image segments
     image_pipeline.segment(sigma=sigma)
     segments = image_pipeline.get_segments()
-    a = []
-    b = []
-    for seg in segments:
-        a.append((seg.x / image_pipeline.width, seg.y / image_pipeline.height,
-                  seg.get_weight(), seg.get_scale()[0] / image_pipeline.width,
-                  seg.get_scale()[1] / image_pipeline.width))
-
-        b.append((seg.x / image_pipeline.width, seg.y / image_pipeline.height,
-                  seg.get_weight()/2, seg.get_scale()[0] / image_pipeline.width,
-                  seg.get_scale()[1] / image_pipeline.width))
+    balanced_segments = image_pipeline.get_balanced_segments()
 
     color_palette = append(color_palette, harmonized_palette).reshape(-1, 3).tolist()
 
+    # Error and warning management0
     if image_pipeline.n_segments == 0:
         messages['composition']['type'] = em.ERROR_TYPE
         messages['composition']['message'] = em.NO_SEGMENTS
@@ -67,7 +58,7 @@ def process_image(file_stream, sigma, n_colors):
         messages['color']['type'] = em.WARNING_TYPE
         messages['color']['message'] = em.COLOR_WARNING
 
-    return color_palette, a, b, color_positions, messages, score
+    return color_palette, segments, balanced_segments, color_positions, messages, score
 
 
 def upload_image_file(file, filename, content_type):
