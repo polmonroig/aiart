@@ -1,20 +1,7 @@
 script src="bower_components/jquery/dist/jquery.min.js"
 script src="bower_components/popper.js/dist/umd/popper.min.js"
-script src="bower_components/moment/moment.js"
-script src="bower_components/chart.js/dist/Chart.min.js"
-script src="bower_components/select2/dist/js/select2.full.min.js"
-script src="bower_components/jquery-bar-rating/dist/jquery.barrating.min.js"
-script src="bower_components/ckeditor/ckeditor.js"
-script src="bower_components/bootstrap-validator/dist/validator.min.js"
-script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"
 script src="bower_components/ion.rangeSlider/js/ion.rangeSlider.min.js"
 script src="bower_components/dropzone/dist/dropzone.js"
-script src="bower_components/editable-table/mindmup-editabletable.js"
-script src="bower_components/datatables.net/js/jquery.dataTables.min.js"
-script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"
-script src="bower_components/fullcalendar/dist/fullcalendar.min.js"
-script src="bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"
-script src="bower_components/tether/dist/js/tether.min.js"
 script src="bower_components/slick-carousel/slick/slick.min.js"
 
 // Bootstrap javascript
@@ -26,7 +13,6 @@ script src="bower_components/bootstrap/js/dist/carousel.js"
 script src="bower_components/bootstrap/js/dist/collapse.js"
 script src="bower_components/bootstrap/js/dist/dropdown.js"
 script src="bower_components/bootstrap/js/dist/modal.js"
-/ script src="bower_components/bootstrap/js/dist/scrollspy.js"
 script src="bower_components/bootstrap/js/dist/tab.js"
 script src="bower_components/bootstrap/js/dist/tooltip.js"
 script src="bower_components/bootstrap/js/dist/popover.js"
@@ -92,6 +78,7 @@ javascript:
   renameFilename: null,
   renameFile: null,
   forceFallback: false,
+	dictDefaultMessage: "Drop your image here",
   accept: function(file, done) {
     console.log("Uploading...");
     done();
@@ -109,7 +96,6 @@ javascript:
         processImage(JSON.parse(response.xhr.responseText));
         showImage(this.files[0],'color-image');
         showImage(this.files[0],'balance-image');
-				this.element.appendChild(Dropzone.createElement("<div class=\"dz-default dz-message\"><span>" + this.options.dictDefaultMessage + "</span></div>"));
     });
   }
   };
@@ -152,6 +138,7 @@ javascript:
   renameFilename: null,
   renameFile: null,
   forceFallback: false,
+	dictDefaultMessage: "Drop your image here",
   accept: function(file, done) {
     console.log("Uploading...");
     done();
@@ -161,7 +148,6 @@ javascript:
       if (this.files[1]!=null){
         this.removeFile(this.files[0]);
       }
-      //showImage(this.files[0]);
     });
 
     // Receives response from server
@@ -170,66 +156,11 @@ javascript:
         processImage(JSON.parse(response.xhr.responseText));
         showImage(this.files[0],'color-image');
         showImage(this.files[0],'balance-image');
-				this.element.appendChild(Dropzone.createElement("<div class=\"dz-default dz-message\"><span>" + this.options.dictDefaultMessage + "</span></div>"));
-    });
-  }
-  };
-
-/! Dropzone Menu button custom functions
-javascript:
-  Dropzone.options.imageDropzoneMenuButton = {
-  url: "http://127.0.0.1:8080/submit",
-  method: "post",
-  withCredentials: false,
-  timeout: 30000,
-  parallelUploads: 2,
-  uploadMultiple: false,
-  maxFilesize: 7,
-  paramName: "file",
-  createImageThumbnails: false,
-  maxThumbnailFilesize: 10,
-  thumbnailMethod: 'crop',
-  resizeWidth: 200,
-  resizeHeight: null,
-  resizeMimeType: null,
-  resizeQuality: 1,
-  resizeMethod: 'contain',
-  filesizeBase: 1000,
-  maxFiles: 1,
-  params: {},
-  headers: null,
-  clickable: document.getElementsByClassName('uploadicon')[0],
-  ignoreHiddenFiles: true,
-  acceptedFiles: ".jpeg,.jpg,.png",
-  acceptedMimeTypes: null,
-  autoProcessQueue: true,
-  autoQueue: true,
-  addRemoveLinks: false,
-  previewsContainer: null,
-  hiddenInputContainer: "body",
-  capture: null,
-  renameFilename: null,
-  renameFile: null,
-  forceFallback: false,
-  accept: function(file, done) {
-    console.log("Uploading...");
-    done();
-  },
-  init: function() {
-    this.on("addedfile", function() {
-      if (this.files[1]!=null){
-        this.removeFile(this.files[0]);
-      }
-      //showImage(this.files[0]);
     });
 
-    // Receives response from server
-    this.on("success", function(response) {
-        console.log("Uploaded!");
-        processImage(JSON.parse(response.xhr.responseText));
-        showImage(this.files[0],'color-image');
-        showImage(this.files[0],'balance-image');
-				this.element.appendChild(Dropzone.createElement("<div class=\"dz-default dz-message\"><span>" + this.options.dictDefaultMessage + "</span></div>"));
-    });
+		this.on("complete", function(file) {
+   		this.removeAllFiles(true);
+			$(".mobile-menu-trigger").click();
+		})
   }
   };

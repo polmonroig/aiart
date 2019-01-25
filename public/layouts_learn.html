@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>aiart - Intelligent Art</title>
+    <title>aiart - Intelligent Art Advisor</title>
     <meta charset="utf-8" />
     <meta content="ie=edge" http-equiv="x-ua-compatible" />
     <meta content="art composition advisor ai intelligent" name="keywords" />
     <meta content="Pol Monroig and Alan Monroig" name="author" />
     <meta content="Intelligent art advisor" name="description" />
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+      <meta content="#293145" name="theme-color" />
+      <link href="favicon.png" rel="icon" sizes="127x127" />
+    </meta>
     <link href="favicon.png" rel="shortcut icon" />
     <link href="apple-touch-icon.png" rel="apple-touch-icon" />
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet" type="text/css" />
-    <link href="bower_components/select2/dist/css/select2.min.css" rel="stylesheet" />
-    <link href="bower_components/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
     <link href="bower_components/dropzone/dist/dropzone.css" rel="stylesheet" />
-    <link href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-    <link href="bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet" />
-    <link href="bower_components/perfect-scrollbar/css/perfect-scrollbar.min.css" rel="stylesheet" />
     <link href="bower_components/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet" />
     <link href="bower_components/slick-carousel/slick/slick.css" rel="stylesheet" />
     <link href="css/main.css?version=4.4.0" rel="stylesheet" />
@@ -65,19 +63,11 @@
                   </div>
                   <span>Help</span></a>
               </li>
-              <li class=" uploadicon" data-target="" data-toggle="">
-                <a href="#">
-                  <div class="icon-w">
-                    <div class="os-icon os-icon-documents-07"></div>
-                  </div>
-                  <span>Upload</span></a>
-              </li>
             </ul>
             <!--------------------
             END - Mobile Menu List
             -------------------->
             <form action="#" class="dropzone dropzone-menu hidden" enctype="multipart/form-data" id="imageDropzoneMenu"></form>
-            <form action="#" class="dropzone dropzone-menu-button hidden" enctype="multipart/form-data" id="imageDropzoneMenuButton"></form>
           </div>
         </div>
         <!--------------------
@@ -114,16 +104,8 @@
                 </div>
                 <span>Help</span></a>
             </li>
-            <li class=" uploadicon" data-target="" data-toggle="">
-              <a href="#">
-                <div class="icon-w">
-                  <div class="os-icon os-icon-documents-07"></div>
-                </div>
-                <span>Upload</span></a>
-            </li>
           </ul>
           <form action="#" class="dropzone dropzone-menu hidden" enctype="multipart/form-data" id="imageDropzoneMenu"></form>
-          <form action="#" class="dropzone dropzone-menu-button hidden" enctype="multipart/form-data" id="imageDropzoneMenuButton"></form>
         </div>
         <!--------------------
         END - Main Menu
@@ -245,28 +227,12 @@
           </div>
         </div>
       </div>
-      <div class="display-type"></div>
     </div>
-    <p class="copyright">
-      © Copyright 2018 - aiart
-    </p>
+    <button class="os-icon os-icon-arrow-up5" id="scroll-up"></button>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
-    <script src="bower_components/moment/moment.js"></script>
-    <script src="bower_components/chart.js/dist/Chart.min.js"></script>
-    <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
-    <script src="bower_components/jquery-bar-rating/dist/jquery.barrating.min.js"></script>
-    <script src="bower_components/ckeditor/ckeditor.js"></script>
-    <script src="bower_components/bootstrap-validator/dist/validator.min.js"></script>
-    <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
     <script src="bower_components/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
     <script src="bower_components/dropzone/dist/dropzone.js"></script>
-    <script src="bower_components/editable-table/mindmup-editabletable.js"></script>
-    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-    <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
-    <script src="bower_components/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js"></script>
-    <script src="bower_components/tether/dist/js/tether.min.js"></script>
     <script src="bower_components/slick-carousel/slick/slick.min.js"></script>
     <script src="bower_components/bootstrap/js/dist/util.js"></script>
     <script src="bower_components/bootstrap/js/dist/alert.js"></script>
@@ -331,6 +297,7 @@
       renameFilename: null,
       renameFile: null,
       forceFallback: false,
+        dictDefaultMessage: "Drop your image here",
       accept: function(file, done) {
         console.log("Uploading...");
         done();
@@ -348,7 +315,6 @@
             processImage(JSON.parse(response.xhr.responseText));
             showImage(this.files[0],'color-image');
             showImage(this.files[0],'balance-image');
-                    this.element.appendChild(Dropzone.createElement("<div class=\"dz-default dz-message\"><span>" + this.options.dictDefaultMessage + "</span></div>"));
         });
       }
       };
@@ -391,6 +357,7 @@
       renameFilename: null,
       renameFile: null,
       forceFallback: false,
+        dictDefaultMessage: "Drop your image here",
       accept: function(file, done) {
         console.log("Uploading...");
         done();
@@ -400,7 +367,6 @@
           if (this.files[1]!=null){
             this.removeFile(this.files[0]);
           }
-          //showImage(this.files[0]);
         });
       
         // Receives response from server
@@ -409,67 +375,12 @@
             processImage(JSON.parse(response.xhr.responseText));
             showImage(this.files[0],'color-image');
             showImage(this.files[0],'balance-image');
-                    this.element.appendChild(Dropzone.createElement("<div class=\"dz-default dz-message\"><span>" + this.options.dictDefaultMessage + "</span></div>"));
-        });
-      }
-      };
-    </script>
-    <!--Dropzone Menu button custom functions-->
-    <script>
-      Dropzone.options.imageDropzoneMenuButton = {
-      url: "http://127.0.0.1:8080/submit",
-      method: "post",
-      withCredentials: false,
-      timeout: 30000,
-      parallelUploads: 2,
-      uploadMultiple: false,
-      maxFilesize: 7,
-      paramName: "file",
-      createImageThumbnails: false,
-      maxThumbnailFilesize: 10,
-      thumbnailMethod: 'crop',
-      resizeWidth: 200,
-      resizeHeight: null,
-      resizeMimeType: null,
-      resizeQuality: 1,
-      resizeMethod: 'contain',
-      filesizeBase: 1000,
-      maxFiles: 1,
-      params: {},
-      headers: null,
-      clickable: document.getElementsByClassName('uploadicon')[0],
-      ignoreHiddenFiles: true,
-      acceptedFiles: ".jpeg,.jpg,.png",
-      acceptedMimeTypes: null,
-      autoProcessQueue: true,
-      autoQueue: true,
-      addRemoveLinks: false,
-      previewsContainer: null,
-      hiddenInputContainer: "body",
-      capture: null,
-      renameFilename: null,
-      renameFile: null,
-      forceFallback: false,
-      accept: function(file, done) {
-        console.log("Uploading...");
-        done();
-      },
-      init: function() {
-        this.on("addedfile", function() {
-          if (this.files[1]!=null){
-            this.removeFile(this.files[0]);
-          }
-          //showImage(this.files[0]);
         });
       
-        // Receives response from server
-        this.on("success", function(response) {
-            console.log("Uploaded!");
-            processImage(JSON.parse(response.xhr.responseText));
-            showImage(this.files[0],'color-image');
-            showImage(this.files[0],'balance-image');
-                    this.element.appendChild(Dropzone.createElement("<div class=\"dz-default dz-message\"><span>" + this.options.dictDefaultMessage + "</span></div>"));
-        });
+            this.on("complete", function(file) {
+            this.removeAllFiles(true);
+                $(".mobile-menu-trigger").click();
+            })
       }
       };
     </script>

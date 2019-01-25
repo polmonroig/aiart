@@ -62,7 +62,7 @@ class Heatmap{
   createHeatmap(){
 
     var heatCtx = this.canvas.getContext('2d');
-    heatCtx.clearRect(0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight) // Start with a clean canvas
+    heatCtx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Start with a clean canvas
 
     var maxValue = 100;
     var gradientImage = this.gradientImage();
@@ -80,19 +80,19 @@ class Heatmap{
         //var a = gradientImage[gray * 4 + 3];
 
 				// Circle draw
-				heatCtx.moveTo(point[0]*this.canvas.offsetWidth, point[1]*this.canvas.offsetHeight);
+				heatCtx.moveTo(point[0]*this.canvas.width, point[1]*this.canvas.height);
         heatCtx.fillStyle = 'rgba( 0,0,0,' + (gray / 255) + ')';
-        heatCtx.ellipse(point[0]*this.canvas.offsetWidth, point[1]*this.canvas.offsetHeight, point[3]*this.canvas.offsetWidth, point[4]*this.canvas.offsetWidth, 0, 0, 2 * Math.PI);
+        heatCtx.ellipse(point[0]*this.canvas.width, point[1]*this.canvas.height, point[3]*this.canvas.width, point[4]*this.canvas.width, 0, 0, 2 * Math.PI);
 
     }
 
 		 heatCtx.fill();
 
     // Blur Canvas
-    stackBlurCanvasRGBA(this.canvas.id, 0, 0, this.canvas.offsetWidth, this.canvas.offsetHeight, this.blur*this.canvas.offsetWidth); // This blur is compatible with retina display devices
+    stackBlurCanvasRGBA(this.canvas.id, 0, 0, this.canvas.width, this.canvas.height, this.blur*this.canvas.width); // This blur is compatible with retina display devices
 
     // Map blurred canvas to heatmap
-    this.colorize(heatCtx, heatCtx, 3, this.canvas.offsetWidth, this.canvas.offsetHeight, true);
+    this.colorize(heatCtx, heatCtx, 3, this.canvas.width, this.canvas.height, true);
 
   }
 
