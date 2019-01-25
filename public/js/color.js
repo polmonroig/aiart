@@ -84,7 +84,7 @@ function createColorSamples(colorPalette){
 	for(var i = 0; i < colorPalette.length/2; i++){
 		html += `
 						<div class="arrow-container" title="${rgb2hex(colorPalette[i])}" onclick="copyToClipboard(this.title, ${i})" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px; -webkit-transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg); transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg)">
-							<div class="colorsample-arrow" style="border-bottom-width: ${rgb2hsv(colorPalette[i])[1]+20}px"></div>
+							<div class="colorsample-arrow" style="border-bottom-width: ${rgb2hsv(colorPalette[i])[1]+10}px"></div>
 						</div>
 						`
 	}
@@ -92,8 +92,8 @@ function createColorSamples(colorPalette){
 	// Create color circles
 	for(var i = 0; i < colorPalette.length/2; i++){
 		html += `
-						<button id="colorsample-${i}" class="colorsample-container" value="${rgb2hex(colorPalette[i])}" onclick="copyToClipboard(this.value, ${i})" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px;">
-							<div class="colorsample" style="background: ${rgb2hex(colorPalette[i])};"></div>
+						<button id="colorsample-${i}" class="colorsample-container" value="${rgb2hex(colorPalette[i])}"  style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px;">
+							<div onclick="copyToClipboard(this.value, ${i})" class="colorsample" style="background: ${rgb2hex(colorPalette[i])};"></div>
 						</button>
 							`
 	}
@@ -115,7 +115,7 @@ function createCanvasPalette(canvas, colorPalette, colorPositions, radius=0.05){
 		// Clear canvas
 		colorCtx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
 
-		for (var i = 0; i < colorPalette.length; i++) {
+		for (var i = 0; i < colorPalette.length/2; i++) {
 				var sample = colorPalette[i];
 				var position = colorPositions[i];
 				colorCtx.strokeStyle = 'white';

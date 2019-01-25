@@ -1,3 +1,27 @@
+
+.text-left{
+	width: 50%;
+}
+.text-right{
+	width: 50%;
+}
+
+// Scroll-up button
+#scroll-up{
+	display: none; /* Hidden by default */
+	position: fixed; /* Fixed/sticky position */
+	bottom: 20px; /* Place the button at the bottom of the page */
+	right: 30px; /* Place the button 30px from the right */
+	z-index: 99; /* Make sure it does not overlap */
+	border: none; /* Remove borders */
+	outline: none; /* Remove outline */
+	background-color: #293145; /* Set a background color */
+	color: white; /* Text color */
+	cursor: pointer; /* Add a mouse pointer on hover */
+	padding: 15px; /* Some padding */
+	border-radius: 50%; /* Rounded corners */
+	font-size: 18px; /* Increase font size */
+}
 // Message info for balance and color
 
 .message {
@@ -115,9 +139,9 @@
   }
 }
 
-.logo-w {
+.menu-w .logo-w, .top-bar .logo-w {
   text-align: center;
-  padding: 14px 1rem 14px 1.7rem;
+  padding: 24px 20px;
   a {
     display: inline-block;
   }
@@ -153,7 +177,10 @@
 
 // DROPZONE
 .dropzone{
-	//border: 2px dashed #bababa;
+	border: 2px dashed #7789b7;
+}
+.dropzone-menu{
+	border: 2px dashed #4b5671;
 }
 
 // TRANSITIONS

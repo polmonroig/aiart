@@ -78,6 +78,7 @@ javascript:
   renameFilename: null,
   renameFile: null,
   forceFallback: false,
+	dictDefaultMessage: "Drop your image here",
   accept: function(file, done) {
     console.log("Uploading...");
     done();
@@ -137,6 +138,7 @@ javascript:
   renameFilename: null,
   renameFile: null,
   forceFallback: false,
+	dictDefaultMessage: "Drop your image here",
   accept: function(file, done) {
     console.log("Uploading...");
     done();
@@ -146,7 +148,6 @@ javascript:
       if (this.files[1]!=null){
         this.removeFile(this.files[0]);
       }
-      //showImage(this.files[0]);
     });
 
     // Receives response from server
@@ -156,63 +157,10 @@ javascript:
         showImage(this.files[0],'color-image');
         showImage(this.files[0],'balance-image');
     });
-  }
-  };
 
-/! Dropzone Menu button custom functions
-javascript:
-  Dropzone.options.imageDropzoneMenuButton = {
-  url: "http://127.0.0.1:8080/submit",
-  method: "post",
-  withCredentials: false,
-  timeout: 30000,
-  parallelUploads: 2,
-  uploadMultiple: false,
-  maxFilesize: 7,
-  paramName: "file",
-  createImageThumbnails: false,
-  maxThumbnailFilesize: 10,
-  thumbnailMethod: 'crop',
-  resizeWidth: 200,
-  resizeHeight: null,
-  resizeMimeType: null,
-  resizeQuality: 1,
-  resizeMethod: 'contain',
-  filesizeBase: 1000,
-  maxFiles: 1,
-  params: {},
-  headers: null,
-  clickable: document.getElementsByClassName('uploadicon')[0],
-  ignoreHiddenFiles: true,
-  acceptedFiles: ".jpeg,.jpg,.png",
-  acceptedMimeTypes: null,
-  autoProcessQueue: true,
-  autoQueue: true,
-  addRemoveLinks: false,
-  previewsContainer: null,
-  hiddenInputContainer: "body",
-  capture: null,
-  renameFilename: null,
-  renameFile: null,
-  forceFallback: false,
-  accept: function(file, done) {
-    console.log("Uploading...");
-    done();
-  },
-  init: function() {
-    this.on("addedfile", function() {
-      if (this.files[1]!=null){
-        this.removeFile(this.files[0]);
-      }
-      //showImage(this.files[0]);
-    });
-
-    // Receives response from server
-    this.on("success", function(response) {
-        console.log("Uploaded!");
-        processImage(JSON.parse(response.xhr.responseText));
-        showImage(this.files[0],'color-image');
-        showImage(this.files[0],'balance-image');
-    });
+		this.on("complete", function(file) {
+   		this.removeAllFiles(true);
+			$(".mobile-menu-trigger").click();
+		})
   }
   };

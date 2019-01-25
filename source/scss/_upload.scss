@@ -1,4 +1,6 @@
-
+#upload-wrapper{
+	padding-bottom: 0;
+}
 // DROPZONE
 
 .dropzone {
@@ -40,21 +42,21 @@
 }
 
 .dropzone-menu{
-  min-height: 180px;
+  min-height: 50px;
   margin: 20px;
   background-color: rgba(0,0,0,0.2);
   color: white;
 
   .dz-message{
-    height: 180px;
-    line-height: 180px;
+    height: 50px;
+    line-height: 50px;
     span{
       color: white;
       opacity: 0.8;
       display: inline-block;
       vertical-align: middle;
       line-height: normal;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 500;
       opacity: 0.4;
     }

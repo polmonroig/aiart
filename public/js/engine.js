@@ -130,7 +130,7 @@ function processImage(responseText){
 
 	    // Create color samples
 	    createColorSamples(colorPalette);
-	    createCanvasPalette(document.getElementById('color-image-samples'), colorPalette.slice(0, 5), colorPositions);
+	    createCanvasPalette(document.getElementById('color-image-samples'), colorPalette, colorPositions);
 
 			if(messages['color']['type'] == 'success'){
 				document.getElementsByClassName('button-color-w')[0].classList.add('hidden');
@@ -194,10 +194,9 @@ function setScore(section, localScore, newScore=-1){
 		var counter=setInterval(timer, 20);
 		function timer(){
 			localScore = initialScore < newScore ? localScore+=1 : localScore-=1;
-			documentOverviewScore.innerHTML = localScore+'%';
 
 			documentScore.innerHTML = localScore+'%';
-			documentOverviewScore.innerHTML = localScore+'%';
+			// documentOverviewScore.innerHTML = localScore+'%';
 			documentScore.innerHTML = localScore+'%';
 			increment.innerHTML = initialScore < newScore ? '+'+(localScore-initialScore) : '-'+(initialScore-localScore);
 			info.innerHTML = localScore+'/100';
