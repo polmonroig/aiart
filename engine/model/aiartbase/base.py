@@ -153,9 +153,8 @@ class BaseTransformer:
                 w = boxes[b].weight
                 relative_weight = sqrt(w['x'] ** 2 + w['y'] ** 2) / (((self.width * self.height) / 4) * 0.001 * (
                             int(sqrt((self.width / 2) ** 2 + (self.height / 2) ** 2)) / 2) * 1.2)
-                self.segments.append(Segment(boxes[b], int(relative_weight)))
+                self.segments.append(Segment(boxes[b], relative_weight))
                 segments_size += boxes[b].size
-                self.segments.append(Segment(boxes[b]))
                 self.force['x'] += w['x']
                 self.force['y'] += w['y']
         self.segment_ratio = (segments_size / (self.width * self.height)) * 100
