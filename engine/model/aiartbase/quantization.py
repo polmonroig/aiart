@@ -1,6 +1,6 @@
 import numpy as np
 from copy import deepcopy
-from math import radians
+from math import radians, pi
 
 
 
@@ -151,12 +151,12 @@ def get_pos(arr, left, right, x, c):
 
 
 def get_closest_hue(template, degree, hue):
-    closest_hue = [hue + radians(180), 0]
+    closest_hue = [3600, 0]
     for zone in template:
-        a = radians(zone[0] + degree)
-        b = radians(zone[1] + degree)
+        a = radians(int(zone[0] + degree) % 360)
+        b = radians(int(zone[1] + degree) % 360)
         if a <= hue <= b:
-            return 0, 0
+            return 0, -1
         if abs(a - hue) < closest_hue[0]:
             closest_hue = [abs(a - hue), a]
         if abs(b - hue) < closest_hue[0]:

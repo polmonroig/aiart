@@ -43,7 +43,6 @@ class ColorGenerator:
             pq_1.push(vbox)
             boxes_iterator(pq_1, self.n_colors * self.FRACTION, cmp_type='fraction')
             pq_2 = MaxHeap()
-
             while not pq_1.empty():
                 tmp = pq_1.top()
                 tmp.cmp_type = 'other'
@@ -86,7 +85,8 @@ class ColorHarmonizer:
             self.color_harmony()
             self.harmonized_colors = hsv_palette(self.colors)
             for it, col in enumerate(self.harmonized_colors):
-                col[0] = col[0] + degrees(self.best_template[3][it])
+                if self.best_template[3][it] != -1:
+                    col[0] = (degrees(self.best_template[3][it]) / 2)
             self.harmonized_colors = rgb_palette(self.harmonized_colors)
         return self.harmonized_colors
 
@@ -98,7 +98,7 @@ class ColorHarmonizer:
                 current_harmony = [0, np.zeros(self.colors.shape[1])]
                 for it, col in enumerate(hsv_palette(self.colors)):
                     sat = radians((col[1] * 255) / 100)
-                    hue = radians((col[0] * 255) / 360)
+                    hue = radians((col[0])*2)
                     closest_hue = get_closest_hue(template, degree, hue)
                     current_harmony[0] += sat * closest_hue[0]
                     current_harmony[1][it] = closest_hue[1]
@@ -107,5 +107,6 @@ class ColorHarmonizer:
             if total_harmony[0] > degree_harmony[0] or total_harmony[0] == -1:
                 total_harmony = degree_harmony
         self.best_template = total_harmony
+        print("tmp: ", self.best_template)
         self.harmony = self.best_template[0]
 

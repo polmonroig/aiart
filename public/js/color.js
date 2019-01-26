@@ -176,8 +176,14 @@ function harmonizeButton(){
 			document.getElementsByClassName('arrow-container')[i].title = `${rgb2hex(colorPalette[i+(colorPalette.length/2)])}`;
 			document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i+(colorPalette.length/2)])};`
 			document.getElementsByClassName('colorsample-image')[i].setAttribute("fill", rgb2hex(colorPalette[i+(colorPalette.length/2)]));
-			//document.getElementsByClassName('colorsample-image')[i].setAttribute("stroke-width", 5);
-			//document.getElementsByClassName('colorsample-image')[i].setAttribute("r", 35);
+
+			// Check if color is changed
+			if(colorPalette[i+(colorPalette.length/2)][0] != colorPalette[i][0] || colorPalette[i+(colorPalette.length/2)][1] != colorPalette[i][1] || colorPalette[i+(colorPalette.length/2)][2] != colorPalette[i][2]){
+				document.getElementsByClassName('colorsample-image')[i].setAttribute("stroke-width", 8);
+				document.getElementsByClassName('colorsample-image')[i].setAttribute("r", 35);
+				console.log(colorPalette[i+(colorPalette.length/2)]);
+				console.log(colorPalette[i]);
+			}
 
 			document.getElementsByClassName('harmonize-btn')[0].disabled = true;
 			document.getElementsByClassName('harmonize-reset-btn')[0].disabled = false;
@@ -215,6 +221,10 @@ function resetHarmonizeButton(){
 		document.getElementsByClassName('arrow-container')[i].title = `${rgb2hex(colorPalette[i])}`;
 		document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i])};`
 		document.getElementsByClassName('colorsample-image')[i].setAttribute("fill", rgb2hex(colorPalette[i]));
+
+		document.getElementsByClassName('colorsample-image')[i].setAttribute("stroke-width", 3);
+		document.getElementsByClassName('colorsample-image')[i].setAttribute("r", 30);
+
 
 		document.getElementsByClassName('harmonize-btn')[0].disabled = false;
 		document.getElementsByClassName('harmonize-reset-btn')[0].disabled = true;
