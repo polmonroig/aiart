@@ -168,7 +168,7 @@ class BaseTransformer:
         if len(self.segments) > 1:
             for seg in self.segments:
                 seg.weight = (seg.weight - self.min_force) / (self.max_force - self.min_force) / 2 + 0.5
-        else:
+        elif len(self.segments) > 0:
             self.segments[0] = 1
         self.segment_ratio = (segments_size / (self.width * self.height)) * 100
         self.n_segments = len(self.segments)
