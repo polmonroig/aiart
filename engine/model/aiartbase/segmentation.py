@@ -128,17 +128,16 @@ class Box:
         return self.size == 0
 
 
-
 class Segment:
     """
     Segment class that represents a segment in an image
     """
-    def __init__(self, b):
+    def __init__(self, b, w):
         self.x_diff = (b.max[0] - b.min[0]) / 2
         self.y_diff = (b.max[1] - b.min[1]) / 2
         self.x = int(self.x_diff) + b.min[0]
         self.y = int(self.y_diff) + b.min[1]
-        self.weight = 100
+        self.weight = w
 
     def get_x(self):
         """

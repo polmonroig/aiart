@@ -150,9 +150,12 @@ class BaseTransformer:
         self.force = {'x': 0, 'y': 0, 'mod': 0}
         for b in boxes:
             if boxes[b].max != [self.height, self.width] and boxes[b].min != [0, 0]:
+                w = boxes[b].weight
+                relative_weight = sqrt(w['x'] ** 2 + w['y'] ** 2) / (((self.width * self.height) / 4) * 0.001 * (
+                            int(sqrt((self.width / 2) ** 2 + (self.height / 2) ** 2)) / 2) * 1.2)
+                self.segments.append(Segment(boxes[b], int(relative_weight)))
                 segments_size += boxes[b].size
                 self.segments.append(Segment(boxes[b]))
-                w = boxes[b].weight
                 self.force['x'] += w['x']
                 self.force['y'] += w['y']
         self.segment_ratio = (segments_size / (self.width * self.height)) * 100
@@ -189,7 +192,7 @@ class BaseTransformer:
         radius = sqrt(mass / pi)
         pos_x = weight_dir['x'] + self.width / 2
         pos_y = self.height / 2 - weight_dir['y']
-        return radius, pos_x, pos_y
+        return radius, pos_x, pos_y, weight_dir
 
     def get_segments(self):
         if self.segments is None:
@@ -207,10 +210,13 @@ class BaseTransformer:
             raise Exception('Segments are not set '
                             'please refer to segment instead')
         balanced = self.get_segments()
-        weight = 100
+        radius, pos_x, pos_y, weight_dir = self.get_balance_attributes()
+        weight_dir['mod'] = sqrt(weight_dir['x']**2 + weight_dir['y']**2)
+        max_weight = (((self.width * self.height) / 4) * 0.001 * (
+                            int(sqrt((self.width / 2) ** 2 + (self.height / 2) ** 2)) / 2) * 1.2)
+        weight = weight_dir['mod'] / max_weight
         if self.segment_ratio >= MAX_SEGMENT_RATIO:
-            weight = -weight
-        radius, pos_x, pos_y = self.get_balance_attributes()
+            weight = 0
         balanced.append((pos_x / self.width, pos_y / self.height,
                         weight, radius / self.width,
                         radius / self.width))
