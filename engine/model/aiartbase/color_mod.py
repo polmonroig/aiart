@@ -85,7 +85,6 @@ class ColorHarmonizer:
         if self.harmonized_colors is None:
             self.color_harmony()
             self.harmonized_colors = hsv_palette(self.colors)
-            print(self.best_template)
             for it, col in enumerate(self.harmonized_colors):
                 col[0] = col[0] + degrees(self.best_template[3][it])
             self.harmonized_colors = rgb_palette(self.harmonized_colors)

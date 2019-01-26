@@ -165,9 +165,11 @@ class BaseTransformer:
                 segments_size += boxes[b].size
                 self.force['x'] += w['x']
                 self.force['y'] += w['y']
-        for seg in self.segments:
-            seg.weight = (seg.weight - self.min_force) / (self.max_force - self.min_force) + 0.5
-
+        if len(self.segments) > 1:
+            for seg in self.segments:
+                seg.weight = (seg.weight - self.min_force) / (self.max_force - self.min_force) / 2 + 0.5
+        else:
+            self.segments[0] = 1
         self.segment_ratio = (segments_size / (self.width * self.height)) * 100
         self.n_segments = len(self.segments)
         self.force['mod'] = sqrt(self.force['x'] ** 2 + self.force['y'] ** 2)
@@ -189,7 +191,6 @@ class BaseTransformer:
             angle = atan(self.force['y'] / float(self.force['x']))
             angle_x = cos(angle)
             angle_y = sin(angle)
-            # print("Angle: ", degrees(angle))
         weight_dir['x'] = f * angle_x
         weight_dir['y'] = f * angle_y
         if (self.force['x'] < 0 and weight_dir['x'] > 0) or (self.force['x'] > 0 and weight_dir['x'] < 0):
@@ -220,14 +221,20 @@ class BaseTransformer:
             raise Exception('Segments are not set '
                             'please refer to segment instead')
         balanced = self.get_segments()
-        size, radius, pos_x, pos_y, weight_dir = self.get_balance_attributes()
-        weight_dir['mod'] = sqrt(weight_dir['x']**2 + weight_dir['y']**2)
-        weight = ((weight_dir['mod'] / size) - self.min_force) / (self.max_force - self.min_force) + 0.5
-        if self.segment_ratio >= MAX_SEGMENT_RATIO:
-            weight = 0
-        balanced.append((pos_x / self.width, pos_y / self.height,
-                        weight, radius / self.width,
-                        radius / self.width))
+        if self.force['mod'] > 20:
+            size, radius, pos_x, pos_y, weight_dir = self.get_balance_attributes()
+            weight_dir['mod'] = sqrt(weight_dir['x']**2 + weight_dir['y']**2)
+            if size == 0:  # uknown erro
+                raise Exception("Balanced circle is empty")
+            if self.min_force == self.max_force:  # Only 1 segment
+                weight = 0.5
+            if self.max_force != self.min_force and size > 0:
+                weight = ((weight_dir['mod'] / size) - self.min_force) / (self.max_force - self.min_force) / 2 + 0.5
+            if self.segment_ratio >= MAX_SEGMENT_RATIO:
+                weight = 0
+            balanced.append((pos_x / self.width, pos_y / self.height,
+                             weight, radius / self.width,
+                             radius / self.width))
         return balanced
 
     def composition(self):

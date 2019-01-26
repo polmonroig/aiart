@@ -43,11 +43,7 @@ def composition_level(x):
     if x <= 20:
         return 100
     else:
-        x = 100 - (x - 20) / 10
-        if x < 0:
-            return 0
-        else:
-            return x
+        return 100 / ((x - 20) ** (1 / 16))
 
 
 def harmony_level(x):
