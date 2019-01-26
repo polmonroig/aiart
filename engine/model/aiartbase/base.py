@@ -45,6 +45,9 @@ class BaseTransformer:
 
         self.force = {}
 
+        self.max_force = None
+        self.min_force = None
+
     def calculate_colors(self, n_colors):
         """
         Returns an instance of the palette class
@@ -148,15 +151,23 @@ class BaseTransformer:
 
         self.segments = []
         self.force = {'x': 0, 'y': 0, 'mod': 0}
+        self.max_force = 0
+        self.min_force = float('inf')
         for b in boxes:
             if boxes[b].max != [self.height, self.width] and boxes[b].min != [0, 0]:
                 w = boxes[b].weight
-                relative_weight = sqrt(w['x'] ** 2 + w['y'] ** 2) / (((self.width * self.height) / 4) * 0.001 * (
-                            int(sqrt((self.width / 2) ** 2 + (self.height / 2) ** 2)) / 2) * 1.2)
-                self.segments.append(Segment(boxes[b], relative_weight))
+                mod = sqrt(w['x']**2 + w['y']**2)
+                if mod >  self.max_force:
+                    self.max_force = mod
+                if mod < self.min_force:
+                    self.min_force = mod
+                self.segments.append(Segment(boxes[b], mod))
                 segments_size += boxes[b].size
                 self.force['x'] += w['x']
                 self.force['y'] += w['y']
+        for seg in self.segments:
+            seg.weight = (seg.weight - self.min_force) / (self.max_force - self.min_force)
+
         self.segment_ratio = (segments_size / (self.width * self.height)) * 100
         self.n_segments = len(self.segments)
         self.force['mod'] = sqrt(self.force['x'] ** 2 + self.force['y'] ** 2)
@@ -211,9 +222,7 @@ class BaseTransformer:
         balanced = self.get_segments()
         radius, pos_x, pos_y, weight_dir = self.get_balance_attributes()
         weight_dir['mod'] = sqrt(weight_dir['x']**2 + weight_dir['y']**2)
-        max_weight = (((self.width * self.height) / 4) * 0.001 * (
-                            int(sqrt((self.width / 2) ** 2 + (self.height / 2) ** 2)) / 2) * 1.2)
-        weight = weight_dir['mod'] / max_weight
+        weight = (weight_dir['mod'] - self.min_force) / (self.max_force - self.min_force)
         if self.segment_ratio >= MAX_SEGMENT_RATIO:
             weight = 0
         balanced.append((pos_x / self.width, pos_y / self.height,
