@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from .shared_variables import saturation_margin, hue_margin
+from math import log
 
 
 def string_to_image(file_stream):
@@ -42,8 +43,10 @@ def image_resize(self, width=None, height=None, inter=cv2.INTER_AREA):
 def composition_level(x):
     if x <= 20:
         return 100
+    elif x > 7745:
+        return 0
     else:
-        return 100 / ((x - 20) ** (1 / 16))
+        return 100 - (log(x-19, 2)**1.8)
 
 
 def harmony_level(x):
