@@ -161,12 +161,12 @@ class BaseTransformer:
                     self.max_force = (mod / boxes[b].size)
                 if (mod / boxes[b].size) < self.min_force:
                     self.min_force = (mod / boxes[b].size)
-                self.segments.append(Segment(boxes[b], mod))
+                self.segments.append(Segment(boxes[b], (mod / boxes[b].size)))
                 segments_size += boxes[b].size
                 self.force['x'] += w['x']
                 self.force['y'] += w['y']
         for seg in self.segments:
-            seg.weight = (seg.weight - self.min_force) / (self.max_force - self.min_force)
+            seg.weight = (seg.weight - self.min_force) / (self.max_force - self.min_force) + 0.5
 
         self.segment_ratio = (segments_size / (self.width * self.height)) * 100
         self.n_segments = len(self.segments)
@@ -222,7 +222,7 @@ class BaseTransformer:
         balanced = self.get_segments()
         size, radius, pos_x, pos_y, weight_dir = self.get_balance_attributes()
         weight_dir['mod'] = sqrt(weight_dir['x']**2 + weight_dir['y']**2)
-        weight = ((weight_dir['mod'] / size) - self.min_force) / (self.max_force - self.min_force)
+        weight = ((weight_dir['mod'] / size) - self.min_force) / (self.max_force - self.min_force) + 0.5
         if self.segment_ratio >= MAX_SEGMENT_RATIO:
             weight = 0
         balanced.append((pos_x / self.width, pos_y / self.height,
