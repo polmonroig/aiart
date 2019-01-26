@@ -130,7 +130,8 @@ function processImage(responseText){
 
 	    // Create color samples
 	    createColorSamples(colorPalette);
-	    createCanvasPalette(document.getElementById('color-image-samples'), colorPalette, colorPositions);
+	    createImageSamples(colorPalette);
+	    //createCanvasPalette(document.getElementById('color-image-samples'),  colorPalette.slice(0, (colorPalette.length/2)), colorPositions);
 
 			if(messages['color']['type'] == 'success'){
 				document.getElementsByClassName('button-color-w')[0].classList.add('hidden');

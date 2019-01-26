@@ -30,8 +30,8 @@
 		}
 
 		.color-image-wrapper{
-			width: 100%;
 			position: relative;
+			width: 100%;
 
 			.color-image{
 				width: 100%;
@@ -42,6 +42,19 @@
 					width: 100%;
 					border-top-left-radius: 6px;
 					border-bottom-left-radius: 6px;
+				}
+			}
+
+			#color-image-samples{
+				width: 100%;
+				position: absolute;
+				top:0;
+				left:0;
+
+				svg{
+					display: block;
+					height: 100%;
+					width: 100%;
 				}
 			}
 

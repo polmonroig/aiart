@@ -13341,8 +13341,8 @@ a.with-avatar span {
     .color-index .color-content-w .color-header {
       margin-bottom: 40px; }
     .color-index .color-content-w .color-image-wrapper {
-      width: 100%;
-      position: relative; }
+      position: relative;
+      width: 100%; }
       .color-index .color-content-w .color-image-wrapper .color-image {
         width: 100%;
         position: relative;
@@ -13352,6 +13352,15 @@ a.with-avatar span {
           width: 100%;
           border-top-left-radius: 6px;
           border-bottom-left-radius: 6px; }
+      .color-index .color-content-w .color-image-wrapper #color-image-samples {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0; }
+        .color-index .color-content-w .color-image-wrapper #color-image-samples svg {
+          display: block;
+          height: 100%;
+          width: 100%; }
       .color-index .color-content-w .color-image-wrapper canvas {
         width: 100%;
         position: absolute;

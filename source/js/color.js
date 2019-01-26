@@ -107,17 +107,32 @@ function createColorSamples(colorPalette){
 
 }
 
+function createImageSamples(colorPalette){
+	var colorImageSamples = document.getElementById("color-image-samples");
 
-function createCanvasPalette(canvas, colorPalette, colorPositions, radius=0.05){
+	// Create color circles
+	var html = `<svg viewBox="0,0,${colorImageSamples.width},${colorImageSamples.height}">`;
+	for(var i = 0; i < colorPalette.length/2; i++){
+		html += `	<circle class="colorsample-image" style="background: ${rgb2hex(colorPalette[i])};" cx="${colorPositions[i][0]*colorImageSamples.width}" cy="${colorPositions[i][1]*colorImageSamples.height}" r="30" stroke="white" stroke-width="3" fill="${rgb2hex(colorPalette[i])}" /> `;
+	}
+	html += "</svg>";
+
+	colorImageSamples.innerHTML = html;
+
+}
+
+
+function createCanvasPalette(canvas, colorPalette, colorPositions, radius=0.03){
 
 		var colorCtx = canvas.getContext('2d');
 
 		// Clear canvas
 		colorCtx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
 
-		for (var i = 0; i < colorPalette.length/2; i++) {
+		for (var i = 0; i < colorPalette.length; i++) {
 				var sample = colorPalette[i];
 				var position = colorPositions[i];
+
 				colorCtx.strokeStyle = 'white';
 				colorCtx.lineWidth = 0.005*canvas.offsetWidth;
 
@@ -160,6 +175,9 @@ function harmonizeButton(){
 			document.getElementsByClassName('colorsample-container')[i].value = `${rgb2hex(colorPalette[i+(colorPalette.length/2)])}`;
 			document.getElementsByClassName('arrow-container')[i].title = `${rgb2hex(colorPalette[i+(colorPalette.length/2)])}`;
 			document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i+(colorPalette.length/2)])};`
+			document.getElementsByClassName('colorsample-image')[i].setAttribute("fill", rgb2hex(colorPalette[i+(colorPalette.length/2)]));
+			//document.getElementsByClassName('colorsample-image')[i].setAttribute("stroke-width", 5);
+			//document.getElementsByClassName('colorsample-image')[i].setAttribute("r", 35);
 
 			document.getElementsByClassName('harmonize-btn')[0].disabled = true;
 			document.getElementsByClassName('harmonize-reset-btn')[0].disabled = false;
@@ -174,7 +192,6 @@ function harmonizeButton(){
 }
 
 function resetHarmonizeButton(){
-
 	setMessage('color', messages['color']['type'], messageList[messages['color']['message']]);
   document.getElementById('colorwheel').classList.remove('colorwheel-anim-show');
 
@@ -197,6 +214,7 @@ function resetHarmonizeButton(){
 		document.getElementsByClassName('colorsample-container')[i].value = `${rgb2hex(colorPalette[i])}`;
 		document.getElementsByClassName('arrow-container')[i].title = `${rgb2hex(colorPalette[i])}`;
 		document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i])};`
+		document.getElementsByClassName('colorsample-image')[i].setAttribute("fill", rgb2hex(colorPalette[i]));
 
 		document.getElementsByClassName('harmonize-btn')[0].disabled = false;
 		document.getElementsByClassName('harmonize-reset-btn')[0].disabled = true;

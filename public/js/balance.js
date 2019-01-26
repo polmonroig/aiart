@@ -3,7 +3,7 @@
 
 class Heatmap{
 
-  constructor(canvas, datapoints, blur=0.07){
+  constructor(canvas, datapoints, blur=0.12){
     this.canvas = canvas;
 		this.blur = blur;
 
@@ -64,35 +64,29 @@ class Heatmap{
     var heatCtx = this.canvas.getContext('2d');
     heatCtx.clearRect(0, 0, this.canvas.width, this.canvas.height) // Start with a clean canvas
 
-    var maxValue = 100;
     var gradientImage = this.gradientImage();
-    //heatCtx.filter = `blur(${this.blur*this.canvas.offsetWidth}px)`; This blur is incompatible with retina display devices
+    //heatCtx.filter = `blur(${this.blur*this.canvas.offsetWidth}px)`; This blur is NOT compatible with retina display devices
+		var maxValue = 1.5;
 
-    heatCtx.beginPath();
+		// Prefill canvas with black
+		heatCtx.fillStyle = "rgba(0,0,0,1)";
+		heatCtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
     // Fill Cells
     for (var i = 0; i < this.datapoints.length; i++) {
         var point = this.datapoints[i];
-
-        var gray = (255 * (point[2] / maxValue)) | 0;
-        var r = gradientImage[gray * 4 + 0];
-        var g = gradientImage[gray * 4 + 1];
-        var b = gradientImage[gray * 4 + 2];
-        //var a = gradientImage[gray * 4 + 3];
-
 				// Circle draw
-				heatCtx.moveTo(point[0]*this.canvas.width, point[1]*this.canvas.height);
-        heatCtx.fillStyle = 'rgba( 0,0,0,' + (gray / 255) + ')';
+				heatCtx.fillStyle = 'rgba(' + Math.floor((point[2])*255) + ',0,0,1)';
+				heatCtx.beginPath();
+				//heatCtx.moveTo(point[0]*this.canvas.width, point[1]*this.canvas.height);
         heatCtx.ellipse(point[0]*this.canvas.width, point[1]*this.canvas.height, point[3]*this.canvas.width, point[4]*this.canvas.width, 0, 0, 2 * Math.PI);
-
+				heatCtx.fill();
     }
-
-		 heatCtx.fill();
-
     // Blur Canvas
     stackBlurCanvasRGBA(this.canvas.id, 0, 0, this.canvas.width, this.canvas.height, this.blur*this.canvas.width); // This blur is compatible with retina display devices
 
     // Map blurred canvas to heatmap
-    this.colorize(heatCtx, heatCtx, 3, this.canvas.width, this.canvas.height, true);
+    this.colorize(heatCtx, heatCtx, 0, this.canvas.width, this.canvas.height, true);
 
   }
 
