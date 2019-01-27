@@ -26,6 +26,7 @@ def process_image(file_stream, sigma, n_colors):
     image_pipeline.calculate_colors(n_colors)
     color_palette = image_pipeline.get_palette()
     harmonized_palette = image_pipeline.get_harmonized_palette()
+    template = image_pipeline.palette.template
 
     if image_utils.is_monochromatic(color_palette):
         messages['color']['type'] = em.ERROR_TYPE
@@ -58,7 +59,7 @@ def process_image(file_stream, sigma, n_colors):
         messages['color']['type'] = em.WARNING_TYPE
         messages['color']['message'] = em.COLOR_WARNING
 
-    return color_palette, segments, balanced_segments, color_positions, messages, score
+    return color_palette, segments, balanced_segments, color_positions, messages, score, template
 
 
 def upload_image_file(file, filename, content_type):
@@ -99,7 +100,7 @@ def submit():
     # where radius, x, y are proportional
     # to the size of the screen
 
-    color_palette, datapoints, datapoints_balanced, color_positions, messages, score = \
+    color_palette, datapoints, datapoints_balanced, color_positions, messages, score, color_template = \
         process_image(file_stream, sigma=500, n_colors=5)
 
 
@@ -107,7 +108,8 @@ def submit():
     data = jsonify(color_palette=color_palette, datapoints=datapoints,
                    datapoints_balanced=datapoints_balanced,
                    messages=messages, score=score,
-                   color_positions=color_positions)
+                   color_positions=color_positions,
+                   color_template=color_template)
 
     # Post to database
     # database.create(data)
