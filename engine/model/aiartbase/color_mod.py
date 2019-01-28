@@ -3,7 +3,6 @@ from .quantization import VBox, boxes_iterator, templates, get_closest_hue
 from .sorting import MaxHeap
 from .image_utils import hsv_palette, rgb_palette, harmony_level
 from math import degrees, radians
-from .shared_variables import hue_margin
 
 
 class ColorGenerator:
@@ -34,6 +33,8 @@ class ColorGenerator:
 
         self.harmony = 0
 
+        self.template = None
+
     def generate(self):
         if self.palette_colors is None:
             # Quantization
@@ -58,7 +59,8 @@ class ColorGenerator:
             self.palette_colors = self.palette_colors.reshape(-1, 3)
             harmonizer = ColorHarmonizer(self.palette_colors.reshape(1, -1, 3))
             self.palette_colors = self.palette_colors.reshape(-1, 3)
-            self.harmonized_palette = harmonizer.harmonize().reshape(-1, 3)
+            self.harmonized_palette, self.template = harmonizer.harmonize()
+            self.harmonized_palette = self.harmonized_palette.reshape(-1, 3)
             self.harmony = harmony_level(harmonizer.harmony)
 
     def get_palette(self):
@@ -80,6 +82,28 @@ class ColorHarmonizer:
         self.best_template = None
         self.harmony = 0
 
+    def set_template(self):
+        if self.best_template is not None:
+            degree = self.best_template[1]
+            if len(self.best_template[2]) == 2:
+                if self.best_template[2][1][2] == 244.8:
+                    return ['Y', degree]
+                if self.best_template[2][1][2] == 320.4:
+                    return ['X', degree]
+                if self.best_template[2][1][2] == 207:
+                    return ['I', degree]
+                else:
+                    return ['L', degree]
+            elif len(self.best_template[2] == 1):
+                if self.best_template[2][0][1] == 18:
+                    return ['i', degree]
+                if self.best_template[2][0][1] == 93.6:
+                    return ['V', degree]
+                if self.best_template[2][0][1] == 180:
+                    return ['T', degree]
+            else:
+                raise Exception("Unknown template")
+
     def harmonize(self):
         if self.harmonized_colors is None:
             self.color_harmony()
@@ -88,7 +112,8 @@ class ColorHarmonizer:
                 if self.best_template[3][it] != -1:
                     col[0] = (degrees(self.best_template[3][it]) / 2)
             self.harmonized_colors = rgb_palette(self.harmonized_colors)
-        return self.harmonized_colors
+        template = self.set_template()
+        return self.harmonized_colors, template
 
     def color_harmony(self):
         total_harmony = [float(-1), 0, 0, np.zeros(self.colors.shape[1])]

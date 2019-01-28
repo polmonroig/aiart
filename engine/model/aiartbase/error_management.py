@@ -1,5 +1,5 @@
 # Constants
-MAX_IMAGE_SIZE = 5000
+MAX_IMAGE_SIZE = 2000
 MIN_IMAGE_SIZE = 10
 # Error messages
 MONOCHROMATIC = 2
