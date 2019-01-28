@@ -41,35 +41,42 @@
 		}
 		h1, h2, h3, h4 {
 			color: $primary;
-			margin-bottom: 1.5rem;
+			margin-bottom: 1.3rem;
 		}
 		.onboarding-text {
-			color: darken($color-text-faded, 10%);
-			font-weight: $font-weight-light;
+			color: rgba(0,0,0,0.7);
+			font-weight: $font-weight-bold;
 			font-size: $font-size-base * 1.1;
 			margin-bottom: 30px;
 			padding-left: 20px;
 			padding-right: 20px;
+			text-align: left;
 			&:last-child {
 				margin-bottom: 10px;
+			}
+			b{
+				font-weight: 700;
 			}
 		}
 		.features-list {
 			text-align: left;
-			padding-left: 20px;
+			padding-left: 45px;
 			li {
-				margin-bottom: 10px;
+				margin-bottom: 27px;
 				list-style: none;
 				position: relative;
 				&:before {
 					content: "\e961";
 					@include osfont();
-					font-size: 12px;
+					font-size: 24px;
 					color: $primary;
 					position: absolute;
-					left: -20px;
-					top: 45%;
+					left: -47px;
+					top: 28%;
 					transform: translateY(-50%);
+				}
+				b{
+					font-weight: 700;
 				}
 			}
 		}
@@ -103,9 +110,9 @@
 				padding-bottom: 60px;
 			}
 			.onboarding-content {
-				padding-bottom: 80px;	
+				padding-bottom: 80px;
 				&.with-gradient {
-					padding-bottom: 80px;	
+					padding-bottom: 80px;
 				}
 			}
 		}
@@ -228,7 +235,7 @@
       top: 50%;
       transform: translateY(-50%);
 		}
-	} 
+	}
 	.slick-next {
 		right: 50px;
 		&:before {
@@ -286,8 +293,7 @@
 			outline: none;
 		}
 		.onboarding-content {
-			padding-bottom: 80px;	
+			padding-bottom: 80px;
 		}
 	}
 }
-

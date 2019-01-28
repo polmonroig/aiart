@@ -13,9 +13,7 @@
     </meta>
     <link href="favicon.png" rel="shortcut icon" />
     <link href="apple-touch-icon.png" rel="apple-touch-icon" />
-    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet" type="text/css">
-      <link href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
-    </link>
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet" type="text/css" />
     <link href="bower_components/dropzone/dist/dropzone.css" rel="stylesheet" />
     <link href="bower_components/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet" />
     <link href="bower_components/slick-carousel/slick/slick.css" rel="stylesheet" />
@@ -58,12 +56,12 @@
                   </div>
                   <span>Learn more</span></a>
               </li>
-              <li class=" " data-target=".modal-help" data-toggle="modal">
-                <a href="#">
+              <li class=" " data-target="" data-toggle="">
+                <a href="https://goo.gl/forms/jSFKtLqDZCLzYkNk1">
                   <div class="icon-w">
-                    <div class="os-icon os-icon-others-43"></div>
+                    <div class="os-icon os-icon-mail-07"></div>
                   </div>
-                  <span>Help</span></a>
+                  <span>Feedback</span></a>
               </li>
             </ul>
             <!--------------------
@@ -99,12 +97,12 @@
                 </div>
                 <span>Learn more</span></a>
             </li>
-            <li class=" " data-target=".modal-help" data-toggle="modal">
-              <a href="#">
+            <li class=" " data-target="" data-toggle="">
+              <a href="https://goo.gl/forms/jSFKtLqDZCLzYkNk1">
                 <div class="icon-w">
-                  <div class="os-icon os-icon-others-43"></div>
+                  <div class="os-icon os-icon-mail-07"></div>
                 </div>
-                <span>Help</span></a>
+                <span>Feedback</span></a>
             </li>
           </ul>
           <form action="#" class="dropzone dropzone-menu hidden" enctype="multipart/form-data" id="imageDropzoneMenu"></form>
@@ -114,463 +112,363 @@
         -------------------->
         <div class="content-w">
           <div class="content-i">
-            <div class="content-box"><!--START - Upload-->
-<div class="element-wrapper" id="upload-wrapper">
-  <div class="element-box">
-    <div class="message">
-      <div class="message-content-w">
-        <div class="message-content-upload message-success">
-          <b>Welcome!</b> please upload your image to start analyzing.
-        </div>
-      </div>
-    </div>
-    <form action="#" class="dropzone" enctype="multipart/form-data" id="imageDropzone"></form>
-  </div>
-</div>
-<!--END - Upload--><!--START - Overview-->
-<div class="element-wrapper hidden" id="overview-wrapper">
-  <div class="compact overview-index">
-    <div class="up-controls">
-      <div class="row">
-        <div class="text-left">
-          <div class="value-pair">
-            <div class="label">
-              Status:
-            </div>
-            <div class="value badge badge-pill badge-success">
-              Completed
-            </div>
-          </div>
-        </div>
-        <div class="text-right">
-          <a class="btn btn-primary btn-sm" href=""><i class="os-icon os-icon-link-3"></i><span>Share results</span></a>
-        </div>
-      </div>
-    </div>
-    <div class="up-contents">
-      <div class="m-b">
-        <div class="row m-b">
-          <div class="col-sm-6 b-r b-b">
-            <div class="el-tablo centered padded-v">
-              <div class="value balance-overview-score">
-                0%
-              </div>
-              <div class="label">
-                Balance Analysis
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 b-b">
-            <div class="el-tablo centered padded-v">
-              <div class="value color-overview-score">
-                0%
-              </div>
-              <div class="label">
-                Color Harmony
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="padded">
-          <div class="os-progress-bar primary balance-progress">
-            <div class="bar-labels">
-              <div class="bar-label-left">
-                <span>Balance rating</span><span class="increment positive">+0</span>
-              </div>
-              <div class="bar-label-right">
-                <span class="info">0/100</span>
-              </div>
-            </div>
-            <div class="bar-level-1" style="width: 100%">
-              <div class="bar-level-2" style="width: 0%">
-                <div class="bar-level-3" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-          <div class="os-progress-bar primary color-progress">
-            <div class="bar-labels">
-              <div class="bar-label-left">
-                <span>Color rating</span><span class="increment positive">+0</span>
-              </div>
-              <div class="bar-label-right">
-                <span class="info">0/100</span>
-              </div>
-            </div>
-            <div class="bar-level-1" style="width: 100%">
-              <div class="bar-level-2" style="width: 0%">
-                <div class="bar-level-3" style="width: 0%"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!--END - Review-->
-<div class="element-wrapper hidden" id="balance-wrapper">
-  <div class="balance-index">
-    <div class="balance-content-w">
-      <div class="balance-heatmap">
-        <div class="balance-image" id="balance-image"></div>
-        <canvas id="heatmap"></canvas>
-      </div>
-      <div class="balance-control">
-        <div class="filter-side">
-          <div class="filters-header">
-            <h4>
-              Balance
-            </h4>
-            <div class="reset-filters">
-              <div class="value balance-score">
-                0%
-              </div>
-            </div>
-          </div>
-          <div class="filter-w">
-            <div class="message">
-              <div class="message-content-w">
-                <div class="message-content-balance message-warning"></div>
-              </div>
-            </div>
-            <h6 class="filter-header">
-              Heat map overlay
-            </h6>
-            <div class="filter-body">
-              <div class="slider">
-                <input class="overlay-slider" type="text" />
-              </div>
-            </div>
-          </div>
-          <div class="filter-w button-balance-w">
-            <div class="button-div">
-              <button class="mr-2 mb-2 btn btn-primary btn-rounded colorwheel-btn balance-btn" onClick="balanceButton()" type="button">Balance Composition</button><button class="mr-2 mb-2 btn btn-outline-primary btn-rounded colorwheel-btn balance-reset-btn" disabled type="button" onClick="resetBalanceButton()"> Reset</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="element-wrapper hidden" id="color-wrapper">
-  <div class="color-index">
-    <div class="color-content-w">
-      <div class="color-image-wrapper">
-        <div class="color-image" id="color-image"></div>
-        <div id="color-image-samples"></div>
-      </div>
-      <div class="color-control">
-        <div class="filter-side">
-          <div class="filters-header">
-            <h4>
-              Color Harmony
-            </h4>
-            <div class="reset-filters">
-              <div class="value color-score">
-                0%
-              </div>
-            </div>
-          </div>
-          <div class="filter-w">
-            <div class="message self">
-              <div class="message-content-w">
-                <div class="message-content-color message-warning"></div>
-              </div>
-            </div>
-            <div class="colorwheel-container">
-              <div id="colorwheel"></div>
-            </div>
-          </div>
-          <div class="filter-w button-color-w">
-            <div class="button-div">
-              <button class="mr-2 mb-2 btn btn-primary btn-rounded colorwheel-btn harmonize-btn" onClick="harmonizeButton()" type="button"> Harmonize Palette</button><button class="mr-2 mb-2 btn btn-outline-primary btn-rounded colorwheel-btn harmonize-reset-btn" disabled type="button" onClick="resetHarmonizeButton()">Reset</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div aria-hidden="true" aria-labelledby="bug" class="modal fade bd-example-modal-lg modal-bug" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          Report a Bug
-        </h5>
-        <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
-      </div>
-      <div class="modal-body">
-        <form class="form-bug">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for=""> Name</label><input class="form-control" placeholder="John Doe" type="text" />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for=""> Email address (optional)</label><input class="form-control" placeholder="Enter email" type="email" />
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for=""> Describe the issue</label><textarea class="form-control" form="form-bug" placeholder="Description..." rows="5"></textarea></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-dismiss="modal" type="button"> Close</button><button class="btn btn-primary" type="button"> Submit</button>
-      </div>
-    </div>
-  </div>
-</div>
-<div aria-hidden="true" aria-labelledby="feature" class="modal fade bd-example-modal-lg modal-feature" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          Request a Feature
-        </h5>
-        <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
-      </div>
-      <div class="modal-body">
-        <form class="form-feature">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for=""> Name</label><input class="form-control" placeholder="John Doe" type="text" />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label for=""> Email address (optional)</label><input class="form-control" placeholder="Enter email" type="email" />
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for=""> Describe the feature</label><textarea class="form-control" form="form-feature" placeholder="Description..." rows="5"></textarea></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-dismiss="modal" type="button"> Close</button><button class="btn btn-primary" type="button"> Submit</button>
-      </div>
-    </div>
-  </div>
-</div>
-<div aria-hidden="true" class="onboarding-modal modal fade animated modal-help" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-lg modal-centered" role="document">
-    <div class="modal-content text-center">
-      <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="close-label">Skip Intro</span><span class="os-icon os-icon-close"></span></button>
-      <div class="onboarding-slider-w">
-        <div class="onboarding-slide">
-          <div class="onboarding-side-by-side">
-            <div class="onboarding-media">
-              <img alt="" src="img/bigicon5.png" width="200px" />
-            </div>
-            <div class="onboarding-content with-gradient">
-              <h4 class="onboarding-title">
-                Example Request Information
-              </h4>
-              <div class="onboarding-text">
-                In this example you can see a form where you can request some additional information from the customer when they land on the app page.
-              </div>
-              <form>
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="">Your Full Name</label><input class="form-control" placeholder="Enter your full name..." type="text" value="" />
+            <div class="content-box">
+              <!--START - Upload-->
+              <div class="element-wrapper" id="upload-wrapper">
+                <div class="element-box">
+                  <div class="message">
+                    <div class="message-content-w">
+                      <div class="message-content-upload message-success">
+                        <b>Welcome!</b> please upload your image to start analyzing.
+                      </div>
                     </div>
                   </div>
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="">Your Role</label><select class="form-control">
-                        <option>
-                          Web Developer
-                        </option>
-                        <option>
-                          Business Owner
-                        </option>
-                        <option>
-                          Other
-                        </option>
-                      </select>
+                  <form action="#" class="dropzone" enctype="multipart/form-data" id="imageDropzone"></form>
+                </div>
+              </div>
+              <!--END - Upload--><!--START - Overview-->
+              <div class="element-wrapper hidden" id="overview-wrapper">
+                <div class="compact overview-index">
+                  <div class="up-controls">
+                    <div class="row">
+                      <div class="text-left">
+                        <div class="value-pair">
+                          <div class="label">
+                            Status:
+                          </div>
+                          <div class="value badge badge-pill badge-success">
+                            Completed
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-right">
+                        <a class="btn btn-primary btn-sm" href=""><i class="os-icon os-icon-link-3"></i><span>Share results</span></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="up-contents">
+                    <div class="m-b">
+                      <div class="row m-b">
+                        <div class="col-sm-6 b-r b-b">
+                          <div class="el-tablo centered padded-v">
+                            <div class="value balance-overview-score">
+                              0%
+                            </div>
+                            <div class="label">
+                              Composition Balance
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-6 b-b">
+                          <div class="el-tablo centered padded-v">
+                            <div class="value color-overview-score">
+                              0%
+                            </div>
+                            <div class="label">
+                              Color Harmony
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="padded">
+                        <div class="os-progress-bar primary balance-progress">
+                          <div class="bar-labels">
+                            <div class="bar-label-left">
+                              <span>Balance rating</span><span class="increment positive">+0</span>
+                            </div>
+                            <div class="bar-label-right">
+                              <span class="info">0/100</span>
+                            </div>
+                          </div>
+                          <div class="bar-level-1" style="width: 100%">
+                            <div class="bar-level-2" style="width: 0%">
+                              <div class="bar-level-3" style="width: 0%"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="os-progress-bar primary color-progress">
+                          <div class="bar-labels">
+                            <div class="bar-label-left">
+                              <span>Color rating</span><span class="increment positive">+0</span>
+                            </div>
+                            <div class="bar-label-right">
+                              <span class="info">0/100</span>
+                            </div>
+                          </div>
+                          <div class="bar-level-1" style="width: 100%">
+                            <div class="bar-level-2" style="width: 0%">
+                              <div class="bar-level-3" style="width: 0%"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div class="onboarding-slide">
-          <div class="onboarding-side-by-side">
-            <div class="onboarding-media">
-              <img alt="" src="img/bigicon6.png" width="200px" />
-            </div>
-            <div class="onboarding-content with-gradient">
-              <h4 class="onboarding-title">
-                Showcase App Features
-              </h4>
-              <div class="onboarding-text">
-                In this example you can showcase some of the features of your application, it is very handy to make new users aware of your hidden features. You can use boostrap columns to split them up.
               </div>
-              <div class="row">
-                <div class="col-sm-6">
-                  <ul class="features-list">
-                    <li>
-                      Fully Responsive design
-                    </li>
-                    <li>
-                      Pre-built app layouts
-                    </li>
-                    <li>
-                      Incredible Flexibility
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-sm-6">
-                  <ul class="features-list">
-                    <li>
-                      Boxed & Full Layouts
-                    </li>
-                    <li>
-                      Based on Bootstrap 4
-                    </li>
-                    <li>
-                      Developer Friendly     
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="onboarding-slide">
-          <div class="onboarding-side-by-side">
-            <div class="onboarding-media">
-              <img alt="" src="img/bigicon2.png" width="200px" />
-            </div>
-            <div class="onboarding-content with-gradient">
-              <h4 class="onboarding-title">
-                Welcome to aiart!
-              </h4>
-              <div class="onboarding-text">
-                This is the first time you are visiting, please take a few moments to read about us so you can take full advantage of yout own intelligent art advisor.
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div aria-hidden="true" class="onboarding-modal modal fade animated modal-learn" role="dialog" tabindex="-1">
-  <div class="modal-dialog modal-lg modal-centered" role="document">
-    <div class="modal-content text-center">
-      <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="close-label">Skip Intro</span><span class="os-icon os-icon-close"></span></button>
-      <div class="onboarding-slider-w">
-        <div class="onboarding-slide">
-          <div class="onboarding-side-by-side">
-            <div class="onboarding-media">
-              <img alt="" src="img/bigicon5.png" width="200px" />
-            </div>
-            <div class="onboarding-content with-gradient">
-              <h4 class="onboarding-title">
-                Example Request Information
-              </h4>
-              <div class="onboarding-text">
-                In this example you can see a form where you can request some additional information from the customer when they land on the app page.
-              </div>
-              <form>
-                <div class="row">
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="">Your Full Name</label><input class="form-control" placeholder="Enter your full name..." type="text" value="" />
+              <!--END - Review-->
+              <div class="element-wrapper hidden" id="balance-wrapper">
+                <div class="balance-index">
+                  <div class="balance-content-w">
+                    <div class="balance-heatmap">
+                      <div class="balance-image" id="balance-image"></div>
+                      <canvas id="heatmap"></canvas>
                     </div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="">Your Role</label><select class="form-control">
-                        <option>
-                          Web Developer
-                        </option>
-                        <option>
-                          Business Owner
-                        </option>
-                        <option>
-                          Other
-                        </option>
-                      </select>
+                    <div class="balance-control">
+                      <div class="filter-side">
+                        <div class="filters-header">
+                          <h4>
+                            Composition
+                          </h4>
+                          <div class="reset-filters">
+                            <div class="value balance-score">
+                              0%
+                            </div>
+                          </div>
+                        </div>
+                        <div class="filter-w">
+                          <div class="message">
+                            <div class="message-content-w">
+                              <div class="message-content-balance message-warning"></div>
+                            </div>
+                          </div>
+                          <h6 class="filter-header">
+                            Heat map overlay
+                          </h6>
+                          <div class="filter-body">
+                            <div class="slider">
+                              <input class="overlay-slider" type="text" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="filter-w button-balance-w">
+                          <div class="button-div">
+                            <button class="mr-2 mb-2 btn btn-primary btn-rounded colorwheel-btn balance-btn" onClick="balanceButton()" type="button">Balance Composition</button><button class="mr-2 mb-2 btn btn-outline-primary btn-rounded colorwheel-btn balance-reset-btn" disabled type="button" onClick="resetBalanceButton()"> Reset</button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div class="onboarding-slide">
-          <div class="onboarding-side-by-side">
-            <div class="onboarding-media">
-              <img alt="" src="img/bigicon6.png" width="200px" />
-            </div>
-            <div class="onboarding-content with-gradient">
-              <h4 class="onboarding-title">
-                Showcase App Features
-              </h4>
-              <div class="onboarding-text">
-                In this example you can showcase some of the features of your application, it is very handy to make new users aware of your hidden features. You can use boostrap columns to split them up.
               </div>
-              <div class="row">
-                <div class="col-sm-6">
-                  <ul class="features-list">
-                    <li>
-                      Fully Responsive design
-                    </li>
-                    <li>
-                      Pre-built app layouts
-                    </li>
-                    <li>
-                      Incredible Flexibility
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-sm-6">
-                  <ul class="features-list">
-                    <li>
-                      Boxed & Full Layouts
-                    </li>
-                    <li>
-                      Based on Bootstrap 4
-                    </li>
-                    <li>
-                      Developer Friendly     
-                    </li>
-                  </ul>
+              <div class="element-wrapper hidden" id="color-wrapper">
+                <div class="color-index">
+                  <div class="color-content-w">
+                    <div class="color-image-wrapper">
+                      <div class="color-image" id="color-image"></div>
+                      <div id="color-image-samples"></div>
+                    </div>
+                    <div class="color-control">
+                      <div class="filter-side">
+                        <div class="filters-header">
+                          <h4>
+                            Color Harmony
+                          </h4>
+                          <div class="reset-filters">
+                            <div class="value color-score">
+                              0%
+                            </div>
+                          </div>
+                        </div>
+                        <div class="filter-w">
+                          <div class="message self">
+                            <div class="message-content-w">
+                              <div class="message-content-color message-warning"></div>
+                            </div>
+                          </div>
+                          <div class="colorwheel-container">
+                            <div id="colorwheel"></div>
+                          </div>
+                        </div>
+                        <div class="filter-w button-color-w">
+                          <div class="button-div">
+                            <button class="mr-2 mb-2 btn btn-primary btn-rounded colorwheel-btn harmonize-btn" onClick="harmonizeButton()" type="button"> Harmonize Palette</button><button class="mr-2 mb-2 btn btn-outline-primary btn-rounded colorwheel-btn harmonize-reset-btn" disabled type="button" onClick="resetHarmonizeButton()">Reset</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="onboarding-slide">
-          <div class="onboarding-side-by-side">
-            <div class="onboarding-media">
-              <img alt="" src="img/bigicon2.png" width="200px" />
-            </div>
-            <div class="onboarding-content with-gradient">
-              <h4 class="onboarding-title">
-                Welcome to aiart!
-              </h4>
-              <div class="onboarding-text">
-                This is the first time you are visiting, please take a few moments to read about us so you can take full advantage of yout own intelligent art advisor.
+              <div aria-hidden="true" class="onboarding-modal modal fade animated modal-learn" role="dialog" tabindex="-1">
+                <div class="modal-dialog modal-lg modal-centered" role="document">
+                  <div class="modal-content text-center">
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="close-label">Skip Intro</span><span class="os-icon os-icon-close"></span></button>
+                    <div class="onboarding-slider-w">
+                      <div class="onboarding-slide">
+                        <div class="onboarding-side-by-side">
+                          <div class="onboarding-media">
+                            <img alt="" src="img/logo_big.png" width="200px" />
+                          </div>
+                          <div class="onboarding-content with-gradient">
+                            <h3 class="onboarding-title">
+                              Meet aiart - your intelligent art advisor
+                            </h3>
+                            <br />
+                            <div class="onboarding-text">
+                              <b>Upload an image to see how aiart evaluates it</b>. And don't worry! we do not store any of your images or information.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="onboarding-slide">
+                        <div class="onboarding-side-by-side">
+                          <div class="onboarding-media">
+                            <img alt="" src="img/bigicon4.png" width="200px" />
+                          </div>
+                          <div class="onboarding-content with-gradient">
+                            <h4 class="onboarding-title">
+                              Our algorithm will see your image in the eyes of:
+                            </h4>
+                            <br />
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="features-list">
+                                  <li>
+                                    <b>Art expert:</b> who evaluates formal attributes of an image based on fundamental art theory of recognized experts in the field.
+                                  </li>
+                                  <li>
+                                    <b>Common public:</b> who will instantly form an opinion on the attractiveness of your image.
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="onboarding-slide">
+                        <div class="onboarding-side-by-side">
+                          <div class="onboarding-media">
+                            <img alt="" src="img/bigicon5.png" width="200px" />
+                          </div>
+                          <div class="onboarding-content with-gradient">
+                            <h4 class="onboarding-title">
+                              How it works:
+                            </h4>
+                            <br />
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="features-list">
+                                  <li>
+                                    We have researched and synthesized the fundamental principles of composition and color harmony into an algorithm.
+                                  </li>
+                                  <li>
+                                    We conducted a study on over 300 people to evaluate the effectiveness of our algorithm. The results of the study showed a 96% of fidelity.  <b> You can see the published paper <a href="#">here</a></b>.
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="onboarding-slide">
+                        <div class="onboarding-side-by-side">
+                          <div class="onboarding-media">
+                            <img alt="" src="img/bigicon3.png" width="200px" />
+                          </div>
+                          <div class="onboarding-content with-gradient">
+                            <h4 class="onboarding-title">
+                              What kind of images we can process:
+                            </h4>
+                            <br />
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="features-list">
+                                  <li>
+                                    Art work of any medium as long as you have a pixel representation of it.
+                                  </li>
+                                  <li>
+                                    Photos of furniture, buildings, clothing attire, food. Or just about anything that has a color palette and clear points of attention.
+                                  </li>
+                                </ul>
+                              </div>
+                              <br />
+                              <div class="onboarding-text">
+                                Highly condensed images, intricate patterns, unrecognizable shapes and low contrast images will result in a poor analysis of the composition and the algorithm will not evaluate it, although it will still evaluate its color harmony.
+                              </div>
+                              <div class="onboarding-text">
+                                Monochromatic images (or nearly) will not return a color harmony evaluation, - since its purpose is specifically to evaluate and improve the combination of various colors.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="onboarding-slide">
+                        <div class="onboarding-side-by-side">
+                          <div class="onboarding-media">
+                            <img alt="" src="img/bigicon1.png" width="200px" />
+                          </div>
+                          <div class="onboarding-content with-gradient">
+                            <h4 class="onboarding-title">
+                              Who needs our service:
+                            </h4>
+                            <br />
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <ul class="features-list">
+                                  <li>
+                                    <b>Artists of any medium:</b> Have an impartial and precise evaluator of your work, use the aiart score to push your piece of work to the next level.
+                                  </li>
+                                  <li>
+                                    <b>Graphic designers:</b> Verify the compatibility of your color scheme and the visual organization of the elements.
+                                  </li>
+                                  <li>
+                                    <b>Art directors:</b> Rapidly take decisions on set about color and composition. Take out your camera and evaluate on real- time your surroundings.
+                                  </li>
+                                  <li>
+                                    <b>Art students:</b> You can learn the fundamental principles of composition and color harmony with immediate feedback using aiart algorithm.
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="onboarding-slide">
+                        <div class="onboarding-side-by-side">
+                          <div class="onboarding-media">
+                            <img alt="" src="img/bigicon7.png" width="200px" />
+                          </div>
+                          <div class="onboarding-content with-gradient">
+                            <h4 class="onboarding-title">
+                              How did the project start:
+                            </h4>
+                            <br>
+                              <div class="row"></div>
+                              <div class="col-sm-12">
+                                <ul class="features-list">
+                                  <li>
+                                    Art should not be left behind from the race of technological improvement. Artists and creatives aided by technology are undoubtedly the future.
+                                  </li>
+                                </ul>
+                              </div>
+                              <div class="onboarding-text">
+                                There is a constant improvement of society towards greater accuracy and objectivity in all disciplines except art, the realm of art has always been left aside to the relative and subjective, even though gestalt psychology has proved we are wired in the same way, our experience on visual feedback is predictable and repeatable. We believe we can set up the common ground for artist to start with  heads up towards improvement.
+                              </div>
+                            </br>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="onboarding-slide">
+                        <div class="onboarding-side-by-side">
+                          <div class="onboarding-media">
+                            <img alt="" src="img/bigicon6.png" width="200px" />
+                          </div>
+                          <div class="onboarding-content with-gradient">
+                            <h4 class="onboarding-title">
+                              Stay tuned!
+                            </h4>
+                            <br />
+                            <div class="onboarding-text">
+                              Our two-parts algorithm is just the start of a bigger project, we are planning to develop a fully capable Artificial Intelligence assistant to guide on more complex and precise areas of artistic creation.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
             </div>
           </div>
         </div>
@@ -610,7 +508,7 @@
     <!--Dropzone custom functions-->
     <script>
       Dropzone.options.imageDropzone = {
-      url: "http://127.0.0.1:8080/submit",
+      url: "https://aiart-2ddfd.appspot.com/submit",
       method: "post",
       withCredentials: false,
       timeout: 30000,
@@ -670,7 +568,7 @@
     <!--Dropzone Menu custom functions-->
     <script>
       Dropzone.options.imageDropzoneMenu = {
-      url: "http://127.0.0.1:8080/submit",
+      url: "https://aiart-2ddfd.appspot.com/submit",
       method: "post",
       withCredentials: false,
       timeout: 30000,

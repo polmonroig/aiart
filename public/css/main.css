@@ -3514,7 +3514,7 @@ button.close {
 
 @media (min-width: 992px) {
   .modal-lg {
-    max-width: 900px; } }
+    max-width: 1200px; } }
 
 .tooltip {
   position: absolute;
@@ -8210,7 +8210,7 @@ body {
     content: "";
     position: absolute;
     z-index: -1;
-    background: linear-gradient(to bottom right, #D7BBEA, #65A8F1);
+    background: linear-gradient(to bottom right, #633d7d, #2867ab);
     top: 0px;
     left: 0px;
     bottom: 0px;
@@ -13726,21 +13726,24 @@ a.with-avatar span {
     background-repeat: no-repeat; }
   .onboarding-modal .onboarding-content h1, .onboarding-modal .onboarding-content h2, .onboarding-modal .onboarding-content h3, .onboarding-modal .onboarding-content h4 {
     color: #047bf8;
-    margin-bottom: 1.5rem; }
+    margin-bottom: 1.3rem; }
   .onboarding-modal .onboarding-content .onboarding-text {
-    color: rgba(69, 76, 96, 0.49);
-    font-weight: 300;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: 500;
     font-size: 0.99rem;
     margin-bottom: 30px;
     padding-left: 20px;
-    padding-right: 20px; }
+    padding-right: 20px;
+    text-align: left; }
     .onboarding-modal .onboarding-content .onboarding-text:last-child {
       margin-bottom: 10px; }
+    .onboarding-modal .onboarding-content .onboarding-text b {
+      font-weight: 700; }
   .onboarding-modal .onboarding-content .features-list {
     text-align: left;
-    padding-left: 20px; }
+    padding-left: 45px; }
     .onboarding-modal .onboarding-content .features-list li {
-      margin-bottom: 10px;
+      margin-bottom: 27px;
       list-style: none;
       position: relative; }
       .onboarding-modal .onboarding-content .features-list li:before {
@@ -13756,12 +13759,14 @@ a.with-avatar span {
         /* Better Font Rendering =========== */
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        font-size: 12px;
+        font-size: 24px;
         color: #047bf8;
         position: absolute;
-        left: -20px;
-        top: 45%;
+        left: -47px;
+        top: 28%;
         transform: translateY(-50%); }
+      .onboarding-modal .onboarding-content .features-list li b {
+        font-weight: 700; }
 
 .onboarding-modal .onboarding-side-by-side {
   display: flex;
@@ -15022,7 +15027,7 @@ Contents:
     .onboarding-modal .onboarding-side-by-side .onboarding-content.with-gradient {
       background-image: url(../img/onboarding-gradient-hor.png);
       background-position: top center;
-      padding: 40px 20px; }
+      padding: 40px 30px; }
   .hidden-mobile {
     display: none !important; }
   .support-index .st-foot {
