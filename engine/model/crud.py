@@ -13,20 +13,20 @@ from numpy import append
 crud = Blueprint('crud', __name__)
 
 
-def get_vision_labels(content):
-    # Instantiates a client
-    client = vision.ImageAnnotatorClient()
-
-    image = types.Image(content=content)
-
-    # Performs label detection on the image file
-    objects = client.object_localization(
-        image=image).localized_object_annotations
-
-    response = client.face_detection(image=image)
-    faces = response.face_annotations
-
-    return faces
+# def get_vision_labels(content):
+#     # Instantiates a client
+#     client = vision.ImageAnnotatorClient()
+#
+#     image = types.Image(content=content)
+#
+#     # Performs label detection on the image file
+#     objects = client.object_localization(
+#         image=image).localized_object_annotations
+#
+#     response = client.face_detection(image=image)
+#     faces = response.face_annotations
+#
+#     return faces
 
 
 def process_image(file_stream, sigma, n_colors):
@@ -110,7 +110,7 @@ def submit():
     file_stream = request.files.get('file').read()
 
     # image_url, name = upload_image_file(file_stream, filename, content_type)
-    print(get_vision_labels(file_stream))
+    # print(get_vision_labels(file_stream))
 
 
 

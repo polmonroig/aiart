@@ -82,7 +82,7 @@ function processImage(responseText){
 
 		// Check if there are no balance error messages
 		if(messages['composition']['type'] != 'error'){
-			
+
 			setScore('balance', score[0]);
 
 			//Set message
