@@ -86,15 +86,15 @@ class ColorHarmonizer:
         if self.best_template is not None:
             degree = self.best_template[1]
             if len(self.best_template[2]) == 2:
-                if self.best_template[2][1][2] == 244.8:
+                if self.best_template[2][1][1] == 244.8:
                     return ['Y', degree]
-                if self.best_template[2][1][2] == 320.4:
+                if self.best_template[2][1][1] == 320.4:
                     return ['X', degree]
-                if self.best_template[2][1][2] == 207:
+                if self.best_template[2][1][1] == 207:
                     return ['I', degree]
                 else:
                     return ['L', degree]
-            elif len(self.best_template[2] == 1):
+            elif len(self.best_template[2]) == 1:
                 if self.best_template[2][0][1] == 18:
                     return ['i', degree]
                 if self.best_template[2][0][1] == 93.6:
@@ -132,6 +132,5 @@ class ColorHarmonizer:
             if total_harmony[0] > degree_harmony[0] or total_harmony[0] == -1:
                 total_harmony = degree_harmony
         self.best_template = total_harmony
-        print("tmp: ", self.best_template)
         self.harmony = self.best_template[0]
 

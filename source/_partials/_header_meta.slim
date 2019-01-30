@@ -15,11 +15,12 @@ head
   link rel="apple-touch-icon" href="apple-touch-icon.png"
 
   link type="text/css" rel="stylesheet" href="#{fonts_url}"
-
-  link rel="stylesheet" href="bower_components/dropzone/dist/dropzone.css"
+	link rel="stylesheet" href="bower_components/filepond/dist/filepond.css"
+	link rel="stylesheet" href="bower_components/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
   link rel="stylesheet" href="bower_components/ion.rangeSlider/css/ion.rangeSlider.css"
   link rel="stylesheet" href="bower_components/slick-carousel/slick/slick.css"
   link rel="stylesheet" href="css/main.css?version=#{template_version}"
+
   - if defined? extra_css_files
     - extra_css_files.each do |css_file|
       link rel="stylesheet" href="#{css_file}"

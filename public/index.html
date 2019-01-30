@@ -13,8 +13,10 @@
     </meta>
     <link href="favicon.png" rel="shortcut icon" />
     <link href="apple-touch-icon.png" rel="apple-touch-icon" />
-    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet" type="text/css" />
-    <link href="bower_components/dropzone/dist/dropzone.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet" type="text/css">
+      <link href="bower_components/filepond/dist/filepond.css" rel="stylesheet" />
+      <link href="bower_components/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+    </link>
     <link href="bower_components/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet" />
     <link href="bower_components/slick-carousel/slick/slick.css" rel="stylesheet" />
     <link href="css/main.css?version=4.4.0" rel="stylesheet" />
@@ -66,8 +68,7 @@
             </ul>
             <!--------------------
             END - Mobile Menu List
-            -------------------->
-            <form action="#" class="dropzone dropzone-menu hidden" enctype="multipart/form-data" id="imageDropzoneMenu"></form>
+            --------------------><input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond hidden" name="file" type="file" />
           </div>
         </div>
         <!--------------------
@@ -105,7 +106,7 @@
                 <span>Feedback</span></a>
             </li>
           </ul>
-          <form action="#" class="dropzone dropzone-menu hidden" enctype="multipart/form-data" id="imageDropzoneMenu"></form>
+          <input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond hidden" name="file" type="file" />
         </div>
         <!--------------------
         END - Main Menu
@@ -123,7 +124,7 @@
                       </div>
                     </div>
                   </div>
-                  <form action="#" class="dropzone" enctype="multipart/form-data" id="imageDropzone"></form>
+                  <input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond" name="file" type="file" />
                 </div>
               </div>
               <!--END - Upload--><!--START - Overview-->
@@ -478,7 +479,6 @@
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
     <script src="bower_components/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
-    <script src="bower_components/dropzone/dist/dropzone.js"></script>
     <script src="bower_components/slick-carousel/slick/slick.min.js"></script>
     <script src="bower_components/bootstrap/js/dist/util.js"></script>
     <script src="bower_components/bootstrap/js/dist/alert.js"></script>
@@ -505,130 +505,65 @@
     </script>
     <!--Google App Engine implementation-->
     <script src="js/engine.js"></script>
-    <!--Dropzone custom functions-->
+    <script src="bower_components/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="bower_components/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+    <script src="bower_components/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+    <script src="bower_components/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
+    <script src="bower_components/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="bower_components/filepond/dist/filepond.js"></script>
     <script>
-      Dropzone.options.imageDropzone = {
-      url: "https://aiart-2ddfd.appspot.com/submit",
-      method: "post",
-      withCredentials: false,
-      timeout: 30000,
-      parallelUploads: 2,
-      uploadMultiple: false,
-      maxFilesize: 7,
-      paramName: "file",
-      createImageThumbnails: true,
-      maxThumbnailFilesize: 10,
-      thumbnailWidth: document.getElementById("imageDropzone").offsetWidth*0.6,
-      thumbnailHeight: document.getElementById("imageDropzone").offsetHeight*0.6,
-      thumbnailMethod: 'crop',
-      resizeWidth: 200,
-      resizeHeight: null,
-      resizeMimeType: null,
-      resizeQuality: 1,
-      resizeMethod: 'contain',
-      filesizeBase: 1000,
-      maxFiles: 1,
-      params: {},
-      headers: null,
-      clickable: true,
-      ignoreHiddenFiles: true,
-      acceptedFiles: ".jpeg,.jpg,.png",
-      acceptedMimeTypes: null,
-      autoProcessQueue: true,
-      autoQueue: true,
-      addRemoveLinks: false,
-      previewsContainer: null,
-      hiddenInputContainer: "body",
-      capture: null,
-      renameFilename: null,
-      renameFile: null,
-      forceFallback: false,
-        dictDefaultMessage: "Drop your image here",
-      accept: function(file, done) {
-        console.log("Uploading...");
-        done();
-      },
-      init: function() {
-        this.on("addedfile", function() {
-          if (this.files[1]!=null){
-            this.removeFile(this.files[0]);
+      FilePond.registerPlugin(
+          FilePondPluginImageResize,
+          FilePondPluginImageTransform,
+          FilePondPluginImagePreview,
+      FilePondPluginFileValidateType,
+          FilePondPluginFileValidateSize
+      );
+      
+      const ponds = FilePond.parse(document.body);
+      
+      FilePond.setOptions({
+      server: {
+          process: {
+              url: 'http://127.0.0.1:8080/submit',
+              method: 'POST',
+              onload: (response) => {
+                                  // Check which filepond has a file
+                                  it = 0;
+                                  while(ponds[it++].getFile() == null);
+                                  --it;
+                                  file = ponds[it].getFile().file;
+                                  console.log(file);
+                                  processImage(JSON.parse(response));
+                                  showImage(file,'color-image');
+                                  showImage(file,'balance-image');
+                                  // Clear filePond for a new upload
+                                  ponds[it].removeFile();
+              }
           }
-        });
-      
-        // Receives response from server
-        this.on("success", function(response) {
-            console.log("Uploaded!");
-            processImage(JSON.parse(response.xhr.responseText));
-            showImage(this.files[0],'color-image');
-            showImage(this.files[0],'balance-image');
-        });
-      }
-      };
-    </script>
-    <!--Dropzone Menu custom functions-->
-    <script>
-      Dropzone.options.imageDropzoneMenu = {
-      url: "https://aiart-2ddfd.appspot.com/submit",
-      method: "post",
-      withCredentials: false,
-      timeout: 30000,
-      parallelUploads: 2,
-      uploadMultiple: false,
-      maxFilesize: 7,
-      paramName: "file",
-      createImageThumbnails: false,
-      maxThumbnailFilesize: 10,
-      thumbnailWidth: document.getElementById("imageDropzoneMenu").offsetWidth*0.6,
-      thumbnailHeight: document.getElementById("imageDropzoneMenu").offsetHeight*0.6,
-      thumbnailMethod: 'crop',
-      resizeWidth: 200,
-      resizeHeight: null,
-      resizeMimeType: null,
-      resizeQuality: 1,
-      resizeMethod: 'contain',
-      filesizeBase: 1000,
-      maxFiles: 1,
-      params: {},
-      headers: null,
-      clickable: true,
-      ignoreHiddenFiles: true,
-      acceptedFiles: ".jpeg,.jpg,.png",
-      acceptedMimeTypes: null,
-      autoProcessQueue: true,
-      autoQueue: true,
-      addRemoveLinks: false,
-      previewsContainer: null,
-      hiddenInputContainer: "body",
-      capture: null,
-      renameFilename: null,
-      renameFile: null,
-      forceFallback: false,
-        dictDefaultMessage: "Drop your image here",
-      accept: function(file, done) {
-        console.log("Uploading...");
-        done();
       },
-      init: function() {
-        this.on("addedfile", function() {
-          if (this.files[1]!=null){
-            this.removeFile(this.files[0]);
-          }
-        });
+          allowMultiple: false,
+          dropOnPage: true,
+          dropOnElement: false,
+          dropValidation: true,
+          stylePanelLayout: 'integrated',
+          styleLoadIndicatorPosition: 'center',
+          styleProgressIndicatorPosition: 'center',
+          acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+          allowImageResize: true,
+          imageResizeMode: 'contain',
+          imageResizeUpscale: false,
+          imageResizeTargetWidth: 200,
+          allowImagePreview: true,
+          imagePreviewMaxHeight: 256,
+          imageTransformOutputQuality: 60,
+          allowFileSizeValidation: true,
+          maxFileSize: '5MB'
+      });
       
-        // Receives response from server
-        this.on("success", function(response) {
-            console.log("Uploaded!");
-            processImage(JSON.parse(response.xhr.responseText));
-            showImage(this.files[0],'color-image');
-            showImage(this.files[0],'balance-image');
-        });
-      
-            this.on("complete", function(file) {
-            this.removeAllFiles(true);
-                $(".mobile-menu-trigger").click();
-            })
-      }
-      };
+      ponds[0].imagePreviewMaxHeight = 100;
+      ponds[1].imagePreviewMaxHeight = 100;
     </script>
+    <!--Dropzone custom functions--><!--Dropzone Menu custom functions-->
   </body>
 </html>

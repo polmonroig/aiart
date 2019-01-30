@@ -44,8 +44,8 @@ function processImage(responseText){
     document.getElementsByClassName('color-index')[0].classList.remove('color-main-anim-hide');
 
     if(!document.getElementById('upload-wrapper').classList.contains("hidden")){
-      document.getElementsByClassName('dropzone-menu')[0].classList.remove('hidden');
-      document.getElementsByClassName('dropzone-menu')[1].classList.remove('hidden');
+      document.getElementsByClassName('filepond')[0].classList.remove('hidden');
+      document.getElementsByClassName('filepond')[1].classList.remove('hidden');
       document.getElementById('upload-wrapper').classList.add('hidden');
 			document.getElementById('overview-wrapper').classList.remove('hidden');
 			document.getElementById('balance-wrapper').classList.remove('hidden');
