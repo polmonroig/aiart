@@ -1,4 +1,6 @@
 # Load libraries
+from google.cloud import vision
+from google.cloud.vision import types
 from model import storage, database
 from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
 from model.aiartbase.base import BaseTransformer
@@ -6,13 +8,27 @@ from model.aiartbase import image_utils
 from .aiartbase import error_management as em
 from numpy import append
 
-
 # Global variables
 crud = Blueprint('crud', __name__)
 
 
-def process_image(file_stream, sigma, n_colors):
+def get_vision_labels(content):
+    # Instantiates a client
+    client = vision.ImageAnnotatorClient()
 
+    image = types.Image(content=content)
+
+    # Performs label detection on the image file
+    objects = client.object_localization(
+        image=image).localized_object_annotations
+
+    response = client.face_detection(image=image)
+    faces = response.face_annotations
+
+    return faces
+
+
+def process_image(file_stream, sigma, n_colors):
     messages = {"composition": {"type": em.SUCCESS_TYPE, "message": em.COMPOSITION_SUCCESS},
                 "color": {"type": em.SUCCESS_TYPE, "message": em.COLOR_SUCCESS}}
 
@@ -92,9 +108,7 @@ def submit():
     file_stream = request.files.get('file').read()
 
     # image_url, name = upload_image_file(file_stream, filename, content_type)
-
-
-
+    print(get_vision_labels(file_stream))
 
     # Datapoints (x, y, value, radius)
     # where radius, x, y are proportional
@@ -102,7 +116,6 @@ def submit():
 
     color_palette, datapoints, datapoints_balanced, color_positions, messages, score, color_template = \
         process_image(file_stream, sigma=500, n_colors=5)
-
 
     # Create data for database
     data = jsonify(color_palette=color_palette, datapoints=datapoints,
@@ -115,3 +128,4 @@ def submit():
     # database.create(data)
 
     return data
+
