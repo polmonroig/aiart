@@ -98,8 +98,8 @@ function balanceButton(){
 
   setMessage('balance', 'success', messageList[7]);
 
-	document.getElementsByClassName('balance-btn')[0].disabled = true;
-	document.getElementsByClassName('balance-reset-btn')[0].disabled = false;
+	document.getElementsByClassName('balance-btn')[0].classList.add('hidden');
+	document.getElementsByClassName('balance-reset-btn')[0].classList.remove('hidden');
 
 	setScore('balance', score[0], 100);
 }
@@ -110,8 +110,8 @@ function resetBalanceButton(){
 
   setMessage('balance',messages['composition']['type'], messageList[messages['composition']['message']]);
 
-	document.getElementsByClassName('balance-btn')[0].disabled = false;
-	document.getElementsByClassName('balance-reset-btn')[0].disabled = true;
+	document.getElementsByClassName('balance-btn')[0].classList.remove('hidden');
+	document.getElementsByClassName('balance-reset-btn')[0].classList.add('hidden');
 
 	setScore('balance', 100, score[0]);
 }

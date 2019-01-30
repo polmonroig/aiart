@@ -264,6 +264,7 @@
     <script src="bower_components/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
     <script src="bower_components/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
     <script src="bower_components/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="bower_components/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
     <script src="bower_components/filepond/dist/filepond.js"></script>
     <script>
       FilePond.registerPlugin(
@@ -271,7 +272,8 @@
           FilePondPluginImageTransform,
           FilePondPluginImagePreview,
       FilePondPluginFileValidateType,
-          FilePondPluginFileValidateSize
+          FilePondPluginFileValidateSize,
+          FilePondPluginImageExifOrientation
       );
       
       const ponds = FilePond.parse(document.body);
@@ -287,7 +289,6 @@
                                   while(ponds[it++].getFile() == null);
                                   --it;
                                   file = ponds[it].getFile().file;
-                                  console.log(file);
                                   processImage(JSON.parse(response));
                                   showImage(file,'color-image');
                                   showImage(file,'balance-image');

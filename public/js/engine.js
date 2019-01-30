@@ -82,7 +82,7 @@ function processImage(responseText){
 
 		// Check if there are no balance error messages
 		if(messages['composition']['type'] != 'error'){
-
+			
 			setScore('balance', score[0]);
 
 			//Set message
@@ -90,8 +90,8 @@ function processImage(responseText){
 
 			// Heatmap UI
 			document.getElementsByClassName('button-balance-w')[0].classList.remove('hidden');
-			document.getElementsByClassName('balance-btn')[0].disabled = false;
-			document.getElementsByClassName('balance-reset-btn')[0].disabled = true;
+			document.getElementsByClassName('balance-btn')[0].classList.remove('hidden');
+			document.getElementsByClassName('balance-reset-btn')[0].classList.add('hidden');
 
 			document.getElementById('heatmap').classList.remove('hidden');
 
@@ -121,8 +121,8 @@ function processImage(responseText){
 
 			// Color UI
 			document.getElementsByClassName('button-color-w')[0].classList.remove('hidden');
-			document.getElementsByClassName('harmonize-btn')[0].disabled = false;
-			document.getElementsByClassName('harmonize-reset-btn')[0].disabled = true;
+			document.getElementsByClassName('harmonize-btn')[0].classList.remove('hidden');
+			document.getElementsByClassName('harmonize-reset-btn')[0].classList.add('hidden');
 
 			// Set image colorsamples canvas inital size
 			document.getElementById('color-image-samples').width = document.getElementById('color-image').getElementsByTagName('img')[0].clientWidth;

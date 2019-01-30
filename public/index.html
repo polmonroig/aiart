@@ -244,7 +244,7 @@
                         </div>
                         <div class="filter-w button-balance-w">
                           <div class="button-div">
-                            <button class="mr-2 mb-2 btn btn-primary btn-rounded colorwheel-btn balance-btn" onClick="balanceButton()" type="button">Balance Composition</button><button class="mr-2 mb-2 btn btn-outline-primary btn-rounded colorwheel-btn balance-reset-btn" disabled type="button" onClick="resetBalanceButton()"> Reset</button>
+                            <button class="mr-2 mb-2 btn btn-primary btn-rounded colorwheel-btn balance-btn" onClick="balanceButton()" type="button">Balance Composition</button><button class="mr-2 mb-2 btn btn-outline-primary btn-rounded colorwheel-btn balance-reset-btn" type="button" onClick="resetBalanceButton()"> Reset</button>
                           </div>
                         </div>
                       </div>
@@ -283,7 +283,7 @@
                         </div>
                         <div class="filter-w button-color-w">
                           <div class="button-div">
-                            <button class="mr-2 mb-2 btn btn-primary btn-rounded colorwheel-btn harmonize-btn" onClick="harmonizeButton()" type="button"> Harmonize Palette</button><button class="mr-2 mb-2 btn btn-outline-primary btn-rounded colorwheel-btn harmonize-reset-btn" disabled type="button" onClick="resetHarmonizeButton()">Reset</button>
+                            <button class="mr-2 mb-2 btn btn-primary btn-rounded colorwheel-btn harmonize-btn" onClick="harmonizeButton()" type="button"> Harmonize Palette</button><button class="mr-2 mb-2 btn btn-outline-primary btn-rounded colorwheel-btn harmonize-reset-btn" type="button" onClick="resetHarmonizeButton()">Reset</button>
                           </div>
                         </div>
                       </div>
@@ -291,6 +291,31 @@
                   </div>
                 </div>
               </div>
+              <!--START - balance error-->
+              <div class="element-wrapper hidden" id="balance-error-wrapper">
+                <div class="element-box">
+                  <div class="message">
+                    <div class="message-content-w">
+                      <div class="message-content-balance-error message-warning">
+                        <b>Welcome!</b> please upload your image to start analyzing.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--END - balance error--><!--START - balance error-->
+              <div class="element-wrapper hidden" id="color-error-wrapper">
+                <div class="element-box">
+                  <div class="message">
+                    <div class="message-content-w">
+                      <div class="message-content-color-error message-warning">
+                        <b>Welcome!</b> please upload your image to start analyzing.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--END - balance error-->
               <div aria-hidden="true" class="onboarding-modal modal fade animated modal-learn" role="dialog" tabindex="-1">
                 <div class="modal-dialog modal-lg modal-centered" role="document">
                   <div class="modal-content text-center">
@@ -510,6 +535,7 @@
     <script src="bower_components/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
     <script src="bower_components/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"></script>
     <script src="bower_components/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script src="bower_components/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
     <script src="bower_components/filepond/dist/filepond.js"></script>
     <script>
       FilePond.registerPlugin(
@@ -517,7 +543,8 @@
           FilePondPluginImageTransform,
           FilePondPluginImagePreview,
       FilePondPluginFileValidateType,
-          FilePondPluginFileValidateSize
+          FilePondPluginFileValidateSize,
+          FilePondPluginImageExifOrientation
       );
       
       const ponds = FilePond.parse(document.body);
@@ -533,7 +560,6 @@
                                   while(ponds[it++].getFile() == null);
                                   --it;
                                   file = ponds[it].getFile().file;
-                                  console.log(file);
                                   processImage(JSON.parse(response));
                                   showImage(file,'color-image');
                                   showImage(file,'balance-image');
