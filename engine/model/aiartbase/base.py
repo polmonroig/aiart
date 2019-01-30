@@ -112,7 +112,7 @@ class BaseTransformer:
 
         return positions
 
-    def segment(self, compactness=50, n_segments=100,
+    def segment(self, objects, faces, compactness=50, n_segments=100,
                 connectivity=1, sigma=500, num_cuts=200):
 
         """
@@ -132,9 +132,9 @@ class BaseTransformer:
             labels = graph.cut_normalized(labels1, g, num_cuts=num_cuts)
 
             image_segmentation = color.label2rgb(labels, self.image, kind='avg')
-            self._set_boxes(labels)
+            self._set_boxes(labels, objects, faces)
 
-    def _set_boxes(self, labels):
+    def _set_boxes(self, labels, objecst, faces):
         """
         Calculates every bounding box
         """

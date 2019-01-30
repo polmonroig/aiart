@@ -4,7 +4,7 @@ from google.cloud.vision import types
 from model import storage, database
 from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
 from model.aiartbase.base import BaseTransformer
-from model.aiartbase import image_utils
+from .aiartbase import image_utils
 from .aiartbase import error_management as em
 from numpy import append
 
@@ -12,7 +12,7 @@ from numpy import append
 crud = Blueprint('crud', __name__)
 
 
-def get_vision_labels(content):
+def get_vision_data(content):
     # Instantiates a client
     client = vision.ImageAnnotatorClient()
 
@@ -25,7 +25,7 @@ def get_vision_labels(content):
     response = client.face_detection(image=image)
     faces = response.face_annotations
 
-    return faces
+    return objects, faces
 
 
 def process_image(file_stream, sigma, n_colors):
@@ -34,10 +34,9 @@ def process_image(file_stream, sigma, n_colors):
 
     # Color Palette
     image = image_utils.string_to_image(file_stream)
-    if image.shape[0] > em.MAX_IMAGE_SIZE or image.shape[1] > em.MAX_IMAGE_SIZE:
-        em.raise_incorrect_size()
-    if image.shape[0] <= em.MIN_IMAGE_SIZE or image.shape[1] <= em.MIN_IMAGE_SIZE:
-        em.raise_incorrect_size()
+    # Resize image
+    image = image_utils.image_resize(image, width=200)
+    objects, faces = get_vision_data(file_stream)
     image_pipeline = BaseTransformer(image)
     image_pipeline.calculate_colors(n_colors)
     color_palette = image_pipeline.get_palette()
@@ -51,7 +50,7 @@ def process_image(file_stream, sigma, n_colors):
     color_positions = image_pipeline.get_color_positions()
 
     # Image segments
-    image_pipeline.segment(sigma=sigma)
+    image_pipeline.segment(sigma=sigma, objects=objects, faces=faces)
     segments = image_pipeline.get_segments()
     balanced_segments = image_pipeline.get_balanced_segments()
 
@@ -108,7 +107,6 @@ def submit():
     file_stream = request.files.get('file').read()
 
     # image_url, name = upload_image_file(file_stream, filename, content_type)
-    print(get_vision_labels(file_stream))
 
     # Datapoints (x, y, value, radius)
     # where radius, x, y are proportional
