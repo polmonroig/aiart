@@ -110,7 +110,6 @@ def submit():
     file_stream = request.files.get('file').read()
 
     # image_url, name = upload_image_file(file_stream, filename, content_type)
-
     print(get_vision_labels(file_stream))
 
 
