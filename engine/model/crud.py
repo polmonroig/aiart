@@ -35,8 +35,12 @@ def process_image(file_stream, sigma, n_colors):
     # Color Palette
     image = image_utils.string_to_image(file_stream)
     # Resize image
-    image = image_utils.image_resize(image, width=200)
-    google_vision_data = False
+    print(image.shape)
+    image = image_utils.image_resize(image, height=200)
+    print(image.shape)
+    google_vision_data = True
+    objects = None
+    faces = None
     if google_vision_data:
         objects, faces = get_vision_data(file_stream)
     image_pipeline = BaseTransformer(image, google_vision_data=google_vision_data)

@@ -5,7 +5,7 @@ from .segmentation import Segment, Box, box_to_segment, NULL_COLOR
 from .color_mod import ColorGenerator
 from .image_utils import image_resize, composition_level
 from math import sqrt, pi, atan, cos, sin
-from .shared_variables import MAX_SEGMENT_RATIO, GRAVITY, INFINITY
+from .shared_variables import MAX_SEGMENT_RATIO, GRAVITY, INFINITY, image_size_relation
 
 
 class BaseTransformer:
@@ -139,82 +139,93 @@ class BaseTransformer:
         # save each segment into categories
         # (convert google data into usable data)
         # First convert the Faces
-        faces = faces['responses']['faceAnnotations']
         for face in faces:
-            if face["detectionConfidence"] >= 0.8:
-                face_positions = face["boundingPoly"]["vertices"]
-                face_size = abs((face_positions[0]["x"] - face_positions[2]["x"]) * (
-                            face_positions[0]["y"] - face_positions[2]["y"]))
+            if face.detection_confidence >= 0.8:
+                print("Enter face")
+                face_positions = face.bounding_poly.vertices
+                face_size = abs((face_positions[0].x - face_positions[2].x) * (
+                            face_positions[0].y - face_positions[2].y)) * image_size_relation
                 # if face size is bigger than image
-                if face_size / (self.height * self.width) > 0.16:
-                    eye_width = abs((face_positions[0]["x"] - face_positions[2]["x"]) / 5)
-                    eye_height = abs((face_positions[0]["y"] - face_positions[2]["y"]) / 7)
+                print("facesize:", face_size)
+                if (face_size / (self.height * self.width)) > 0.16:
+                    print("Inside eyes")
+                    eye_width = abs((face_positions[0].x - face_positions[2].x) / 5) * image_size_relation
+                    eye_height = abs((face_positions[0].y - face_positions[2].y) / 7) * image_size_relation
                     eye_size = eye_height * eye_width
 
                     # left eye
-                    left_eye = face["landmarks"][0]["position"]
-                    left_box = Box(0, 0)
+                    left_eye = face.landmarks[0].position
+                    left_box = Box(self.height, self.width)
                     tmp_color = NULL_COLOR
                     tmp_color[0] *= eye_size
                     tmp_color[1] *= eye_size
                     tmp_color[2] *= eye_size
                     left_box._average_color = tmp_color.copy()
                     left_box.size = eye_size
-                    left_box.max = [int(left_eye['x'] + eye_width), int(left_eye['y'] + eye_height)]
-                    left_box.min = [int(left_eye['x'] - eye_width), int(left_eye['y'] - eye_height)]
+                    left_box.max = [int(left_eye.x*image_size_relation + eye_width), int(left_eye.y*image_size_relation + eye_height)]
+                    left_box.min = [int(left_eye.x*image_size_relation - eye_width), int(left_eye.y*image_size_relation - eye_height)]
                     self.max_force, self.min_force, seg = box_to_segment(left_box, self.max_force, self.min_force)
                     self.segments.append(seg)
                     # right eye
-                    right_eye = face["landmarks"][1]["position"]
-                    right_box = Box(0, 0)
+                    right_eye = face.landmarks[1].position
+                    right_box = Box(self.height, self.width)
                     right_box._average_color = tmp_color.copy()
                     right_box.size = eye_size
-                    right_box.max = [int(right_eye['x'] + eye_width), int(right_eye['y'] + eye_height)]
-                    right_box.min = [int(right_eye['x'] - eye_width), int(right_eye['y'] - eye_height)]
+                    right_box.max = [int(right_eye.x*image_size_relation + eye_width), int(right_eye.y*image_size_relation + eye_height)]
+                    right_box.min = [int(right_eye.x*image_size_relation - eye_width), int(right_eye.y*image_size_relation - eye_height)]
                     self.max_force, self.min_force, seg = box_to_segment(right_box, self.max_force, self.min_force)
                     self.segments.append(seg)
                     # mouth
-                    mouth = face["landmarks"][12]["position"]
-                    mouth_width = abs((face_positions[0]["x"] - face_positions[2]["x"]) / 5)
-                    mouth_height = abs((face_positions[0]["y"] - face_positions[2]["y"]) / 8)
+                    mouth = face.landmarks[12].position
+                    mouth_width = abs((face_positions[0].x - face_positions[2].x) / 5) * image_size_relation
+                    mouth_height = abs((face_positions[0].y - face_positions[2].y) / 8) * image_size_relation
                     mouth_size = mouth_height * mouth_width
-                    mouth_box = Box(0, 0)
+                    mouth_box = Box(self.height, self.width)
                     tmp_color = NULL_COLOR
                     tmp_color[0] *= mouth_size
                     tmp_color[1] *= mouth_size
                     tmp_color[2] *= mouth_size
                     mouth_box._average_color = tmp_color.copy()
                     mouth_box.size = mouth_size
-                    mouth_box.max = [int(mouth['x'] + mouth_width), int(mouth['y'] + mouth_height)]
-                    mouth_box.min = [int(mouth['x'] - mouth_width), int(mouth['y'] - mouth_height)]
+                    mouth_box.max = [int(mouth.x*image_size_relation + mouth_width), int(mouth.y*image_size_relation + mouth_height)]
+                    mouth_box.min = [int(mouth.x*image_size_relation - mouth_width), int(mouth.y*image_size_relation - mouth_height)]
                     self.max_force, self.min_force, seg = box_to_segment(mouth_box, self.max_force, self.min_force)
                     self.segments.append(seg)
 
                 else:
                     # calculate avg_color
+                    print("Outside")
                     avg_color = [0, 0, 0]
-                    for i in range(face_positions[0]["y"], face_positions[2]["y"]):
-                        for j in range(face_positions[0]["x"], face_positions[2]["x"]):
+                    face_positions[0].y = int(face_positions[0].y * image_size_relation)
+                    face_positions[2].y = int(face_positions[2].y * image_size_relation)
+                    face_positions[2].x = int(face_positions[2].x * image_size_relation)
+                    face_positions[0].x = int(face_positions[0].x * image_size_relation)
+                    for i in range(face_positions[0].y, face_positions[2].y):
+                        for j in range(face_positions[0].x, face_positions[2].x):
                             avg_color[0] += self.image[i][j][0]
                             avg_color[1] += self.image[i][j][1]
                             avg_color[2] += self.image[i][j][2]
-                    face_box = Box(0, 0)
+                    print("Color: ", avg_color)
+                    print("Size: ", face_size)
+                    face_box = Box(self.height, self.width)
                     face_box._average_color = avg_color
                     face_box.size = face_size
-                    face_box.max = [face_positions[2]["x"], face_positions[2]["y"]]
-                    face_box.min = [face_positions[0]["x"], face_positions[0]["y"]]
+                    face_box.max = [face_positions[2].x, face_positions[2].y]
+                    face_box.min = [face_positions[0].x, face_positions[0].y]
+                    print("MaxVertex: ", face_box.max)
+                    print("MinVertex: ", face_box.min)
                     self.max_force, self.min_force, seg = box_to_segment(face_box, self.max_force, self.min_force)
+                    print("Weight", seg.weight)
                     self.segments.append(seg)
 
         #  Convert objects and delete if there is a face in the same pos
-        objects = objects["responses"]["localizedObjectAnnotations"]
         for obj in objects:
-            if obj["score"] >= 0.8:
-                bounding_polygon = obj["boundingPoly"]["normalizedVertices"]
+            if obj.score >= 0.8:
+                bounding_polygon = obj.bounding_poly.normalized_vertices
                 min_pos = [0, 0]
                 if bounding_polygon[0]:
-                    min_pos = [bounding_polygon[0]['x'] * self.width, bounding_polygon[0]['y'] * self.height]
-                max_pos = [bounding_polygon[2]['x'] * self.width, bounding_polygon[2]['y'] * self.height]
+                    min_pos = [int(bounding_polygon[0].x * self.width), int(bounding_polygon[0].y * self.height)]
+                max_pos = [int(bounding_polygon[2].x * self.width), int(bounding_polygon[2].y * self.height)]
                 obj_height = max_pos[1] - min_pos[1]
                 obj_width = max_pos[0] - min_pos[0]
                 relative_size = (obj_height * obj_width) / (self.height * self.width)
@@ -227,7 +238,7 @@ class BaseTransformer:
                             avg_color[0] += self.image[i][j][0]
                             avg_color[1] += self.image[i][j][1]
                             avg_color[2] += self.image[i][j][2]
-                    object_box = Box(0, 0)
+                    object_box = Box(self.height, self.width)
                     object_box._average_color = avg_color
                     object_box.size = size
                     object_box.max = max_pos
@@ -257,6 +268,8 @@ class BaseTransformer:
         for b in boxes:
             if boxes[b].max != [self.height, self.width] and boxes[b].min != [0, 0]:
                 w = boxes[b].weight
+                w['x'] *= 0.4
+                w['y'] *= 0.4
                 mod = sqrt(w['x']**2 + w['y']**2)
                 if (mod / boxes[b].size) > self.max_force:
                     self.max_force = (mod / boxes[b].size)
@@ -266,7 +279,6 @@ class BaseTransformer:
                 segments_size += boxes[b].size
                 self.force['x'] += w['x']
                 self.force['y'] += w['y']
-
         # use google data, my slower performance but improve segmentation
         if self.google_vision_data:
             self._google_vision_detection(objects, faces)
@@ -328,7 +340,7 @@ class BaseTransformer:
             raise Exception('Segments are not set '
                             'please refer to segment instead')
         balanced = self.get_segments()
-        if self.force['mod'] > 2000:
+        if self.force['mod'] > 20:
             size, radius, pos_x, pos_y, weight_dir = self.get_balance_attributes()
             weight_dir['mod'] = sqrt(weight_dir['x']**2 + weight_dir['y']**2)
             if size == 0:  # uknown erro

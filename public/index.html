@@ -68,7 +68,8 @@
             </ul>
             <!--------------------
             END - Mobile Menu List
-            --------------------><input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond hidden" name="file" type="file" />
+            ------------------
+              include ../_partials/_content_settings.slim--><input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond hidden" name="file" type="file" />
           </div>
         </div>
         <!--------------------
@@ -105,6 +106,9 @@
                 </div>
                 <span>Feedback</span></a>
             </li>
+            <div class="settings">
+              <label class="switch"><input class="checkbox-speed" type="checkbox" /><span class="slider round"></span></label>
+            </div>
           </ul>
           <input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond hidden" name="file" type="file" />
         </div>
@@ -609,7 +613,7 @@
           allowImageResize: true,
           imageResizeMode: 'contain',
           imageResizeUpscale: false,
-          imageResizeTargetWidth: 256,
+          imageResizeTargetWidth: 800,
           allowImagePreview: true,
           imagePreviewMaxHeight: 256,
           imageTransformOutputQuality: 100,

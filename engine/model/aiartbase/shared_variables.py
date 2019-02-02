@@ -8,3 +8,5 @@ GRAVITY = 0.001
 MAX_SEGMENT_RATIO = 65
 INFINITY = float('inf')
 
+image_size_relation = 200 / 800
+
