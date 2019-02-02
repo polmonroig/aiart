@@ -40,6 +40,20 @@ def image_resize(self, width=None, height=None, inter=cv2.INTER_AREA):
     return self
 
 
+def composition_score(x):
+    """
+    Pre: gravity == 0.1
+    :param x:
+    :return: Composition score
+    """
+    if x <= 0:
+        return 1000
+    elif x > 59000:
+        return 0
+    else:
+        return 1000 - (log(x+1, 2)**2.5)
+
+
 def composition_level(x):
     if x <= 20:
         return 100

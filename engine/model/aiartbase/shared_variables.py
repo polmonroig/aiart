@@ -6,4 +6,5 @@ hue_margin = 20
 # Segmentation
 GRAVITY = 0.001
 MAX_SEGMENT_RATIO = 65
+INFINITY = float('inf')
 

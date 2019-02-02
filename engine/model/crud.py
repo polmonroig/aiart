@@ -3,7 +3,7 @@ from google.cloud import vision
 from google.cloud.vision import types
 from model import storage, database
 from flask import Blueprint, current_app, redirect, render_template, request, url_for, jsonify
-from model.aiartbase.base import BaseTransformer
+from .aiartbase.base import BaseTransformer
 from .aiartbase import image_utils
 from .aiartbase import error_management as em
 from numpy import append
@@ -36,8 +36,10 @@ def process_image(file_stream, sigma, n_colors):
     image = image_utils.string_to_image(file_stream)
     # Resize image
     image = image_utils.image_resize(image, width=200)
-    objects, faces = get_vision_data(file_stream)
-    image_pipeline = BaseTransformer(image)
+    google_vision_data = False
+    if google_vision_data:
+        objects, faces = get_vision_data(file_stream)
+    image_pipeline = BaseTransformer(image, google_vision_data=google_vision_data)
     image_pipeline.calculate_colors(n_colors)
     color_palette = image_pipeline.get_palette()
     harmonized_palette = image_pipeline.get_harmonized_palette()

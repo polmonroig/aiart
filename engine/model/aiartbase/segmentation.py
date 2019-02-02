@@ -3,6 +3,19 @@ from math import sqrt, atan, cos, sin, degrees
 from .shared_variables import GRAVITY
 
 
+NULL_COLOR = [106, 168, 79]
+
+
+def box_to_segment(b, max_force, min_force):
+    w = b.weight
+    mod = sqrt(w['x'] ** 2 + w['y'] ** 2)
+    if (mod / b.size) > max_force:
+        max_force = (mod / b.size)
+    if (mod / b.size) < min_force:
+        min_force = (mod / b.size)
+    return max_force, min_force, Segment(b, (mod / b.size))
+
+
 class Box:
     """
     This box class is a helper class
