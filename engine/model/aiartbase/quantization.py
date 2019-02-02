@@ -155,7 +155,7 @@ def get_closest_hue(template, degree, hue):
     for zone in template:
         a = radians(int(zone[0] + degree) % 360)
         b = radians(int(zone[1] + degree) % 360)
-        if a <= hue <= b:
+        if(a < b and a <= hue <= b) or b <= hue <= a:
             return 0, -1
         if abs(a - hue) < closest_hue[0]:
             closest_hue = [abs(a - hue), a]

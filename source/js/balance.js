@@ -3,7 +3,7 @@
 
 class Heatmap{
 
-  constructor(canvas, datapoints, blur=0.08){
+  constructor(canvas, datapoints, blur=0.13){
     this.canvas = canvas;
 		this.blur = blur;
 
@@ -67,6 +67,7 @@ class Heatmap{
     var gradientImage = this.gradientImage();
     //heatCtx.filter = `blur(${this.blur*this.canvas.offsetWidth}px)`; This blur is NOT compatible with retina display devices
 		var maxValue = 1.5;
+		var extraValue = 0.4;
 
 		// Prefill canvas with black
 		heatCtx.fillStyle = "rgba(0,0,0,1)";
@@ -76,7 +77,7 @@ class Heatmap{
     for (var i = 0; i < this.datapoints.length; i++) {
         var point = this.datapoints[i];
 				// Circle draw
-				heatCtx.fillStyle = 'rgba(' + Math.floor((point[2])*255) + ',0,0,1)';
+				heatCtx.fillStyle = 'rgba(' + Math.floor((point[2]+extraValue)*255) + ',0,0,1)';
 				heatCtx.beginPath();
 				//heatCtx.moveTo(point[0]*this.canvas.width, point[1]*this.canvas.height);
         heatCtx.ellipse(point[0]*this.canvas.width, point[1]*this.canvas.height, point[3]*this.canvas.width, point[4]*this.canvas.width, 0, 0, 2 * Math.PI);

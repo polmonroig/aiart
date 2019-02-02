@@ -164,6 +164,9 @@ class BaseTransformer:
                     left_box.size = eye_size
                     left_box.max = [int(left_eye.x*image_size_relation + eye_width), int(left_eye.y*image_size_relation + eye_height)]
                     left_box.min = [int(left_eye.x*image_size_relation - eye_width), int(left_eye.y*image_size_relation - eye_height)]
+                    w = left_box.weight
+                    self.force['x'] += w['x'] * 1.2
+                    self.force['y'] += w['y'] * 1.2
                     self.max_force, self.min_force, seg = box_to_segment(left_box, self.max_force, self.min_force)
                     self.segments.append(seg)
                     # right eye
@@ -173,6 +176,9 @@ class BaseTransformer:
                     right_box.size = eye_size
                     right_box.max = [int(right_eye.x*image_size_relation + eye_width), int(right_eye.y*image_size_relation + eye_height)]
                     right_box.min = [int(right_eye.x*image_size_relation - eye_width), int(right_eye.y*image_size_relation - eye_height)]
+                    w = right_box.weight
+                    self.force['x'] += w['x'] * 1.2
+                    self.force['y'] += w['y'] * 1.2
                     self.max_force, self.min_force, seg = box_to_segment(right_box, self.max_force, self.min_force)
                     self.segments.append(seg)
                     # mouth
@@ -189,12 +195,14 @@ class BaseTransformer:
                     mouth_box.size = mouth_size
                     mouth_box.max = [int(mouth.x*image_size_relation + mouth_width), int(mouth.y*image_size_relation + mouth_height)]
                     mouth_box.min = [int(mouth.x*image_size_relation - mouth_width), int(mouth.y*image_size_relation - mouth_height)]
+                    w = mouth_box.weight
+                    self.force['x'] += w['x']
+                    self.force['y'] += w['y']
                     self.max_force, self.min_force, seg = box_to_segment(mouth_box, self.max_force, self.min_force)
                     self.segments.append(seg)
 
                 else:
                     # calculate avg_color
-                    print("Outside")
                     avg_color = [0, 0, 0]
                     face_positions[0].y = int(face_positions[0].y * image_size_relation)
                     face_positions[2].y = int(face_positions[2].y * image_size_relation)
@@ -205,17 +213,15 @@ class BaseTransformer:
                             avg_color[0] += self.image[i][j][0]
                             avg_color[1] += self.image[i][j][1]
                             avg_color[2] += self.image[i][j][2]
-                    print("Color: ", avg_color)
-                    print("Size: ", face_size)
                     face_box = Box(self.height, self.width)
                     face_box._average_color = avg_color
                     face_box.size = face_size
                     face_box.max = [face_positions[2].x, face_positions[2].y]
                     face_box.min = [face_positions[0].x, face_positions[0].y]
-                    print("MaxVertex: ", face_box.max)
-                    print("MinVertex: ", face_box.min)
+                    w = face_box.weight
+                    self.force['x'] += w['x']
+                    self.force['y'] += w['y']
                     self.max_force, self.min_force, seg = box_to_segment(face_box, self.max_force, self.min_force)
-                    print("Weight", seg.weight)
                     self.segments.append(seg)
 
         #  Convert objects and delete if there is a face in the same pos
@@ -243,6 +249,9 @@ class BaseTransformer:
                     object_box.size = size
                     object_box.max = max_pos
                     object_box.min = min_pos
+                    w = object_box.weight
+                    self.force['x'] += w['x']
+                    self.force['y'] += w['y']
                     self.max_force, self.min_force, seg = box_to_segment(object_box, self.max_force, self.min_force)
                     self.segments.append(seg)
 
@@ -264,24 +273,67 @@ class BaseTransformer:
         self.segments = []
         self.force = {'x': 0, 'y': 0, 'mod': 0}
         self.max_force = 0
-        self.min_force = float('inf')
+        self.min_force = INFINITY
+        temporal_segments = []
         for b in boxes:
             if boxes[b].max != [self.height, self.width] and boxes[b].min != [0, 0]:
                 w = boxes[b].weight
-                w['x'] *= 0.4
-                w['y'] *= 0.4
-                mod = sqrt(w['x']**2 + w['y']**2)
-                if (mod / boxes[b].size) > self.max_force:
-                    self.max_force = (mod / boxes[b].size)
-                if (mod / boxes[b].size) < self.min_force:
-                    self.min_force = (mod / boxes[b].size)
-                self.segments.append(Segment(boxes[b], (mod / boxes[b].size)))
-                segments_size += boxes[b].size
-                self.force['x'] += w['x']
-                self.force['y'] += w['y']
+
+                if not self.google_vision_data:
+
+                    mod = sqrt(w['x'] ** 2 + w['y'] ** 2)
+                    temporal_segments.append(Segment(boxes[b], (mod / boxes[b].size)))
+                    self.force['x'] += w['x']
+                    self.force['y'] += w['y']
+                    if (mod / boxes[b].size) > self.max_force:
+                        self.max_force = (mod / boxes[b].size)
+                    if (mod / boxes[b].size) < self.min_force:
+                        self.min_force = (mod / boxes[b].size)
+                else:
+                    w['x'] *= 0.4
+                    w['y'] *= 0.4
+                    mod = sqrt(w['x'] ** 2 + w['y'] ** 2)
+                    temporal_segments.append([Segment(boxes[b], (mod / boxes[b].size)), w])
+
         # use google data, my slower performance but improve segmentation
         if self.google_vision_data:
             self._google_vision_detection(objects, faces)
+            if len(self.segments) > 0:
+                for google_seg in self.segments:
+                    x_diff, y_diff = google_seg.get_scale()
+                    radius = sqrt(x_diff**2 + y_diff**2)
+                    for seg in temporal_segments:
+                        a, b = seg[0].get_scale()
+                        w = seg[1]
+                        mod = sqrt(w['x'] ** 2 + w['y'] ** 2)
+                        size = mod / seg[0].weight
+                        if sqrt((a - x_diff) ** 2 + (b - y_diff) ** 2) < radius:
+                            w['x'] *= 0.5
+                            w['y'] *= 0.5
+                        mod = sqrt(w['x'] ** 2 + w['y'] ** 2)
+                        self.force['x'] += w['x']
+                        self.force['y'] += w['y']
+                        if (mod / size) > self.max_force:
+                            self.max_force = (mod / size)
+                        if (mod / size) < self.min_force:
+                            self.min_force = (mod / size)
+                        seg[0].weight = mod / size
+                for seg in temporal_segments:
+                    self.segments.append(seg[0])
+            else:
+                for seg in temporal_segments:
+                    self.segments.append(seg[0])
+                    w = seg[1]
+                    mod = sqrt(w['x'] ** 2 + w['y'] ** 2)
+                    size = mod / seg[0].weight
+                    self.force['x'] += w['x']
+                    self.force['y'] += w['y']
+                    if (mod / size) > self.max_force:
+                        self.max_force = (mod / size)
+                    if (mod / size) < self.min_force:
+                        self.min_force = (mod / size)
+        else:
+            self.segments = temporal_segments
 
         # Calculate weight of all the segments
         if len(self.segments) > 1:
