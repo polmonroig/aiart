@@ -99,6 +99,41 @@ function processImage(responseText){
 			document.getElementById('heatmap').width = document.getElementById('balance-image').getElementsByTagName('img')[0].clientWidth;
 			document.getElementById('heatmap').height = document.getElementById('balance-image').getElementsByTagName('img')[0].clientHeight;
 
+			// Set width to adapt inside div
+			var image_element = document.getElementById('balance-image').getElementsByTagName('img')[0];
+			var image_width = image_element.clientWidth;
+			var image_height = image_element.clientHeight;
+			var size_relation = image_height / image_width;
+			var max_relation = 0.8;
+			var heatmap_element = document.getElementById('heatmap');
+			var min_relation = 0.5;
+			var max_relation = 0.7;
+			console.log("Image Relation: " + size_relation.toString());
+			if(size_relation <= max_relation && size_relation >= min_relation){
+					var window_limit = 1350;
+					var window_width = window.innerWidth;
+					var heatmap_element = document.getElementById('heatmap');
+					if(window_limit <= window_width){
+							heatmap_element.style.width = "100%";
+							heatmap_element.style.height = "auto";
+					}
+					else{
+							heatmap_element.style.width = "auto";
+							heatmap_element.style.height = "100%";
+
+					}
+			}
+			else if(size_relation <= max_relation){ // width >= height
+				// 100% on s'estira
+				// else auto
+				heatmap_element.style.width = "100%";
+				heatmap_element.style.height = "auto";
+			}
+			else{ // height > width
+				heatmap_element.style.width = "auto";
+				heatmap_element.style.height = "100%";
+			}
+
 			// Create heapmap
 			const heatmap = new Heatmap(document.getElementById('heatmap'), datapoints);
 			heatmap.createHeatmap();
@@ -128,6 +163,7 @@ function processImage(responseText){
 			document.getElementById('color-image-samples').width = document.getElementById('color-image').getElementsByTagName('img')[0].clientWidth;
 			document.getElementById('color-image-samples').height = document.getElementById('color-image').getElementsByTagName('img')[0].clientHeight;
 
+
 	    // Create color samples
 	    createColorSamples(colorPalette);
 	    createImageSamples(colorPalette);
@@ -156,7 +192,8 @@ function showImage(file, displayArea){
       var reader = new FileReader();
 
       reader.onload = function(e) {
-          displayArea.innerHTML = "";
+					// Check if exists and remove previous image
+					displayArea.innerHTML = '';
 
           var img = new Image();
           img.src = reader.result;

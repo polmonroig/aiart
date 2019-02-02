@@ -319,7 +319,7 @@
               <div aria-hidden="true" class="onboarding-modal modal fade animated modal-learn" role="dialog" tabindex="-1">
                 <div class="modal-dialog modal-lg modal-centered" role="document">
                   <div class="modal-content text-center">
-                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="close-label">Skip Intro</span><span class="os-icon os-icon-close"></span></button>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="close-label">Exit</span><span class="os-icon os-icon-close"></span></button>
                     <div class="onboarding-slider-w">
                       <div class="onboarding-slide">
                         <div class="onboarding-side-by-side">
@@ -538,6 +538,35 @@
     <script src="bower_components/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
     <script src="bower_components/filepond/dist/filepond.js"></script>
     <script>
+      // Set heatmap canvas size with event listener
+      window.addEventListener("resize", resizeHeatmap);
+      
+      function resizeHeatmap(){
+          if(document.getElementById('balance-image').getElementsByTagName('img')[0]){
+                  var image_element = document.getElementById('balance-image').getElementsByTagName('img')[0];
+                  var image_width = image_element.clientWidth;
+                  var image_height = image_element.clientHeight;
+                  var size_relation = image_height / image_width;
+                  var min_relation = 0.5;
+                  var max_relation = 0.7;
+                  if(size_relation <= max_relation && size_relation >= min_relation){
+                          var window_limit = 1350;
+                          var window_width = window.innerWidth;
+                          var heatmap_element = document.getElementById('heatmap');
+                          if(window_limit <= window_width){
+                                  heatmap_element.style.width = "100%";
+                                  heatmap_element.style.height = "auto";
+                          }
+                          else{
+                                  heatmap_element.style.width = "auto";
+                                  heatmap_element.style.height = "100%";
+      
+                          }
+                  }
+          }
+      }
+    </script>
+    <script>
       FilePond.registerPlugin(
           FilePondPluginImageResize,
           FilePondPluginImageTransform,
@@ -563,6 +592,7 @@
                                   processImage(JSON.parse(response));
                                   showImage(file,'color-image');
                                   showImage(file,'balance-image');
+      
                                   // Clear filePond for a new upload
                                   ponds[it].removeFile();
               }
@@ -579,12 +609,12 @@
           allowImageResize: true,
           imageResizeMode: 'contain',
           imageResizeUpscale: false,
-          imageResizeTargetWidth: 200,
+          imageResizeTargetWidth: 256,
           allowImagePreview: true,
           imagePreviewMaxHeight: 256,
-          imageTransformOutputQuality: 60,
+          imageTransformOutputQuality: 100,
           allowFileSizeValidation: true,
-          maxFileSize: '5MB'
+          maxFileSize: '20MB'
       });
       
       ponds[0].imagePreviewMaxHeight = 100;

@@ -141,6 +141,20 @@
 }
 
 
+.section-anim{
+	animation-name: fadeUp;
+	animation-duration: 0.5s;
+	animation-delay: 0s;
+	animation-fill-mode: both;
+}
+
+.section-anim-hide{
+	animation-name: fadeDown;
+	animation-duration: 0.5s;
+	animation-delay: 0s;
+	animation-fill-mode: both;
+}
+
 .floated-chat-btn {
   animation-name: jumpUp;
   animation-duration: 0.5s;

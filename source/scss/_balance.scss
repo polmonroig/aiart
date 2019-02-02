@@ -36,29 +36,32 @@
 		.balance-heatmap{
 			width: 100%;
 			position: relative;
-			background-color: #f2f4f8;
-
-			canvas{
-				width: 100%;
-				position: relative;
-				border-top-left-radius: 6px;
-				border-bottom-left-radius: 6px;
-				margin-bottom: -8px;
-			}
+			padding: 30px;
+			align-items: center;
+	    justify-content: center;
+	    display: flex;
 
 			.balance-image{
-				width: 100%;
+				max-width: 100%;
+				max-height: 500px;
+				position: relative;
+
+				img{
+					max-height: 500px;
+					max-width: 100%;
+					border-radius: 25px;
+				}
+			}
+
+			canvas{
 				position: absolute;
-				top: 0;
 				opacity: 1;
+				padding: 30px;
+				border-radius: 52px;
+				max-width: 100%;
 			}
 		}
 
-		.balance-heatmap img{
-			width: 100%;
-			border-top-left-radius: 6px;
-			border-bottom-left-radius: 6px;
-		}
 
 		.balance-thread {
 
@@ -71,6 +74,7 @@
 			flex: 0 0 420px;
       display: flex;
 			position: relative;
+			height: 500px;
       .filter-side{
         width: 100%;
       }
@@ -143,6 +147,8 @@
 
 					button{
 						margin: 0;
+						font-size: 18px;
+						padding: 10px 20px;
 					}
 				}
 

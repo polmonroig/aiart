@@ -32,24 +32,29 @@
 		.color-image-wrapper{
 			position: relative;
 			width: 100%;
+			padding: 30px;
+			align-items: center;
+	    justify-content: center;
+	    display: flex;
 
 			.color-image{
-				width: 100%;
+				max-width: 100%;
+				max-height: 500px;
 				position: relative;
-				background-color: #f2f4f8;
 				z-index: 0;
 				img{
-					width: 100%;
-					border-top-left-radius: 6px;
-					border-bottom-left-radius: 6px;
+					max-height: 500px;
+					max-width: 100%;
+					border-radius: 25px;
 				}
 			}
 
 			#color-image-samples{
+				height: 100%;
 				width: 100%;
 				position: absolute;
-				top:0;
-				left:0;
+				opacity: 1;
+				padding: 30px;
 
 				svg{
 					display: block;
@@ -214,7 +219,7 @@
     width: 100%;
     display: inline-block;
     text-align: center;
-		margin-top: 20px;
+		margin-top: 0;
 
     #colorwheel{
       background: url("../img/color_wheel_05x.png") no-repeat center;
@@ -222,7 +227,7 @@
       height: 270px;
       width: 270px;
 			margin: 0 auto;
-			margin-bottom: 40px;
+			margin-bottom: 20px;
       position: relative;
 
       button.colorsample-container{
@@ -354,6 +359,9 @@
 		margin-top: 32px;
 
     button{
+			margin: 0;
+			font-size: 18px;
+			padding: 10px 20px;
     }
   }
 }
