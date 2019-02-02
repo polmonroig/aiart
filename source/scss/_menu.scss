@@ -223,7 +223,7 @@
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.3s ease;
-    border-radius: $global-border-radius;
+    border-radius: $global-border-radius-small;
     .avatar-w {
       border-color: #fff;
     }
@@ -723,7 +723,7 @@
       position: absolute;
       background-color: #fff;
       padding: 10px 20px 20px;
-      border-radius: $global-border-radius;
+      border-radius: $global-border-radius-small;
       right: 0px;
       top: 50%;
       transform: translate(110%, -50%);
@@ -1181,23 +1181,23 @@
 }
 .menu-position-side.menu-side-right {
   .top-bar {
-    border-radius: $global-border-radius 0px 0px 0px;
+    border-radius: $global-border-radius-small 0px 0px 0px;
   }
   .content-w {
-    border-radius: $global-border-radius 0px 0px $global-border-radius;
+    border-radius: $global-border-radius-small 0px 0px $global-border-radius-small;
   }
 }
 .menu-position-side.menu-w {
-  border-radius: $global-border-radius 0px 0px $global-border-radius;
+  border-radius: $global-border-radius-small 0px 0px $global-border-radius-small;
   &.menu-side-left {
     .logo-w:first-child {
-      border-radius: $global-border-radius 0px 0px 0px;
+      border-radius: $global-border-radius-small 0px 0px 0px;
     }
   }
   &.menu-side-right {
-    border-radius: 0px $global-border-radius $global-border-radius 0px;
+    border-radius: 0px $global-border-radius-small $global-border-radius-small 0px;
     .logo-w:first-child {
-      border-radius: 0px $global-border-radius 0px 0px;
+      border-radius: 0px $global-border-radius-small 0px 0px;
     }
     &.sub-menu-style-flyout,
     &.sub-menu-style-over {
@@ -1429,7 +1429,7 @@
 
 .menu-position-top.menu-w {
   flex: 0 0 100%;
-  border-radius: $global-border-radius $global-border-radius 0px 0px;
+  border-radius: $global-border-radius-small $global-border-radius-small 0px 0px;
   border-bottom: 0px solid rgba(0,0,0,0.05);
   border-right: none;
   display: flex;

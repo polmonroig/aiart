@@ -45,7 +45,38 @@ script src="bower_components/filepond-plugin-image-preview/dist/filepond-plugin-
 script src="bower_components/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"
 script src="bower_components/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"
 script src="bower_components/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"
+script src="bower_components/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"
 script src="bower_components/filepond/dist/filepond.js"
+
+javascript:
+		// Set heatmap canvas size with event listener
+		window.addEventListener("resize", resizeHeatmap);
+
+		function resizeHeatmap(){
+			if(document.getElementById('balance-image').getElementsByTagName('img')[0]){
+					var image_element = document.getElementById('balance-image').getElementsByTagName('img')[0];
+					var image_width = image_element.clientWidth;
+					var image_height = image_element.clientHeight;
+					var size_relation = image_height / image_width;
+					var min_relation = 0.5;
+					var max_relation = 0.7;
+					if(size_relation <= max_relation && size_relation >= min_relation){
+							var window_limit = 1350;
+							var window_width = window.innerWidth;
+							var heatmap_element = document.getElementById('heatmap');
+							if(window_limit <= window_width){
+									heatmap_element.style.width = "100%";
+									heatmap_element.style.height = "auto";
+							}
+							else{
+									heatmap_element.style.width = "auto";
+									heatmap_element.style.height = "100%";
+
+							}
+					}
+			}
+		}
+
 
 javascript:
 
@@ -54,7 +85,8 @@ javascript:
 		FilePondPluginImageTransform,
 		FilePondPluginImagePreview,
     FilePondPluginFileValidateType,
-		FilePondPluginFileValidateSize
+		FilePondPluginFileValidateSize,
+		FilePondPluginImageExifOrientation
 	);
 
 	const ponds = FilePond.parse(document.body);
@@ -70,10 +102,10 @@ javascript:
 								while(ponds[it++].getFile() == null);
 								--it;
 								file = ponds[it].getFile().file;
-								console.log(file);
 								processImage(JSON.parse(response));
 								showImage(file,'color-image');
 								showImage(file,'balance-image');
+
 								// Clear filePond for a new upload
 								ponds[it].removeFile();
             }
@@ -90,12 +122,12 @@ javascript:
 		allowImageResize: true,
 		imageResizeMode: 'contain',
 		imageResizeUpscale: false,
-		imageResizeTargetWidth: 200,
+		imageResizeTargetWidth: 256,
 		allowImagePreview: true,
 		imagePreviewMaxHeight: 256,
-		imageTransformOutputQuality: 60,
+		imageTransformOutputQuality: 100,
 		allowFileSizeValidation: true,
-		maxFileSize: '5MB'
+		maxFileSize: '20MB'
 	});
 
 	ponds[0].imagePreviewMaxHeight = 100;

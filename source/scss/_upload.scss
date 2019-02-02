@@ -9,8 +9,18 @@
 // FilePond
 .filepond--root {
     min-height: 250px;
+		font-size: 22px;
+
 		.filepond--image-preview-wrapper{
-			border-radius: 10px !important;
+			border-radius: 20px !important;
+
+			.filepond--image-preview{
+				background-color: rgba(0,0,0,0);
+
+				.filepond--image-clip{
+					border-radius: 20px !important;
+				}
+			}
 		}
 
 		.filepond--image-preview-overlay{
@@ -28,6 +38,14 @@
 		.filepond--file{
 			color: #4f4f4f;
 		}
+}
+
+.filepond--panel-root {
+	border-radius: 30px;
+}
+
+.filepond--item-panel {
+    border-radius: 30px;
 }
 
 .menu-w {
@@ -54,11 +72,15 @@
 				color: #ddd;
 			}
 			.filepond--image-preview-wrapper{
-				border-radius: 0px !important;
+				border-radius: 20px !important;
 			}
 	}
 	.filepond--drop-label{
 	    color: #ddd;
+			font-size: 16px !important;
+			label{
+				font-size: 16px !important;
+			}
 	}
 
 }

@@ -185,8 +185,8 @@ function harmonizeButton(){
 				console.log(colorPalette[i]);
 			}
 
-			document.getElementsByClassName('harmonize-btn')[0].disabled = true;
-			document.getElementsByClassName('harmonize-reset-btn')[0].disabled = false;
+			document.getElementsByClassName('harmonize-btn')[0].classList.add('hidden');
+			document.getElementsByClassName('harmonize-reset-btn')[0].classList.remove('hidden');
 		}
 		setTimeout(function() {
 			for(var i = 0; i < colorPalette.length/2; i++){
@@ -226,8 +226,8 @@ function resetHarmonizeButton(){
 		document.getElementsByClassName('colorsample-image')[i].setAttribute("r", 30);
 
 
-		document.getElementsByClassName('harmonize-btn')[0].disabled = false;
-		document.getElementsByClassName('harmonize-reset-btn')[0].disabled = true;
+		document.getElementsByClassName('harmonize-btn')[0].classList.remove('hidden');
+		document.getElementsByClassName('harmonize-reset-btn')[0].classList.add('hidden');
 	}
 	setTimeout(function() {
 		for(var i = 0; i < colorPalette.length/2; i++){
