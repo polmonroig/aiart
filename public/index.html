@@ -66,10 +66,12 @@
                   <span>Feedback</span></a>
               </li>
             </ul>
-            <!--------------------
+            <div class="settings">
+              <span class="label-speed">Fast mode</span><label class="switch"><input class="checkbox-vision" type="checkbox" checked onclick="visionCheck()" /><span class="slider round"></span></label>
+            </div>
+            <input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond hidden" name="file" type="file" /><!--------------------
             END - Mobile Menu List
-            ------------------
-              include ../_partials/_content_settings.slim--><input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond hidden" name="file" type="file" />
+            -------------------->
           </div>
         </div>
         <!--------------------
@@ -107,7 +109,7 @@
                 <span>Feedback</span></a>
             </li>
             <div class="settings">
-              <label class="switch"><input class="checkbox-speed" type="checkbox" /><span class="slider round"></span></label>
+              <span class="label-speed">Fast mode</span><label class="switch"><input class="checkbox-vision" type="checkbox" checked onclick="visionCheck()" /><span class="slider round"></span></label>
             </div>
           </ul>
           <input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond hidden" name="file" type="file" />
@@ -569,6 +571,21 @@
                   }
           }
       }
+      
+      // Set Settings
+      var vision = 0;
+      
+      function visionCheck(){
+              var visionCheckbox = document.getElementsByClassName('checkbox-vision')[0];
+              if (visionCheckbox.checked == true){
+              vision = 1;
+                  document.getElementsByClassName('checkbox-vision')[0].checked = false;
+            } else {
+               vision = 0;
+                   document.getElementsByClassName('checkbox-vision')[0].checked = true;
+            }
+              console.log(vision);
+      }
     </script>
     <script>
       FilePond.registerPlugin(
@@ -585,8 +602,12 @@
       FilePond.setOptions({
       server: {
           process: {
-              url: 'http://127.0.0.1:8080/submit',
+              url: `http://127.0.0.1:8080/submit`,
               method: 'POST',
+                          ondata: (formData) => {
+                  formData.append('vision', vision);
+                  return formData;
+              },
               onload: (response) => {
                                   // Check which filepond has a file
                                   it = 0;
@@ -599,6 +620,7 @@
       
                                   // Clear filePond for a new upload
                                   ponds[it].removeFile();
+                                  console.log(vision);
               }
           }
       },

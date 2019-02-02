@@ -14252,7 +14252,10 @@ a.with-avatar span {
 
 /* 24. Settings */
 .settings {
+  margin-top: 30px;
   /* Rounded sliders */ }
+  .settings .label-speed {
+    padding: 20px; }
   .settings .switch {
     position: relative;
     display: inline-block;

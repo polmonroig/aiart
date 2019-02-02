@@ -28,7 +28,7 @@ def get_vision_data(content):
     return objects, faces
 
 
-def process_image(file_stream, sigma, n_colors):
+def process_image(file_stream, settings, sigma, n_colors):
     messages = {"composition": {"type": em.SUCCESS_TYPE, "message": em.COMPOSITION_SUCCESS},
                 "color": {"type": em.SUCCESS_TYPE, "message": em.COLOR_SUCCESS}}
 
@@ -38,7 +38,7 @@ def process_image(file_stream, sigma, n_colors):
     print(image.shape)
     image = image_utils.image_resize(image, height=200)
     print(image.shape)
-    google_vision_data = True
+    google_vision_data = settings['vision']
     objects = None
     faces = None
     if google_vision_data:
@@ -111,6 +111,7 @@ def submit():
     # filename = request.files.get('file').filename
     # content_type = request.files.get('file').content_type
     file_stream = request.files.get('file').read()
+    settings = {'vision': int(request.form.getlist('vision')[0])}
 
     # image_url, name = upload_image_file(file_stream, filename, content_type)
 
@@ -119,7 +120,7 @@ def submit():
     # to the size of the screen
 
     color_palette, datapoints, datapoints_balanced, color_positions, messages, score, color_template = \
-        process_image(file_stream, sigma=500, n_colors=5)
+        process_image(file_stream, settings, sigma=500, n_colors=5)
 
     # Create data for database
     data = jsonify(color_palette=color_palette, datapoints=datapoints,

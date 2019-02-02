@@ -77,6 +77,21 @@ javascript:
 			}
 		}
 
+		// Set Settings
+		var vision = 0;
+
+		function visionCheck(){
+				var visionCheckbox = document.getElementsByClassName('checkbox-vision')[0];
+				if (visionCheckbox.checked == true){
+			    vision = 1;
+					document.getElementsByClassName('checkbox-vision')[0].checked = false;
+			  } else {
+			     vision = 0;
+					 document.getElementsByClassName('checkbox-vision')[0].checked = true;
+			  }
+				console.log(vision);
+		}
+
 
 javascript:
 
@@ -94,8 +109,12 @@ javascript:
 	FilePond.setOptions({
     server: {
         process: {
-            url: 'http://127.0.0.1:8080/submit',
+            url: `http://127.0.0.1:8080/submit`,
             method: 'POST',
+						ondata: (formData) => {
+                formData.append('vision', vision);
+                return formData;
+            },
             onload: (response) => {
 								// Check which filepond has a file
 								it = 0;
@@ -108,6 +127,7 @@ javascript:
 
 								// Clear filePond for a new upload
 								ponds[it].removeFile();
+								console.log(vision);
             }
         }
     },
