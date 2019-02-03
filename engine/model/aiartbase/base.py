@@ -5,7 +5,7 @@ from .segmentation import Segment, Box, box_to_segment, NULL_COLOR
 from .color_mod import ColorGenerator
 from .image_utils import image_resize, composition_level
 from math import sqrt, pi, atan, cos, sin
-from .shared_variables import MAX_SEGMENT_RATIO, GRAVITY, INFINITY, image_size_relation
+from .shared_variables import MAX_SEGMENT_RATIO, GRAVITY, INFINITY, image_size_relation, MAX_SEGMENTS
 
 
 class BaseTransformer:
@@ -298,7 +298,7 @@ class BaseTransformer:
         # use google data, my slower performance but improve segmentation
         if self.google_vision_data:
             self._google_vision_detection(objects, faces)
-            if len(self.segments) > 0:
+            if len(self.segments) > 0 and (len(self.segments) + len(temporal_segments)) < MAX_SEGMENTS:
                 for google_seg in self.segments:
                     x_diff, y_diff = google_seg.get_scale()
                     radius = sqrt(x_diff**2 + y_diff**2)
@@ -320,7 +320,7 @@ class BaseTransformer:
                         seg[0].weight = mod / size
                 for seg in temporal_segments:
                     self.segments.append(seg[0])
-            else:
+            elif (len(self.segments) + len(temporal_segments)) < MAX_SEGMENTS:
                 for seg in temporal_segments:
                     self.segments.append(seg[0])
                     w = seg[1]
