@@ -3,7 +3,7 @@
 
 class Heatmap{
 
-  constructor(canvas, datapoints, blur=0.13){
+  constructor(canvas, datapoints, blur=0.09){
     this.canvas = canvas;
 		this.blur = blur;
 

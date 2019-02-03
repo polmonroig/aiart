@@ -36,7 +36,10 @@ def process_image(file_stream, settings, sigma, n_colors):
     image = image_utils.string_to_image(file_stream)
     # Resize image
     print(image.shape)
-    image = image_utils.image_resize(image, height=200)
+    if image.shape[0] == 800:
+        image = image_utils.image_resize(image, height=200)
+    else:
+        image = image_utils.image_resize(image, width=200)
     print(image.shape)
     google_vision_data = settings['vision']
     objects = None

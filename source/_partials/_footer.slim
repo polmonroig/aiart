@@ -81,15 +81,16 @@ javascript:
 		var vision = 0;
 
 		function visionCheck(){
-				var visionCheckbox = document.getElementsByClassName('checkbox-vision')[0];
-				if (visionCheckbox.checked == true){
-			    vision = 1;
-					document.getElementsByClassName('checkbox-vision')[0].checked = false;
-			  } else {
-			     vision = 0;
-					 document.getElementsByClassName('checkbox-vision')[0].checked = true;
-			  }
-				console.log(vision);
+			if (vision == 0){
+		    vision = 1;
+				document.getElementsByClassName('checkbox-vision')[0].checked = false;
+				document.getElementsByClassName('checkbox-vision')[1].checked = false;
+		  } else {
+		     vision = 0;
+				 document.getElementsByClassName('checkbox-vision')[0].checked = true;
+				 document.getElementsByClassName('checkbox-vision')[1].checked = true;
+		  }
+			console.log(vision);
 		}
 
 
@@ -106,6 +107,7 @@ javascript:
 
 	const ponds = FilePond.parse(document.body);
 
+	// https://aiart-2ddfd.appspot.com
 	FilePond.setOptions({
     server: {
         process: {

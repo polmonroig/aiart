@@ -2,6 +2,8 @@ Flask==0.11.1
 gunicorn==19.6.0
 google-cloud-firestore
 google-cloud-storage
+google-api-python-client
+google-cloud-vision
 flask_cors
 opencv-python
 numpy==1.15.4
