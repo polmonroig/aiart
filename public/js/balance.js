@@ -67,7 +67,7 @@ class Heatmap{
     var gradientImage = this.gradientImage();
     //heatCtx.filter = `blur(${this.blur*this.canvas.offsetWidth}px)`; This blur is NOT compatible with retina display devices
 		var maxValue = 1.5;
-		var extraValue = 0.4;
+		var extraValue = 0.3;
 
 		// Prefill canvas with black
 		heatCtx.fillStyle = "rgba(0,0,0,1)";

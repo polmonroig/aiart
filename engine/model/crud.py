@@ -35,12 +35,10 @@ def process_image(file_stream, settings, sigma, n_colors):
     # Color Palette
     image = image_utils.string_to_image(file_stream)
     # Resize image
-    print(image.shape)
     if image.shape[0] == 800:
         image = image_utils.image_resize(image, height=200)
     else:
         image = image_utils.image_resize(image, width=200)
-    print(image.shape)
     google_vision_data = settings['vision']
     objects = None
     faces = None
@@ -123,7 +121,7 @@ def submit():
     # to the size of the screen
 
     color_palette, datapoints, datapoints_balanced, color_positions, messages, score, color_template = \
-        process_image(file_stream, settings, sigma=500, n_colors=5)
+        process_image(file_stream, settings, sigma=500, n_colors=8)
 
     # Create data for database
     data = jsonify(color_palette=color_palette, datapoints=datapoints,

@@ -1,18 +1,19 @@
 import numpy as np
 from copy import deepcopy
-from math import radians, pi
+from math import radians, pi, degrees
 
 
 
 # Templates
 i = [[0, 18]]
 V = [[0, 93.6]]
-L = [[0, 18], [99, 178.2]]  # diff = 90
-I = [[0, 18], [189, 207]]  # diff = 180
+Y = [[0, 93.6], [217.8, 235.8]]  # diff = 90
+I = [[0, 18], [180, 198]]  # diff = 180
 T = [[0, 180]]
-Y = [[0, 93.6], [226.8, 244.8]]  # diff = 180
-X = [[0, 93.6], [226.8, 320.4]]  # diff = 180
-templates = [i, V, L, I, Y, X]
+L = [[0, 79.2], [121.6, 138.6]]  # diff = 180
+X = [[0, 93.6], [180, 273.6]]  # diff = 180
+#templates = [X]
+templates = [i, V, X, I, L, X]
 
 
 class VBox:
@@ -139,7 +140,6 @@ def boxes_iterator(boxes, target, cmp_type):
 def get_pos(arr, left, right, x, c):
     m = int((left + right) / 2)
     if left < right:
-        # print(arr[m][0])
         if arr[m][c] == x:
             return m
         elif arr[m][c] > x:
@@ -155,7 +155,7 @@ def get_closest_hue(template, degree, hue):
     for zone in template:
         a = radians(int(zone[0] + degree) % 360)
         b = radians(int(zone[1] + degree) % 360)
-        if(a < b and a <= hue <= b) or b <= hue <= a:
+        if (a <= hue <= b and a <= b) or (hue < b < a):
             return 0, -1
         if abs(a - hue) < closest_hue[0]:
             closest_hue = [abs(a - hue), a]

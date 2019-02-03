@@ -2,6 +2,7 @@
 
 var colorPalette = [];
 var colorPositions = [];
+var colorTemplate = [];
 var datapoints = [];
 var datapointsBalanced = [];
 var messages = [];
@@ -67,6 +68,7 @@ function processImage(responseText){
     // Handle response text
     colorPalette = responseText["color_palette"];
     colorPositions = responseText["color_positions"];
+    colorTemplate = responseText["color_template"];
 		datapoints = responseText["datapoints"];
 		datapointsBalanced = responseText["datapoints_balanced"];
 		messages = responseText["messages"];
@@ -77,6 +79,7 @@ function processImage(responseText){
 		console.log(datapointsBalanced);
 		console.log(colorPalette);
 		console.log(colorPositions);
+		console.log(colorTemplate);
 		console.log(messages);
 		console.log(score);
 
@@ -165,9 +168,8 @@ function processImage(responseText){
 
 
 	    // Create color samples
-	    createColorSamples(colorPalette);
+	    createColorSamples(colorPalette, colorTemplate);
 	    createImageSamples(colorPalette);
-	    //createCanvasPalette(document.getElementById('color-image-samples'),  colorPalette.slice(0, (colorPalette.length/2)), colorPositions);
 
 			if(messages['color']['type'] == 'success'){
 				document.getElementsByClassName('button-color-w')[0].classList.add('hidden');
@@ -180,6 +182,7 @@ function processImage(responseText){
 
 
   }, delayInMilliseconds);
+
 }
 
 //Load image from user

@@ -75,19 +75,9 @@ function rgb2posSaturated(rgb){
 }
 
 
-function createColorSamples(colorPalette){
-	var html = "";
-
-	// Setting onclick functionality to both arrow and button because Firefox does not detect the click of button properly
-
-	// Create arrows
-	for(var i = 0; i < colorPalette.length/2; i++){
-		html += `
-						<div class="arrow-container" title="${rgb2hex(colorPalette[i])}" onclick="copyToClipboard(this.title, ${i})" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px; -webkit-transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg); transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg)">
-							<div class="colorsample-arrow" style="border-bottom-width: ${rgb2hsv(colorPalette[i])[1]+10}px"></div>
-						</div>
-						`
-	}
+function createColorSamples(colorPalette, colorTemplate){
+	// Create color template div
+	var html = '<div id="color-template"></div>';
 
 	// Create color circles
 	for(var i = 0; i < colorPalette.length/2; i++){
@@ -105,15 +95,30 @@ function createColorSamples(colorPalette){
 
 	document.getElementById("colorwheel").innerHTML = html;
 
+	// Set color template type
+	document.getElementById('color-template').style.cssText = `background-image: url('../img/color-templates/color_template_${colorTemplate[0]}.svg');
+																															-webkit-transform: rotate(${colorTemplate[1]}deg);
+																															transform: rotate(${colorTemplate[1]}deg);
+																														`;
+
+
 }
 
 function createImageSamples(colorPalette){
 	var colorImageSamples = document.getElementById("color-image-samples");
 
 	// Create color circles
-	var html = `<svg viewBox="0,0,${colorImageSamples.width},${colorImageSamples.height}">`;
+	var html = `<svg viewBox="0,0,${colorImageSamples.width},${colorImageSamples.height}">
+							  <defs>
+							    <filter id="glow" width="200%" height="200%" filterUnits="userSpaceOnUse">
+							      <feGaussianBlur stdDeviation="4"/> <!-- stdDeviation is how much to blur -->
+							      <feMerge> <feMergeNode/>
+							      <feMergeNode in="SourceGraphic"/></feMerge>
+							    </filter>
+							  </defs>
+							`;
 	for(var i = 0; i < colorPalette.length/2; i++){
-		html += `	<circle class="colorsample-image" style="background: ${rgb2hex(colorPalette[i])};" cx="${colorPositions[i][0]*colorImageSamples.width}" cy="${colorPositions[i][1]*colorImageSamples.height}" r="30" stroke="white" stroke-width="3" fill="${rgb2hex(colorPalette[i])}" /> `;
+		html += `	<circle class="colorsample-image" cx="${colorPositions[i][0]*colorImageSamples.width}" cy="${colorPositions[i][1]*colorImageSamples.height}" r="20" stroke="white" stroke-width="4" fill="${rgb2hex(colorPalette[i])}" /> `;
 	}
 	html += "</svg>";
 
@@ -155,15 +160,7 @@ function harmonizeButton(){
 
 
 		for(var i = 0; i < colorPalette.length/2; i++){
-			document.getElementsByClassName('colorsample-arrow')[i].classList.add('hide-arrow-anim');
 
-			document.getElementsByClassName('arrow-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[0]}px;
-																																		 left: ${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[1]}px;
-																																		 -webkit-transform: rotate(${rgb2hsv(colorPalette[i+(colorPalette.length/2)])[0]}deg);
-																																		 transform: rotate(${rgb2hsv(colorPalette[i+(colorPalette.length/2)])[0]}deg)
-																																		`
-
-			document.getElementsByClassName('colorsample-arrow')[i].style = `border-bottom-width: ${rgb2hsv(colorPalette[i+(colorPalette.length/2)])[1]+20}px;`
 			document.getElementsByClassName('colorsample-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[0]}px;
 																																					 left:${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[1]}px;
 																																					 `
@@ -173,26 +170,21 @@ function harmonizeButton(){
 																																					 `
 			document.getElementsByClassName('tooltip-hex')[i].innerHTML = `${rgb2hex(colorPalette[i+(colorPalette.length/2)])}`;
 			document.getElementsByClassName('colorsample-container')[i].value = `${rgb2hex(colorPalette[i+(colorPalette.length/2)])}`;
-			document.getElementsByClassName('arrow-container')[i].title = `${rgb2hex(colorPalette[i+(colorPalette.length/2)])}`;
 			document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i+(colorPalette.length/2)])};`
 			document.getElementsByClassName('colorsample-image')[i].setAttribute("fill", rgb2hex(colorPalette[i+(colorPalette.length/2)]));
 
 			// Check if color is changed
 			if(colorPalette[i+(colorPalette.length/2)][0] != colorPalette[i][0] || colorPalette[i+(colorPalette.length/2)][1] != colorPalette[i][1] || colorPalette[i+(colorPalette.length/2)][2] != colorPalette[i][2]){
-				document.getElementsByClassName('colorsample-image')[i].setAttribute("stroke-width", 8);
-				document.getElementsByClassName('colorsample-image')[i].setAttribute("r", 35);
-				console.log(colorPalette[i+(colorPalette.length/2)]);
-				console.log(colorPalette[i]);
+				document.getElementsByClassName('colorsample-image')[i].setAttribute("stroke-width", 4);
+				document.getElementsByClassName('colorsample-image')[i].classList.remove("colorsample-image-shrink");
+				document.getElementsByClassName('colorsample-image')[i].classList.add("colorsample-image-grow");
+				document.getElementsByClassName('colorsample-image')[i].setAttribute("style", "filter:url(#glow)");
+
 			}
 
 			document.getElementsByClassName('harmonize-btn')[0].classList.add('hidden');
 			document.getElementsByClassName('harmonize-reset-btn')[0].classList.remove('hidden');
 		}
-		setTimeout(function() {
-			for(var i = 0; i < colorPalette.length/2; i++){
-				document.getElementsByClassName('colorsample-arrow')[i].classList.remove('hide-arrow-anim');
-			}
-		}, 800);
 
 		setScore('color', score[1], 100);
 }
@@ -202,14 +194,7 @@ function resetHarmonizeButton(){
   document.getElementById('colorwheel').classList.remove('colorwheel-anim-show');
 
 	for(var i = 0; i < colorPalette.length/2; i++){
-		document.getElementsByClassName('colorsample-arrow')[i].classList.add('hide-arrow-anim');
-		document.getElementsByClassName('arrow-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i])[0]}px;
-																																	 left: ${rgb2posSaturated(colorPalette[i])[1]}px;
-																																	 -webkit-transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg);
-																																	 transform: rotate(${rgb2hsv(colorPalette[i])[0]}deg)
-																																	`
 
-		document.getElementsByClassName('colorsample-arrow')[i].style = `border-bottom-width: ${rgb2hsv(colorPalette[i])[1]+20}px;`
 		document.getElementsByClassName('colorsample-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i])[0]}px;
 																																				 left:${rgb2posSaturated(colorPalette[i])[1]}px;
 																																				 `
@@ -218,22 +203,20 @@ function resetHarmonizeButton(){
 																															`
 		document.getElementsByClassName('tooltip-hex')[i].innerHTML = `${rgb2hex(colorPalette[i])}`;
 		document.getElementsByClassName('colorsample-container')[i].value = `${rgb2hex(colorPalette[i])}`;
-		document.getElementsByClassName('arrow-container')[i].title = `${rgb2hex(colorPalette[i])}`;
 		document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i])};`
 		document.getElementsByClassName('colorsample-image')[i].setAttribute("fill", rgb2hex(colorPalette[i]));
 
-		document.getElementsByClassName('colorsample-image')[i].setAttribute("stroke-width", 3);
-		document.getElementsByClassName('colorsample-image')[i].setAttribute("r", 30);
+		document.getElementsByClassName('colorsample-image')[i].setAttribute("stroke-width", 4);
+		if(document.getElementsByClassName('colorsample-image')[i].classList.contains("colorsample-image-grow")){
+			document.getElementsByClassName('colorsample-image')[i].classList.remove("colorsample-image-grow");
+			document.getElementsByClassName('colorsample-image')[i].classList.add("colorsample-image-shrink");
+		}
+		document.getElementsByClassName('colorsample-image')[i].setAttribute("style", "filter:none");
 
 
 		document.getElementsByClassName('harmonize-btn')[0].classList.remove('hidden');
 		document.getElementsByClassName('harmonize-reset-btn')[0].classList.add('hidden');
 	}
-	setTimeout(function() {
-		for(var i = 0; i < colorPalette.length/2; i++){
-			document.getElementsByClassName('colorsample-arrow')[i].classList.remove('hide-arrow-anim');
-		}
-	}, 800);
 
 	setScore('color', 100, score[1]);
 }

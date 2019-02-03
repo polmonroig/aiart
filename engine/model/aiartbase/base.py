@@ -96,7 +96,7 @@ class BaseTransformer:
             positions.append([0, 0])
             differences.append(INFINITY)
         tmp_colors = self.palette.palette_colors.astype(np.float32).reshape(-1, 3).tolist()
-        margin = 20
+        margin = 10
         i = margin
         while i < reduced_image.shape[0] - margin:
             j = margin
@@ -141,14 +141,11 @@ class BaseTransformer:
         # First convert the Faces
         for face in faces:
             if face.detection_confidence >= 0.8:
-                print("Enter face")
                 face_positions = face.bounding_poly.vertices
                 face_size = abs((face_positions[0].x - face_positions[2].x) * (
                             face_positions[0].y - face_positions[2].y)) * image_size_relation
                 # if face size is bigger than image
-                print("facesize:", face_size)
                 if (face_size / (self.height * self.width)) > 0.16:
-                    print("Inside eyes")
                     eye_width = abs((face_positions[0].x - face_positions[2].x) / 5) * image_size_relation
                     eye_height = abs((face_positions[0].y - face_positions[2].y) / 7) * image_size_relation
                     eye_size = eye_height * eye_width
@@ -308,8 +305,8 @@ class BaseTransformer:
                         mod = sqrt(w['x'] ** 2 + w['y'] ** 2)
                         size = mod / seg[0].weight
                         if sqrt((a - x_diff) ** 2 + (b - y_diff) ** 2) < radius:
-                            w['x'] *= 0.5
-                            w['y'] *= 0.5
+                            w['x'] *= 0.2
+                            w['y'] *= 0.2
                         mod = sqrt(w['x'] ** 2 + w['y'] ** 2)
                         self.force['x'] += w['x']
                         self.force['y'] += w['y']

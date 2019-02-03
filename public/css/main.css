@@ -13506,6 +13506,16 @@ a.with-avatar span {
     margin: 0 auto;
     margin-bottom: 20px;
     position: relative; }
+    .filter-w .colorwheel-container #colorwheel #color-template {
+      background-size: 100%;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 270px;
+      width: 270px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.7; }
     .filter-w .colorwheel-container #colorwheel button.colorsample-container {
       position: absolute;
       border-style: none;
@@ -13513,12 +13523,13 @@ a.with-avatar span {
       -webkit-transition: all 1s;
       transition: all 1s; }
       .filter-w .colorwheel-container #colorwheel button.colorsample-container .colorsample {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
         border-radius: 50%;
         border-color: white;
         border-style: solid;
-        border-width: 4px;
+        border-width: 3px;
+        box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.4);
         background-color: rgba(1, 1, 1, 0);
         position: absolute;
         left: 0;
@@ -13547,24 +13558,6 @@ a.with-avatar span {
       margin-left: -7%;
       margin-top: -30px;
       opacity: 0; }
-    .filter-w .colorwheel-container #colorwheel .arrow-container {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background: none;
-      -webkit-transition: all 1s;
-      transition: all 1s; }
-      .filter-w .colorwheel-container #colorwheel .arrow-container .colorsample-arrow {
-        width: 0;
-        height: 0;
-        border-left: 20px solid transparent;
-        border-right: 20px solid transparent;
-        border-bottom: 55px solid white;
-        position: absolute;
-        left: 0;
-        bottom: 18px;
-        -webkit-transition: all 1s;
-        transition: all 1s; }
   .filter-w .colorwheel-container #colorwheel:hover .tooltip-hex {
     opacity: 1; }
   .filter-w .colorwheel-container #palette {
@@ -13609,18 +13602,6 @@ a.with-avatar span {
     font-size: 18px;
     padding: 10px 20px; }
 
-.hide-arrow-anim {
-  animation-name: hideArrow;
-  animation-duration: 1.5s;
-  animation-delay: 0s;
-  animation-fill-mode: both; }
-
-.show-arrow-anim {
-  animation-name: showArrow;
-  animation-duration: 0.5s;
-  animation-delay: 0s;
-  animation-fill-mode: both; }
-
 .color-main-anim {
   animation-name: fadeUp;
   animation-duration: 0.5s;
@@ -13642,6 +13623,30 @@ a.with-avatar span {
 .colorwheel-anim-hide {
   animation-name: hideStraightRotate;
   animation-duration: 0.2s;
+  animation-delay: 0s;
+  animation-fill-mode: both; }
+
+@keyframes colorsampleImageGrow {
+  from {
+    r: 20px; }
+  to {
+    r: 28px; } }
+
+@keyframes colorsampleImageShrink {
+  from {
+    r: 28px; }
+  to {
+    r: 20px; } }
+
+.colorsample-image-grow {
+  animation-name: colorsampleImageGrow;
+  animation-duration: 0.4s;
+  animation-delay: 0s;
+  animation-fill-mode: both; }
+
+.colorsample-image-shrink {
+  animation-name: colorsampleImageShrink;
+  animation-duration: 0.4s;
   animation-delay: 0s;
   animation-fill-mode: both; }
 

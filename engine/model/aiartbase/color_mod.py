@@ -86,21 +86,21 @@ class ColorHarmonizer:
         if self.best_template is not None:
             degree = self.best_template[1]
             if len(self.best_template[2]) == 2:
-                if self.best_template[2][1][1] == 244.8:
-                    return ['Y', degree]
-                if self.best_template[2][1][1] == 320.4:
-                    return ['X', degree]
-                if self.best_template[2][1][1] == 207:
-                    return ['I', degree]
+                if self.best_template[2][1][1] == 235.8:
+                    return ['y', degree]
+                if self.best_template[2][1][1] == 273.6:
+                    return ['x', degree]
+                if self.best_template[2][1][1] == 198:
+                    return ['ii', degree]
                 else:
-                    return ['L', degree]
+                    return ['l', degree]
             elif len(self.best_template[2]) == 1:
                 if self.best_template[2][0][1] == 18:
                     return ['i', degree]
                 if self.best_template[2][0][1] == 93.6:
-                    return ['V', degree]
+                    return ['v', degree]
                 if self.best_template[2][0][1] == 180:
-                    return ['T', degree]
+                    return ['t', degree]
             else:
                 raise Exception("Unknown template")
 
@@ -109,9 +109,11 @@ class ColorHarmonizer:
             self.color_harmony()
             self.harmonized_colors = hsv_palette(self.colors)
             for it, col in enumerate(self.harmonized_colors):
-                if self.best_template[3][it] != -1:
+                if int(self.best_template[3][it]) != -1:
                     col[0] = (degrees(self.best_template[3][it]) / 2)
-            self.harmonized_colors = rgb_palette(self.harmonized_colors)
+                    self.harmonized_colors[it] = rgb_palette(col)
+                else:
+                    self.harmonized_colors[it] = self.colors[0][it]
         template = self.set_template()
         return self.harmonized_colors, template
 
