@@ -12,7 +12,7 @@ var messageList = [
 	'Congratulations! the color palette of your image is harmonic.',
 	'Great! The composition of your image is balanced.',
 	'Your image is monochromatic (or almost) so the color palette cannot be evaluated!',
-	'The segmentation algorithm did not find any identifieable points of attention in your image.',
+	'The segmentation algorithm did not find any identifiable points of attention in your image.',
 	'The segmentation algorithm found to many areas of attention in your image.',
 	'Your composition is slightly out of balance, try to add or eliminate an element to compensate properly!',
 	'The color palette of the image is not ideal! check the harmonized verison to improve it.',
@@ -31,6 +31,9 @@ function processImage(responseText){
   document.getElementsByClassName('color-index')[0].classList.remove('color-main-anim');
 	document.getElementsByClassName('color-index')[0].classList.add('color-main-anim-hide');
 
+  document.getElementById('balance-error-wrapper').classList.remove('color-main-anim');
+	document.getElementById('color-error-wrapper').classList.add('color-main-anim-hide');
+
   document.getElementById('upload-wrapper').classList.add('upload-main-anim-hide');
 
 	// Delay functions to allow animation to complete
@@ -40,9 +43,13 @@ function processImage(responseText){
 		document.getElementById('overview-wrapper').classList.add('hidden');
 		document.getElementById('balance-wrapper').classList.add('hidden');
 		document.getElementById('color-wrapper').classList.add('hidden');
+		document.getElementById('color-error-wrapper').classList.add('hidden');
+		document.getElementById('balance-error-wrapper').classList.add('hidden');
     document.getElementsByClassName('overview-index')[0].classList.remove('overview-main-anim-hide');
     document.getElementsByClassName('balance-index')[0].classList.remove('balance-main-anim-hide');
     document.getElementsByClassName('color-index')[0].classList.remove('color-main-anim-hide');
+    document.getElementById('color-error-wrapper').classList.remove('color-main-anim-hide');
+    document.getElementById('balance-error-wrapper').classList.remove('color-main-anim-hide');
 
     if(!document.getElementById('upload-wrapper').classList.contains("hidden")){
       document.getElementsByClassName('filepond')[0].classList.remove('hidden');
@@ -147,6 +154,9 @@ function processImage(responseText){
 		}else{
 			setScore('balance', 0);
 			document.getElementById('balance-wrapper').classList.add('hidden');
+			document.getElementsByClassName('message-content-balance-error')[0].innerHTML = messageList[messages['composition']['message']];
+			document.getElementById('balance-error-wrapper').classList.remove('hidden');
+      document.getElementById('balance-error-wrapper').classList.add('overview-main-anim');
 		}
 
 		// Check if there are no color error messages
@@ -178,6 +188,9 @@ function processImage(responseText){
 		}else{
 			setScore('color', 0);
 			document.getElementById('color-wrapper').classList.add('hidden');
+			document.getElementsByClassName('message-content-color-error')[0].innerHTML = messageList[messages['color']['message']];
+			document.getElementById('color-error-wrapper').classList.remove('hidden');
+      document.getElementById('color-error-wrapper').classList.add('overview-main-anim');
 		}
 
 

@@ -1,0 +1,31 @@
+/!
+	------------------
+  START - Example Images
+  ------------------
+- examples = [['credits' => 'Mandy Jurgens', 'category' => '2D Painting', 'img' => 'flowers.jpg'],
+                  	['credits' => 'Evgeniya Osipova', 'category' => 'CG Image', 'img' => 'girl.jpg'],
+                  	['credits' => 'Hurca', 'category' => 'Graphic Design', 'img' => 'graphic.jpg'],
+                  	['credits' => 'tian zi', 'category' => 'CG Image', 'img' => 'redhair.jpg'],
+                  	['credits' => 'Atey Ghailan', 'category' => '2D Painting', 'img' => 'pool.jpg'],
+                  	['credits' => 'Allan Bernardo', 'category' => 'CG Image', 'img' => 'street.jpg']]
+
+.element-wrapper id="examples-wrapper"
+  h6.element-header Example Images
+  .element-box-tp
+    - examples.each do |example|
+      .example
+        a.example-box onclick="exampleProcess('img/examples/#{example[0]['img']}')"
+          .example-image-w
+            img src="img/examples/#{example[0]['img']}" alt=""/
+        .example-meta
+          ul
+            li
+              | Credits:
+              strong= example[0]['credits']
+            li
+              | Category:
+              strong= example[0]['category']
+/!
+  ------------------
+  END - Example Images
+  ------------------

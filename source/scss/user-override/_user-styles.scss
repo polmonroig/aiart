@@ -45,6 +45,7 @@
     }
   }
 
+
   .message-content-balance {
     transition: all 1s;
     padding: 15px 35px;
@@ -62,6 +63,38 @@
     }
   }
   .message-content-color {
+    transition: all 1s;
+    padding: 15px 35px;
+    width: 100%;
+    display: inline-block;
+    margin-bottom: -20px;
+    border-radius: 10px;
+    text-align: left;
+    animation-name: fadeUp;
+    animation-duration: 0.5s;
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+    b{
+      font-weight: 700;
+    }
+  }
+  .message-content-balance-error {
+    transition: all 1s;
+    padding: 15px 35px;
+    width: 100%;
+    display: inline-block;
+    margin-bottom: -20px;
+    border-radius: 10px;
+    text-align: left;
+    animation-name: fadeUp;
+    animation-duration: 0.5s;
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+    b{
+      font-weight: 700;
+    }
+  }
+  .message-content-color-error {
     transition: all 1s;
     padding: 15px 35px;
     width: 100%;

@@ -113,7 +113,7 @@ function createImageSamples(colorPalette){
 							  </defs>
 							`;
 	for(var i = 0; i < colorPalette.length/2; i++){
-		html += `	<circle id="colorsample-${i}" onclick="copyToClipboard(this.getAttribute('fill'), ${i})" class="colorsample-image" cx="${colorPositions[i][0]*colorImageSamples.width}" cy="${colorPositions[i][1]*colorImageSamples.height}" r="20" stroke="white" stroke-width="4" fill="${rgb2hex(colorPalette[i])}" />
+		html += `	<circle id="colorsample-${i}" onclick="copyToClipboard(this.getAttribute('fill'), ${i})" class="colorsample-image" cx="${colorPositions[i][0]*colorImageSamples.width}" cy="${colorPositions[i][1]*colorImageSamples.height}" r="20px" stroke="white" stroke-width="4" fill="${rgb2hex(colorPalette[i])}" />
 							<g class="tooltip-hex" transform="translate(${colorPositions[i][0]*colorImageSamples.width}, ${colorPositions[i][1]*colorImageSamples.height})">
 						    <rect id="rounded-rectangle" rx="10" x="-45px" y="-70px" width="90px" height="40px"/>
 						    <text id="tooltip-text-${i}" y="-70px" dy="25px" text-anchor="middle" >${rgb2hex(colorPalette[i])}</text>

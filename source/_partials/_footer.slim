@@ -39,6 +39,11 @@ javascript:
 /! Google App Engine implementation
 script src="js/engine.js"
 
+javascript:
+	//Call modal on start
+	$('.modal-learn').modal('show');
+
+
 //FilePond Configuration
 script src="bower_components/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"
 script src="bower_components/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"
@@ -47,6 +52,7 @@ script src="bower_components/filepond-plugin-image-resize/dist/filepond-plugin-i
 script src="bower_components/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"
 script src="bower_components/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"
 script src="bower_components/filepond/dist/filepond.js"
+
 
 javascript:
 		// Set heatmap canvas size with event listener
@@ -83,12 +89,12 @@ javascript:
 		function visionCheck(){
 			if (vision == 0){
 		    vision = 1;
-				document.getElementsByClassName('checkbox-vision')[0].checked = false;
-				document.getElementsByClassName('checkbox-vision')[1].checked = false;
+				document.getElementsByClassName('checkbox-vision')[0].checked = true;
+				document.getElementsByClassName('checkbox-vision')[1].checked = true;
 		  } else {
 		     vision = 0;
-				 document.getElementsByClassName('checkbox-vision')[0].checked = true;
-				 document.getElementsByClassName('checkbox-vision')[1].checked = true;
+				 document.getElementsByClassName('checkbox-vision')[0].checked = false;
+				 document.getElementsByClassName('checkbox-vision')[1].checked = false;
 		  }
 			console.log(vision);
 		}
@@ -128,7 +134,9 @@ javascript:
 								showImage(file,'balance-image');
 
 								// Clear filePond for a new upload
-								ponds[it].removeFile();
+								ponds[0].removeFile();
+								ponds[1].removeFile();
+								ponds[2].removeFile();
             }
         }
     },
@@ -155,69 +163,16 @@ javascript:
 	ponds[0].imagePreviewMaxHeight = 100;
 	ponds[1].imagePreviewMaxHeight = 100;
 
-/! Dropzone custom functions
+	// Example Images
 
-/! Dropzone Menu custom functions
-//javascript:
-  Dropzone.options.imageDropzoneMenu = {
-  url: "http://127.0.0.1:8080/submit",
-  method: "post",
-  withCredentials: false,
-  timeout: 30000,
-  parallelUploads: 2,
-  uploadMultiple: false,
-  maxFilesize: 7,
-  paramName: "file",
-  createImageThumbnails: false,
-  maxThumbnailFilesize: 10,
-  thumbnailWidth: document.getElementById("imageDropzoneMenu").offsetWidth*0.6,
-  thumbnailHeight: document.getElementById("imageDropzoneMenu").offsetHeight*0.6,
-  thumbnailMethod: 'crop',
-  resizeWidth: 200,
-  resizeHeight: null,
-  resizeMimeType: null,
-  resizeQuality: 1,
-  resizeMethod: 'contain',
-  filesizeBase: 1000,
-  maxFiles: 1,
-  params: {},
-  headers: null,
-  clickable: true,
-  ignoreHiddenFiles: true,
-  acceptedFiles: ".jpeg,.jpg,.png",
-  acceptedMimeTypes: null,
-  autoProcessQueue: true,
-  autoQueue: true,
-  addRemoveLinks: false,
-  previewsContainer: null,
-  hiddenInputContainer: "body",
-  capture: null,
-  renameFilename: null,
-  renameFile: null,
-  forceFallback: false,
-	dictDefaultMessage: "Drop your image here",
-  accept: function(file, done) {
-    console.log("Uploading...");
-    done();
-  },
-  init: function() {
-    this.on("addedfile", function() {
-      if (this.files[1]!=null){
-        this.removeFile(this.files[0]);
-      }
-    });
-
-    // Receives response from server
-    this.on("success", function(response) {
-        console.log("Uploaded!");
-        processImage(JSON.parse(response.xhr.responseText));
-        showImage(this.files[0],'color-image');
-        showImage(this.files[0],'balance-image');
-    });
-
-		this.on("complete", function(file) {
-   		this.removeAllFiles(true);
-			$(".mobile-menu-trigger").click();
-		})
-  }
-	};
+	function exampleProcess(src){
+		if(window.getComputedStyle(document.getElementById('upload-wrapper')).display == 'none'){
+			if (window.getComputedStyle(document.getElementsByClassName('menu-mobile')[0]).display == 'none') {
+				ponds[1].addFile(src);
+			}else{
+				ponds[0].addFile(src);
+			}
+		}else{
+			ponds[2].addFile(src);
+		}
+	}

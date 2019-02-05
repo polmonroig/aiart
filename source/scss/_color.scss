@@ -388,6 +388,19 @@
 	animation-fill-mode: both;
 }
 
+@keyframes colorsampleClicked {
+  0% {
+    stroke-width: 4px;
+  }
+  50% {
+    stroke-width: 10px;
+  }
+  100% {
+    stroke-width: 4px;
+  }
+}
+
+
 @keyframes colorsampleImageGrow {
     from {
         r: 20px;

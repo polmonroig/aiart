@@ -67,7 +67,7 @@
               </li>
             </ul>
             <div class="settings">
-              <span class="label-speed">Fast mode</span><label class="switch"><input class="checkbox-vision" type="checkbox" checked onclick="visionCheck()" /><span class="slider round"></span></label>
+              <span class="label-speed">Acurracy Mode</span><label class="switch"><input class="checkbox-vision" type="checkbox" onclick="visionCheck()" /><span class="slider round"></span></label>
             </div>
             <input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond hidden" name="file" type="file" /><!--------------------
             END - Mobile Menu List
@@ -109,7 +109,7 @@
                 <span>Feedback</span></a>
             </li>
             <div class="settings">
-              <span class="label-speed">Fast mode</span><label class="switch"><input class="checkbox-vision" type="checkbox" checked onclick="visionCheck()" /><span class="slider round"></span></label>
+              <span class="label-speed">Acurracy Mode</span><label class="switch"><input class="checkbox-vision" type="checkbox" onclick="visionCheck()" /><span class="slider round"></span></label>
             </div>
           </ul>
           <input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond hidden" name="file" type="file" />
@@ -300,10 +300,10 @@
               <!--START - balance error-->
               <div class="element-wrapper hidden" id="balance-error-wrapper">
                 <div class="element-box">
-                  <div class="message">
+                  <div class="message" style="height:100%">
                     <div class="message-content-w">
                       <div class="message-content-balance-error message-warning">
-                        <b>Welcome!</b> please upload your image to start analyzing.
+                        Balance error
                       </div>
                     </div>
                   </div>
@@ -312,17 +312,131 @@
               <!--END - balance error--><!--START - balance error-->
               <div class="element-wrapper hidden" id="color-error-wrapper">
                 <div class="element-box">
-                  <div class="message">
+                  <div class="message" style="height:100%">
                     <div class="message-content-w">
                       <div class="message-content-color-error message-warning">
-                        <b>Welcome!</b> please upload your image to start analyzing.
+                        Color error
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <!--END - balance error-->
-              <div aria-hidden="true" class="onboarding-modal modal fade animated modal-learn" role="dialog" tabindex="-1">
+              <!--END - balance error--><!--------------------
+              START - Example Images
+              -------------------->
+              <div class="element-wrapper" id="examples-wrapper">
+                <h6 class="element-header">
+                  Example Images
+                </h6>
+                <div class="element-box-tp">
+                  <div class="example">
+                    <a class="example-box" onclick="exampleProcess(&#39;img/examples/flowers.jpg&#39;)">
+                      <div class="example-image-w">
+                        <img alt="" src="img/examples/flowers.jpg" />
+                      </div>
+                    </a>
+                    <div class="example-meta">
+                      <ul>
+                        <li>
+                          Credits:<strong>Mandy Jurgens</strong>
+                        </li>
+                        <li>
+                          Category:<strong>2D Painting</strong>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="example">
+                    <a class="example-box" onclick="exampleProcess(&#39;img/examples/girl.jpg&#39;)">
+                      <div class="example-image-w">
+                        <img alt="" src="img/examples/girl.jpg" />
+                      </div>
+                    </a>
+                    <div class="example-meta">
+                      <ul>
+                        <li>
+                          Credits:<strong>Evgeniya Osipova</strong>
+                        </li>
+                        <li>
+                          Category:<strong>CG Image</strong>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="example">
+                    <a class="example-box" onclick="exampleProcess(&#39;img/examples/graphic.jpg&#39;)">
+                      <div class="example-image-w">
+                        <img alt="" src="img/examples/graphic.jpg" />
+                      </div>
+                    </a>
+                    <div class="example-meta">
+                      <ul>
+                        <li>
+                          Credits:<strong>Hurca</strong>
+                        </li>
+                        <li>
+                          Category:<strong>Graphic Design</strong>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="example">
+                    <a class="example-box" onclick="exampleProcess(&#39;img/examples/redhair.jpg&#39;)">
+                      <div class="example-image-w">
+                        <img alt="" src="img/examples/redhair.jpg" />
+                      </div>
+                    </a>
+                    <div class="example-meta">
+                      <ul>
+                        <li>
+                          Credits:<strong>tian zi</strong>
+                        </li>
+                        <li>
+                          Category:<strong>CG Image</strong>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="example">
+                    <a class="example-box" onclick="exampleProcess(&#39;img/examples/pool.jpg&#39;)">
+                      <div class="example-image-w">
+                        <img alt="" src="img/examples/pool.jpg" />
+                      </div>
+                    </a>
+                    <div class="example-meta">
+                      <ul>
+                        <li>
+                          Credits:<strong>Atey Ghailan</strong>
+                        </li>
+                        <li>
+                          Category:<strong>2D Painting</strong>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="example">
+                    <a class="example-box" onclick="exampleProcess(&#39;img/examples/street.jpg&#39;)">
+                      <div class="example-image-w">
+                        <img alt="" src="img/examples/street.jpg" />
+                      </div>
+                    </a>
+                    <div class="example-meta">
+                      <ul>
+                        <li>
+                          Credits:<strong>Allan Bernardo</strong>
+                        </li>
+                        <li>
+                          Category:<strong>CG Image</strong>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------------
+              END - Example Images
+              -------------------->
+              <div class="onboarding-modal modal fade animated modal-learn" data-show="true" role="dialog" tabindex="-1">
                 <div class="modal-dialog modal-lg modal-centered" role="document">
                   <div class="modal-content text-center">
                     <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span class="close-label">Exit</span><span class="os-icon os-icon-close"></span></button>
@@ -332,13 +446,13 @@
                           <div class="onboarding-media">
                             <img alt="" src="img/logo_big.png" width="200px" />
                           </div>
-                          <div class="onboarding-content with-gradient">
+                          <div class="onboarding-content">
                             <h3 class="onboarding-title">
                               Meet aiart - your intelligent art advisor
                             </h3>
                             <br />
                             <div class="onboarding-text">
-                              <b>Upload an image to see how aiart evaluates it</b>. And don't worry! we do not store any of your images or information.
+                              <b>Upload an image or use one of the example images to see how aiart evaluates it</b>. And don't worry! we do not store any of your images or information.
                             </div>
                           </div>
                         </div>
@@ -348,7 +462,7 @@
                           <div class="onboarding-media">
                             <img alt="" src="img/bigicon4.png" width="200px" />
                           </div>
-                          <div class="onboarding-content with-gradient">
+                          <div class="onboarding-content">
                             <h4 class="onboarding-title">
                               Our algorithm will see your image in the eyes of:
                             </h4>
@@ -373,7 +487,7 @@
                           <div class="onboarding-media">
                             <img alt="" src="img/bigicon5.png" width="200px" />
                           </div>
-                          <div class="onboarding-content with-gradient">
+                          <div class="onboarding-content">
                             <h4 class="onboarding-title">
                               How it works:
                             </h4>
@@ -398,7 +512,7 @@
                           <div class="onboarding-media">
                             <img alt="" src="img/bigicon3.png" width="200px" />
                           </div>
-                          <div class="onboarding-content with-gradient">
+                          <div class="onboarding-content">
                             <h4 class="onboarding-title">
                               What kind of images we can process:
                             </h4>
@@ -430,7 +544,7 @@
                           <div class="onboarding-media">
                             <img alt="" src="img/bigicon1.png" width="200px" />
                           </div>
-                          <div class="onboarding-content with-gradient">
+                          <div class="onboarding-content">
                             <h4 class="onboarding-title">
                               Who needs our service:
                             </h4>
@@ -461,7 +575,7 @@
                           <div class="onboarding-media">
                             <img alt="" src="img/bigicon7.png" width="200px" />
                           </div>
-                          <div class="onboarding-content with-gradient">
+                          <div class="onboarding-content">
                             <h4 class="onboarding-title">
                               How did the project start:
                             </h4>
@@ -486,7 +600,7 @@
                           <div class="onboarding-media">
                             <img alt="" src="img/bigicon6.png" width="200px" />
                           </div>
-                          <div class="onboarding-content with-gradient">
+                          <div class="onboarding-content">
                             <h4 class="onboarding-title">
                               Stay tuned!
                             </h4>
@@ -536,6 +650,10 @@
     </script>
     <!--Google App Engine implementation-->
     <script src="js/engine.js"></script>
+    <script>
+      //Call modal on start
+      $('.modal-learn').modal('show');
+    </script>
     <script src="bower_components/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
     <script src="bower_components/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="bower_components/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
@@ -578,12 +696,12 @@
       function visionCheck(){
           if (vision == 0){
           vision = 1;
-              document.getElementsByClassName('checkbox-vision')[0].checked = false;
-              document.getElementsByClassName('checkbox-vision')[1].checked = false;
+              document.getElementsByClassName('checkbox-vision')[0].checked = true;
+              document.getElementsByClassName('checkbox-vision')[1].checked = true;
         } else {
            vision = 0;
-               document.getElementsByClassName('checkbox-vision')[0].checked = true;
-               document.getElementsByClassName('checkbox-vision')[1].checked = true;
+               document.getElementsByClassName('checkbox-vision')[0].checked = false;
+               document.getElementsByClassName('checkbox-vision')[1].checked = false;
         }
           console.log(vision);
       }
@@ -621,7 +739,9 @@
                                   showImage(file,'balance-image');
       
                                   // Clear filePond for a new upload
-                                  ponds[it].removeFile();
+                                  ponds[0].removeFile();
+                                  ponds[1].removeFile();
+                                  ponds[2].removeFile();
               }
           }
       },
@@ -647,7 +767,20 @@
       
       ponds[0].imagePreviewMaxHeight = 100;
       ponds[1].imagePreviewMaxHeight = 100;
+      
+      // Example Images
+      
+      function exampleProcess(src){
+          if(window.getComputedStyle(document.getElementById('upload-wrapper')).display == 'none'){
+              if (window.getComputedStyle(document.getElementsByClassName('menu-mobile')[0]).display == 'none') {
+                  ponds[1].addFile(src);
+              }else{
+                  ponds[0].addFile(src);
+              }
+          }else{
+              ponds[2].addFile(src);
+          }
+      }
     </script>
-    <!--Dropzone custom functions--><!--Dropzone Menu custom functions-->
   </body>
 </html>

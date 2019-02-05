@@ -67,7 +67,7 @@
               </li>
             </ul>
             <div class="settings">
-              <span class="label-speed">Fast mode</span><label class="switch"><input class="checkbox-vision" type="checkbox" checked onclick="visionCheck()" /><span class="slider round"></span></label>
+              <span class="label-speed">Acurracy Mode</span><label class="switch"><input class="checkbox-vision" type="checkbox" onclick="visionCheck()" /><span class="slider round"></span></label>
             </div>
             <input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond hidden" name="file" type="file" /><!--------------------
             END - Mobile Menu List
@@ -109,7 +109,7 @@
                 <span>Feedback</span></a>
             </li>
             <div class="settings">
-              <span class="label-speed">Fast mode</span><label class="switch"><input class="checkbox-vision" type="checkbox" checked onclick="visionCheck()" /><span class="slider round"></span></label>
+              <span class="label-speed">Acurracy Mode</span><label class="switch"><input class="checkbox-vision" type="checkbox" onclick="visionCheck()" /><span class="slider round"></span></label>
             </div>
           </ul>
           <input accept="image/png, image/jpeg, image/jpg, image/gif" class="filepond hidden" name="file" type="file" />
@@ -265,6 +265,10 @@
     </script>
     <!--Google App Engine implementation-->
     <script src="js/engine.js"></script>
+    <script>
+      //Call modal on start
+      $('.modal-learn').modal('show');
+    </script>
     <script src="bower_components/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"></script>
     <script src="bower_components/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="bower_components/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
@@ -307,12 +311,12 @@
       function visionCheck(){
           if (vision == 0){
           vision = 1;
-              document.getElementsByClassName('checkbox-vision')[0].checked = false;
-              document.getElementsByClassName('checkbox-vision')[1].checked = false;
+              document.getElementsByClassName('checkbox-vision')[0].checked = true;
+              document.getElementsByClassName('checkbox-vision')[1].checked = true;
         } else {
            vision = 0;
-               document.getElementsByClassName('checkbox-vision')[0].checked = true;
-               document.getElementsByClassName('checkbox-vision')[1].checked = true;
+               document.getElementsByClassName('checkbox-vision')[0].checked = false;
+               document.getElementsByClassName('checkbox-vision')[1].checked = false;
         }
           console.log(vision);
       }
@@ -350,7 +354,9 @@
                                   showImage(file,'balance-image');
       
                                   // Clear filePond for a new upload
-                                  ponds[it].removeFile();
+                                  ponds[0].removeFile();
+                                  ponds[1].removeFile();
+                                  ponds[2].removeFile();
               }
           }
       },
@@ -376,7 +382,20 @@
       
       ponds[0].imagePreviewMaxHeight = 100;
       ponds[1].imagePreviewMaxHeight = 100;
+      
+      // Example Images
+      
+      function exampleProcess(src){
+          if(window.getComputedStyle(document.getElementById('upload-wrapper')).display == 'none'){
+              if (window.getComputedStyle(document.getElementsByClassName('menu-mobile')[0]).display == 'none') {
+                  ponds[1].addFile(src);
+              }else{
+                  ponds[0].addFile(src);
+              }
+          }else{
+              ponds[2].addFile(src);
+          }
+      }
     </script>
-    <!--Dropzone custom functions--><!--Dropzone Menu custom functions-->
   </body>
 </html>
