@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>aiartbase.color_mod &#8212; aiart 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/bootstrap-3.1.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/bootstrap-3.1.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/bootstrap-sphinx.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/favicon.png">
+          aiart</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary">
+<form action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9">
+      
+  <h1>Source code for aiartbase.color_mod</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.quantization</span> <span class="k">import</span> <span class="n">VBox</span><span class="p">,</span> <span class="n">boxes_iterator</span><span class="p">,</span> <span class="n">templates</span><span class="p">,</span> <span class="n">get_closest_hue</span>
+<span class="kn">from</span> <span class="nn">.sorting</span> <span class="k">import</span> <span class="n">MaxHeap</span>
+<span class="kn">from</span> <span class="nn">.image_utils</span> <span class="k">import</span> <span class="n">hsv_palette</span><span class="p">,</span> <span class="n">rgb_palette</span><span class="p">,</span> <span class="n">harmony_level</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">degrees</span><span class="p">,</span> <span class="n">radians</span>
+
+
+<div class="viewcode-block" id="ColorGenerator"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.color_mod.ColorGenerator">[docs]</a><span class="k">class</span> <span class="nc">ColorGenerator</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Modified color transformer class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">n_colors</span><span class="p">,</span> <span class="n">fraction</span><span class="o">=</span><span class="mf">0.75</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">colors</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;`colors` MUST be a list &#39;</span>
+                            <span class="s1">&#39;that contains items not </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">colors</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">n_colors</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">n_colors</span> <span class="o">&gt;</span> <span class="mi">256</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;`max_color` MUST be an integer value between &#39;</span>
+                            <span class="s1">&#39;2 and 256. not </span><span class="si">%s</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_colors</span><span class="p">))</span>
+
+        <span class="c1"># Image color list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="n">colors</span>
+
+        <span class="c1"># Image n_colors to calculate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_colors</span> <span class="o">=</span> <span class="n">n_colors</span>
+
+        <span class="c1"># Color palettes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">palette_colors</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">harmonized_palette</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">FRACTION</span> <span class="o">=</span> <span class="n">fraction</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">harmony</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ColorGenerator.generate"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.color_mod.ColorGenerator.generate">[docs]</a>    <span class="k">def</span> <span class="nf">generate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette_colors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Quantization</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">palette_colors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+            <span class="n">vbox</span> <span class="o">=</span> <span class="n">VBox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span> <span class="n">cmp_type</span><span class="o">=</span><span class="s1">&#39;fraction&#39;</span><span class="p">)</span>
+            <span class="n">pq_1</span> <span class="o">=</span> <span class="n">MaxHeap</span><span class="p">()</span>
+            <span class="n">pq_1</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">vbox</span><span class="p">)</span>
+            <span class="n">boxes_iterator</span><span class="p">(</span><span class="n">pq_1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_colors</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">FRACTION</span><span class="p">,</span> <span class="n">cmp_type</span><span class="o">=</span><span class="s1">&#39;fraction&#39;</span><span class="p">)</span>
+            <span class="n">pq_2</span> <span class="o">=</span> <span class="n">MaxHeap</span><span class="p">()</span>
+            <span class="k">while</span> <span class="ow">not</span> <span class="n">pq_1</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                <span class="n">tmp</span> <span class="o">=</span> <span class="n">pq_1</span><span class="o">.</span><span class="n">top</span><span class="p">()</span>
+                <span class="n">tmp</span><span class="o">.</span><span class="n">cmp_type</span> <span class="o">=</span> <span class="s1">&#39;other&#39;</span>
+                <span class="n">pq_2</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+                <span class="n">pq_1</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+
+            <span class="n">boxes_iterator</span><span class="p">(</span><span class="n">pq_2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_colors</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">FRACTION</span><span class="p">),</span> <span class="n">cmp_type</span><span class="o">=</span><span class="s1">&#39;other&#39;</span><span class="p">)</span>
+
+            <span class="k">while</span> <span class="ow">not</span> <span class="n">pq_2</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">palette_colors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">palette_colors</span><span class="p">,</span> <span class="n">pq_2</span><span class="o">.</span><span class="n">top</span><span class="p">()</span><span class="o">.</span><span class="n">average</span><span class="p">)</span>
+                <span class="n">pq_2</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="c1"># Harmonization</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">palette_colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette_colors</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="n">harmonizer</span> <span class="o">=</span> <span class="n">ColorHarmonizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">palette_colors</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">palette_colors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette_colors</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">harmonized_palette</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">harmonizer</span><span class="o">.</span><span class="n">harmonize</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">harmonized_palette</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">harmonized_palette</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">harmony</span> <span class="o">=</span> <span class="n">harmony_level</span><span class="p">(</span><span class="n">harmonizer</span><span class="o">.</span><span class="n">harmony</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ColorGenerator.get_palette"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.color_mod.ColorGenerator.get_palette">[docs]</a>    <span class="k">def</span> <span class="nf">get_palette</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">palette_colors</span></div>
+
+<div class="viewcode-block" id="ColorGenerator.get_harmonized_palette"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.color_mod.ColorGenerator.get_harmonized_palette">[docs]</a>    <span class="k">def</span> <span class="nf">get_harmonized_palette</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">harmonized_palette</span></div></div>
+
+
+<div class="viewcode-block" id="ColorHarmonizer"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.color_mod.ColorHarmonizer">[docs]</a><span class="k">class</span> <span class="nc">ColorHarmonizer</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Harmonizes colors</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">colors</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Number of dimensions is incorrect&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">harmonized_colors</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_template</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">harmony</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="ColorHarmonizer.set_template"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.color_mod.ColorHarmonizer.set_template">[docs]</a>    <span class="k">def</span> <span class="nf">set_template</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_template</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">degree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_template</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_template</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_template</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mf">235.8</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_template</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mf">273.6</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_template</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">198</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;ii&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_template</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_template</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">18</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_template</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mf">93.6</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_template</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">180</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="n">degree</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unknown template&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ColorHarmonizer.harmonize"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.color_mod.ColorHarmonizer.harmonize">[docs]</a>    <span class="k">def</span> <span class="nf">harmonize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">harmonized_colors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">color_harmony</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">harmonized_colors</span> <span class="o">=</span> <span class="n">hsv_palette</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">it</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">harmonized_colors</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_template</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">it</span><span class="p">])</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">degrees</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">best_template</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">it</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">harmonized_colors</span><span class="p">[</span><span class="n">it</span><span class="p">]</span> <span class="o">=</span> <span class="n">rgb_palette</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">harmonized_colors</span><span class="p">[</span><span class="n">it</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">it</span><span class="p">]</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_template</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">harmonized_colors</span><span class="p">,</span> <span class="n">template</span></div>
+
+<div class="viewcode-block" id="ColorHarmonizer.color_harmony"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.color_mod.ColorHarmonizer.color_harmony">[docs]</a>    <span class="k">def</span> <span class="nf">color_harmony</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">total_harmony</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="k">for</span> <span class="n">template</span> <span class="ow">in</span> <span class="n">templates</span><span class="p">:</span>
+            <span class="n">degree_harmony</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">template</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">degree</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">360</span><span class="p">):</span>
+                <span class="n">current_harmony</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+                <span class="k">for</span> <span class="n">it</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hsv_palette</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">)):</span>
+                    <span class="n">sat</span> <span class="o">=</span> <span class="n">radians</span><span class="p">((</span><span class="n">col</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span>
+                    <span class="n">hue</span> <span class="o">=</span> <span class="n">radians</span><span class="p">((</span><span class="n">col</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
+                    <span class="n">closest_hue</span> <span class="o">=</span> <span class="n">get_closest_hue</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">hue</span><span class="p">)</span>
+                    <span class="n">current_harmony</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">sat</span> <span class="o">*</span> <span class="n">closest_hue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">current_harmony</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">it</span><span class="p">]</span> <span class="o">=</span> <span class="n">closest_hue</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">degree_harmony</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">current_harmony</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">degree_harmony</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="n">degree_harmony</span> <span class="o">=</span> <span class="p">[</span><span class="n">current_harmony</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">degree</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">current_harmony</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="n">total_harmony</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">degree_harmony</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">or</span> <span class="n">total_harmony</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">total_harmony</span> <span class="o">=</span> <span class="n">degree_harmony</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">best_template</span> <span class="o">=</span> <span class="n">total_harmony</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">harmony</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">best_template</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div></div>
+
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, aiart.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>aiartbase package &#8212; aiart 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-3.1.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-3.1.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html"><img src="_static/favicon.png">
+          aiart</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">aiartbase package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-aiartbase.base">aiartbase.base module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.color_mod">aiartbase.color_mod module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.error_management">aiartbase.error_management module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.image_utils">aiartbase.image_utils module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.quantization">aiartbase.quantization module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.segmentation">aiartbase.segmentation module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.shared_variables">aiartbase.shared_variables module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.sorting">aiartbase.sorting module</a></li>
+<li><a class="reference internal" href="#module-aiartbase">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/aiartbase.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">aiartbase package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-aiartbase.base">aiartbase.base module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.color_mod">aiartbase.color_mod module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.error_management">aiartbase.error_management module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.image_utils">aiartbase.image_utils module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.quantization">aiartbase.quantization module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.segmentation">aiartbase.segmentation module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.shared_variables">aiartbase.shared_variables module</a></li>
+<li><a class="reference internal" href="#module-aiartbase.sorting">aiartbase.sorting module</a></li>
+<li><a class="reference internal" href="#module-aiartbase">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="sourcelink">
+  <a href="_sources/aiartbase.rst.txt"
+     rel="nofollow">Source</a>
+</div>
+<form action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9">
+      
+  <div class="section" id="aiartbase-package">
+<h1>aiartbase package<a class="headerlink" href="#aiartbase-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-aiartbase.base">
+<span id="aiartbase-base-module"></span><h2>aiartbase.base module<a class="headerlink" href="#module-aiartbase.base" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="aiartbase.base.BaseTransformer">
+<em class="property">class </em><code class="descclassname">aiartbase.base.</code><code class="descname">BaseTransformer</code><span class="sig-paren">(</span><em>image</em>, <em>google_vision_data=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/base.html#BaseTransformer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.base.BaseTransformer" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the image class representation</p>
+<dl class="method">
+<dt id="aiartbase.base.BaseTransformer.calculate_colors">
+<code class="descname">calculate_colors</code><span class="sig-paren">(</span><em>n_colors</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/base.html#BaseTransformer.calculate_colors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.base.BaseTransformer.calculate_colors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an instance of the palette class</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.base.BaseTransformer.composition">
+<code class="descname">composition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/base.html#BaseTransformer.composition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.base.BaseTransformer.composition" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.base.BaseTransformer.get_balance_attributes">
+<code class="descname">get_balance_attributes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/base.html#BaseTransformer.get_balance_attributes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.base.BaseTransformer.get_balance_attributes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.base.BaseTransformer.get_balanced_segments">
+<code class="descname">get_balanced_segments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/base.html#BaseTransformer.get_balanced_segments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.base.BaseTransformer.get_balanced_segments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.base.BaseTransformer.get_color_positions">
+<code class="descname">get_color_positions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/base.html#BaseTransformer.get_color_positions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.base.BaseTransformer.get_color_positions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.base.BaseTransformer.get_harmonized_palette">
+<code class="descname">get_harmonized_palette</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/base.html#BaseTransformer.get_harmonized_palette"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.base.BaseTransformer.get_harmonized_palette" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.base.BaseTransformer.get_palette">
+<code class="descname">get_palette</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/base.html#BaseTransformer.get_palette"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.base.BaseTransformer.get_palette" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.base.BaseTransformer.get_segments">
+<code class="descname">get_segments</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/base.html#BaseTransformer.get_segments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.base.BaseTransformer.get_segments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.base.BaseTransformer.harmony">
+<code class="descname">harmony</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/base.html#BaseTransformer.harmony"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.base.BaseTransformer.harmony" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.base.BaseTransformer.segment">
+<code class="descname">segment</code><span class="sig-paren">(</span><em>objects</em>, <em>faces</em>, <em>compactness=50</em>, <em>n_segments=100</em>, <em>connectivity=1</em>, <em>sigma=500</em>, <em>num_cuts=200</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/base.html#BaseTransformer.segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.base.BaseTransformer.segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function responable of image segmentation</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-aiartbase.color_mod">
+<span id="aiartbase-color-mod-module"></span><h2>aiartbase.color_mod module<a class="headerlink" href="#module-aiartbase.color_mod" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="aiartbase.color_mod.ColorGenerator">
+<em class="property">class </em><code class="descclassname">aiartbase.color_mod.</code><code class="descname">ColorGenerator</code><span class="sig-paren">(</span><em>colors</em>, <em>n_colors</em>, <em>fraction=0.75</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/color_mod.html#ColorGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.color_mod.ColorGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modified color transformer class</p>
+<dl class="method">
+<dt id="aiartbase.color_mod.ColorGenerator.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/color_mod.html#ColorGenerator.generate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.color_mod.ColorGenerator.generate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.color_mod.ColorGenerator.get_harmonized_palette">
+<code class="descname">get_harmonized_palette</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/color_mod.html#ColorGenerator.get_harmonized_palette"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.color_mod.ColorGenerator.get_harmonized_palette" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.color_mod.ColorGenerator.get_palette">
+<code class="descname">get_palette</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/color_mod.html#ColorGenerator.get_palette"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.color_mod.ColorGenerator.get_palette" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="aiartbase.color_mod.ColorHarmonizer">
+<em class="property">class </em><code class="descclassname">aiartbase.color_mod.</code><code class="descname">ColorHarmonizer</code><span class="sig-paren">(</span><em>colors</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/color_mod.html#ColorHarmonizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.color_mod.ColorHarmonizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Harmonizes colors</p>
+<dl class="method">
+<dt id="aiartbase.color_mod.ColorHarmonizer.color_harmony">
+<code class="descname">color_harmony</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/color_mod.html#ColorHarmonizer.color_harmony"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.color_mod.ColorHarmonizer.color_harmony" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.color_mod.ColorHarmonizer.harmonize">
+<code class="descname">harmonize</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/color_mod.html#ColorHarmonizer.harmonize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.color_mod.ColorHarmonizer.harmonize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.color_mod.ColorHarmonizer.set_template">
+<code class="descname">set_template</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/color_mod.html#ColorHarmonizer.set_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.color_mod.ColorHarmonizer.set_template" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-aiartbase.error_management">
+<span id="aiartbase-error-management-module"></span><h2>aiartbase.error_management module<a class="headerlink" href="#module-aiartbase.error_management" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aiartbase.error_management.raise_incorrect_size">
+<code class="descclassname">aiartbase.error_management.</code><code class="descname">raise_incorrect_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/error_management.html#raise_incorrect_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.error_management.raise_incorrect_size" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.error_management.rise_incorrect_file_extension">
+<code class="descclassname">aiartbase.error_management.</code><code class="descname">rise_incorrect_file_extension</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/error_management.html#rise_incorrect_file_extension"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.error_management.rise_incorrect_file_extension" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aiartbase.image_utils">
+<span id="aiartbase-image-utils-module"></span><h2>aiartbase.image_utils module<a class="headerlink" href="#module-aiartbase.image_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="aiartbase.image_utils.color_weight">
+<code class="descclassname">aiartbase.image_utils.</code><code class="descname">color_weight</code><span class="sig-paren">(</span><em>rgb_color</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/image_utils.html#color_weight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.image_utils.color_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.image_utils.composition_level">
+<code class="descclassname">aiartbase.image_utils.</code><code class="descname">composition_level</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/image_utils.html#composition_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.image_utils.composition_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.image_utils.composition_score">
+<code class="descclassname">aiartbase.image_utils.</code><code class="descname">composition_score</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/image_utils.html#composition_score"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.image_utils.composition_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pre: gravity == 0.1
+:param x:
+:return: Composition score</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.image_utils.harmony_level">
+<code class="descclassname">aiartbase.image_utils.</code><code class="descname">harmony_level</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/image_utils.html#harmony_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.image_utils.harmony_level" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.image_utils.hsv_palette">
+<code class="descclassname">aiartbase.image_utils.</code><code class="descname">hsv_palette</code><span class="sig-paren">(</span><em>palette</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/image_utils.html#hsv_palette"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.image_utils.hsv_palette" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.image_utils.image_resize">
+<code class="descclassname">aiartbase.image_utils.</code><code class="descname">image_resize</code><span class="sig-paren">(</span><em>self</em>, <em>width=None</em>, <em>height=None</em>, <em>inter=3</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/image_utils.html#image_resize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.image_utils.image_resize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.image_utils.image_to_string">
+<code class="descclassname">aiartbase.image_utils.</code><code class="descname">image_to_string</code><span class="sig-paren">(</span><em>image</em>, <em>file_extension</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/image_utils.html#image_to_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.image_utils.image_to_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.image_utils.is_monochromatic">
+<code class="descclassname">aiartbase.image_utils.</code><code class="descname">is_monochromatic</code><span class="sig-paren">(</span><em>pal</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/image_utils.html#is_monochromatic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.image_utils.is_monochromatic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.image_utils.rgb_palette">
+<code class="descclassname">aiartbase.image_utils.</code><code class="descname">rgb_palette</code><span class="sig-paren">(</span><em>palette</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/image_utils.html#rgb_palette"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.image_utils.rgb_palette" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.image_utils.string_to_image">
+<code class="descclassname">aiartbase.image_utils.</code><code class="descname">string_to_image</code><span class="sig-paren">(</span><em>file_stream</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/image_utils.html#string_to_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.image_utils.string_to_image" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aiartbase.quantization">
+<span id="aiartbase-quantization-module"></span><h2>aiartbase.quantization module<a class="headerlink" href="#module-aiartbase.quantization" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="aiartbase.quantization.VBox">
+<em class="property">class </em><code class="descclassname">aiartbase.quantization.</code><code class="descname">VBox</code><span class="sig-paren">(</span><em>colors</em>, <em>cmp_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/quantization.html#VBox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.quantization.VBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>VBox Class</p>
+<dl class="attribute">
+<dt id="aiartbase.quantization.VBox.average">
+<code class="descname">average</code><a class="headerlink" href="#aiartbase.quantization.VBox.average" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="aiartbase.quantization.VBox.copy">
+<code class="descname">copy</code><a class="headerlink" href="#aiartbase.quantization.VBox.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="aiartbase.quantization.VBox.ranges">
+<code class="descname">ranges</code><a class="headerlink" href="#aiartbase.quantization.VBox.ranges" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="aiartbase.quantization.VBox.volume">
+<code class="descname">volume</code><a class="headerlink" href="#aiartbase.quantization.VBox.volume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.quantization.boxes_iterator">
+<code class="descclassname">aiartbase.quantization.</code><code class="descname">boxes_iterator</code><span class="sig-paren">(</span><em>boxes</em>, <em>target</em>, <em>cmp_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/quantization.html#boxes_iterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.quantization.boxes_iterator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.quantization.get_closest_hue">
+<code class="descclassname">aiartbase.quantization.</code><code class="descname">get_closest_hue</code><span class="sig-paren">(</span><em>template</em>, <em>degree</em>, <em>hue</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/quantization.html#get_closest_hue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.quantization.get_closest_hue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.quantization.get_pos">
+<code class="descclassname">aiartbase.quantization.</code><code class="descname">get_pos</code><span class="sig-paren">(</span><em>arr</em>, <em>left</em>, <em>right</em>, <em>x</em>, <em>c</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/quantization.html#get_pos"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.quantization.get_pos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.quantization.median_cut">
+<code class="descclassname">aiartbase.quantization.</code><code class="descname">median_cut</code><span class="sig-paren">(</span><em>box</em>, <em>cmp_type</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/quantization.html#median_cut"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.quantization.median_cut" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aiartbase.segmentation">
+<span id="aiartbase-segmentation-module"></span><h2>aiartbase.segmentation module<a class="headerlink" href="#module-aiartbase.segmentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="aiartbase.segmentation.Box">
+<em class="property">class </em><code class="descclassname">aiartbase.segmentation.</code><code class="descname">Box</code><span class="sig-paren">(</span><em>i</em>, <em>j</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/segmentation.html#Box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.segmentation.Box" title="Permalink to this definition">¶</a></dt>
+<dd><p>This box class is a helper class
+useful to classify the bounding boxes</p>
+<dl class="method">
+<dt id="aiartbase.segmentation.Box.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>pixel</em>, <em>pixel_color</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/segmentation.html#Box.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.segmentation.Box.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="aiartbase.segmentation.Box.average_color">
+<code class="descname">average_color</code><a class="headerlink" href="#aiartbase.segmentation.Box.average_color" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.segmentation.Box.empty">
+<code class="descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/segmentation.html#Box.empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.segmentation.Box.empty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.segmentation.Box.get_dir">
+<code class="descname">get_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/segmentation.html#Box.get_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.segmentation.Box.get_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="aiartbase.segmentation.Box.mass">
+<code class="descname">mass</code><a class="headerlink" href="#aiartbase.segmentation.Box.mass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.segmentation.Box.ratio">
+<code class="descname">ratio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/segmentation.html#Box.ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.segmentation.Box.ratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.segmentation.Box.set_weight_dir">
+<code class="descname">set_weight_dir</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/segmentation.html#Box.set_weight_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.segmentation.Box.set_weight_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="aiartbase.segmentation.Box.weight">
+<code class="descname">weight</code><a class="headerlink" href="#aiartbase.segmentation.Box.weight" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate:
+1. Size = self.size
+:return: Box weight</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="aiartbase.segmentation.Box.x">
+<code class="descname">x</code><a class="headerlink" href="#aiartbase.segmentation.Box.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="aiartbase.segmentation.Box.y">
+<code class="descname">y</code><a class="headerlink" href="#aiartbase.segmentation.Box.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="aiartbase.segmentation.Segment">
+<em class="property">class </em><code class="descclassname">aiartbase.segmentation.</code><code class="descname">Segment</code><span class="sig-paren">(</span><em>b</em>, <em>w</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/segmentation.html#Segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.segmentation.Segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Segment class that represents a segment in an image</p>
+<dl class="method">
+<dt id="aiartbase.segmentation.Segment.get_scale">
+<code class="descname">get_scale</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/segmentation.html#Segment.get_scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.segmentation.Segment.get_scale" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.segmentation.Segment.get_weight">
+<code class="descname">get_weight</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/segmentation.html#Segment.get_weight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.segmentation.Segment.get_weight" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.segmentation.Segment.get_x">
+<code class="descname">get_x</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/segmentation.html#Segment.get_x"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.segmentation.Segment.get_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>get x function
+:return: self.x</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.segmentation.Segment.get_y">
+<code class="descname">get_y</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/segmentation.html#Segment.get_y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.segmentation.Segment.get_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>get y function
+:return: self.y</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="aiartbase.segmentation.box_to_segment">
+<code class="descclassname">aiartbase.segmentation.</code><code class="descname">box_to_segment</code><span class="sig-paren">(</span><em>b</em>, <em>max_force</em>, <em>min_force</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/segmentation.html#box_to_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.segmentation.box_to_segment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-aiartbase.shared_variables">
+<span id="aiartbase-shared-variables-module"></span><h2>aiartbase.shared_variables module<a class="headerlink" href="#module-aiartbase.shared_variables" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-aiartbase.sorting">
+<span id="aiartbase-sorting-module"></span><h2>aiartbase.sorting module<a class="headerlink" href="#module-aiartbase.sorting" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="aiartbase.sorting.MaxHeap">
+<em class="property">class </em><code class="descclassname">aiartbase.sorting.</code><code class="descname">MaxHeap</code><a class="reference internal" href="_modules/aiartbase/sorting.html#MaxHeap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.sorting.MaxHeap" title="Permalink to this definition">¶</a></dt>
+<dd><p>This max heap class represents the
+priority queue</p>
+<dl class="method">
+<dt id="aiartbase.sorting.MaxHeap.empty">
+<code class="descname">empty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/sorting.html#MaxHeap.empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.sorting.MaxHeap.empty" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.sorting.MaxHeap.insert_element">
+<code class="descname">insert_element</code><span class="sig-paren">(</span><em>pos</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/sorting.html#MaxHeap.insert_element"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.sorting.MaxHeap.insert_element" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.sorting.MaxHeap.pop">
+<code class="descname">pop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/sorting.html#MaxHeap.pop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.sorting.MaxHeap.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes element on the top</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.sorting.MaxHeap.push">
+<code class="descname">push</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/sorting.html#MaxHeap.push"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.sorting.MaxHeap.push" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert x into heap
+:param x: Value to insert</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.sorting.MaxHeap.remove_element">
+<code class="descname">remove_element</code><span class="sig-paren">(</span><em>pos</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/sorting.html#MaxHeap.remove_element"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.sorting.MaxHeap.remove_element" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="aiartbase.sorting.MaxHeap.top">
+<code class="descname">top</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiartbase/sorting.html#MaxHeap.top"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#aiartbase.sorting.MaxHeap.top" title="Permalink to this definition">¶</a></dt>
+<dd><p>Top element
+:return: max element</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-aiartbase">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-aiartbase" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, aiart.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

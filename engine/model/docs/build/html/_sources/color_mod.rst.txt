@@ -1,0 +1,7 @@
+color\_mod module
+=================
+
+.. automodule:: color_mod
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -88,9 +88,10 @@ class Box:
     def weight(self):
         """
         Calculate:
-            1. Size = self.size
+        1. Size = self.size
         :return: Box weight
         """
+
         if self.empty():
             raise Exception("The box is empty")
         if self._weight is None:

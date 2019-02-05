@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>aiartbase.quantization &#8212; aiart 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/bootstrap-3.1.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/bootstrap-3.1.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/bootstrap-sphinx.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><img src="../../_static/favicon.png">
+          aiart</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary">
+<form action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9">
+      
+  <h1>Source code for aiartbase.quantization</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">radians</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">degrees</span>
+
+
+
+<span class="c1"># Templates</span>
+<span class="n">i</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">]]</span>
+<span class="n">V</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">93.6</span><span class="p">]]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">93.6</span><span class="p">],</span> <span class="p">[</span><span class="mf">217.8</span><span class="p">,</span> <span class="mf">235.8</span><span class="p">]]</span>  <span class="c1"># diff = 90</span>
+<span class="n">I</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">],</span> <span class="p">[</span><span class="mi">180</span><span class="p">,</span> <span class="mi">198</span><span class="p">]]</span>  <span class="c1"># diff = 180</span>
+<span class="n">T</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">]]</span>
+<span class="n">L</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">79.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">121.6</span><span class="p">,</span> <span class="mf">138.6</span><span class="p">]]</span>  <span class="c1"># diff = 180</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">93.6</span><span class="p">],</span> <span class="p">[</span><span class="mi">180</span><span class="p">,</span> <span class="mf">273.6</span><span class="p">]]</span>  <span class="c1"># diff = 180</span>
+<span class="c1"># templates = [V]</span>
+<span class="n">templates</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">V</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">I</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">X</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="VBox"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.quantization.VBox">[docs]</a><span class="k">class</span> <span class="nc">VBox</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    VBox Class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">cmp_type</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ranges</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">histogram</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_average</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_volume</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">histogram</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmp_type</span> <span class="o">=</span> <span class="n">cmp_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_ranges</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ranges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ranges</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+
+            <span class="n">max_b</span> <span class="o">=</span> <span class="n">max_g</span> <span class="o">=</span> <span class="n">max_r</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">min_b</span> <span class="o">=</span> <span class="n">min_g</span> <span class="o">=</span> <span class="n">min_r</span> <span class="o">=</span> <span class="mi">256</span>
+
+            <span class="k">for</span> <span class="n">current_color</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">histogram</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">min_r</span> <span class="o">&gt;</span> <span class="n">current_color</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="n">min_r</span> <span class="o">=</span> <span class="n">current_color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">max_r</span> <span class="o">&lt;</span> <span class="n">current_color</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="n">max_r</span> <span class="o">=</span> <span class="n">current_color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">min_b</span> <span class="o">&gt;</span> <span class="n">current_color</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+                    <span class="n">min_b</span> <span class="o">=</span> <span class="n">current_color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">max_b</span> <span class="o">&lt;</span> <span class="n">current_color</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+                    <span class="n">max_b</span> <span class="o">=</span> <span class="n">current_color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">min_g</span> <span class="o">&gt;</span> <span class="n">current_color</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">min_g</span> <span class="o">=</span> <span class="n">current_color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">max_g</span> <span class="o">&lt;</span> <span class="n">current_color</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">max_g</span> <span class="o">=</span> <span class="n">current_color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">min_ranges</span> <span class="o">=</span> <span class="p">[</span><span class="n">min_r</span><span class="p">,</span> <span class="n">min_g</span><span class="p">,</span> <span class="n">min_b</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ranges</span> <span class="o">=</span> <span class="p">[</span><span class="n">max_r</span> <span class="o">-</span> <span class="n">min_r</span><span class="p">,</span>
+                            <span class="n">max_g</span> <span class="o">-</span> <span class="n">min_g</span><span class="p">,</span>
+                            <span class="n">max_b</span> <span class="o">-</span> <span class="n">min_b</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ranges</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">volume</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_volume</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_volume</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> \
+                           <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> \
+                           <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_volume</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">copied</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">copied</span><span class="o">.</span><span class="n">_avg</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">copied</span><span class="o">.</span><span class="n">_volume</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">copied</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
+        <span class="n">copied</span><span class="o">.</span><span class="n">_ranges</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">copied</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">average</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_average</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_average</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">histogram</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_average</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">color</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_average</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_average</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">color</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_average</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_average</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_average</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_average</span>
+
+    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmp_type</span> <span class="o">==</span> <span class="s1">&#39;fraction&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">count</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmp_type</span> <span class="o">==</span> <span class="s1">&#39;other&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">volume</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Unknown compare type&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="median_cut"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.quantization.median_cut">[docs]</a><span class="k">def</span> <span class="nf">median_cut</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="n">cmp_type</span><span class="p">):</span>
+    <span class="n">max_channel</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">ranges</span><span class="p">)</span>
+    <span class="n">bucket_range</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span>
+    <span class="n">channel</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">limit</span> <span class="o">=</span> <span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">box</span><span class="o">.</span><span class="n">min_ranges</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">max_channel</span> <span class="o">==</span> <span class="n">box</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">bucket_range</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">box</span><span class="o">.</span><span class="n">min_ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="n">max_channel</span> <span class="o">==</span> <span class="n">box</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">bucket_range</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="p">(</span><span class="n">box</span><span class="o">.</span><span class="n">ranges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">box</span><span class="o">.</span><span class="n">min_ranges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">b_view</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">histogram</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="p">[(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)])</span>
+    <span class="n">sorted_bucket</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">b_view</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="p">[</span><span class="n">bucket_range</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">sorted_bucket</span> <span class="o">=</span> <span class="n">sorted_bucket</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">get_pos</span><span class="p">(</span><span class="n">sorted_bucket</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sorted_bucket</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">(</span><span class="n">limit</span><span class="p">),</span> <span class="n">channel</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">VBox</span><span class="p">(</span><span class="n">sorted_bucket</span><span class="o">.</span><span class="n">copy</span><span class="p">()[</span><span class="n">size</span><span class="p">:],</span> <span class="n">cmp_type</span><span class="p">),</span> <span class="n">VBox</span><span class="p">(</span><span class="n">sorted_bucket</span><span class="o">.</span><span class="n">copy</span><span class="p">()[:</span><span class="n">size</span><span class="p">],</span> <span class="n">cmp_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="boxes_iterator"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.quantization.boxes_iterator">[docs]</a><span class="k">def</span> <span class="nf">boxes_iterator</span><span class="p">(</span><span class="n">boxes</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">cmp_type</span><span class="p">):</span>
+    <span class="n">n_color</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">n_iter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">n_iter</span> <span class="o">&lt;</span> <span class="mi">1000</span> <span class="ow">and</span> <span class="n">n_color</span> <span class="o">&lt;</span> <span class="n">target</span><span class="p">:</span>
+        <span class="n">current_box</span> <span class="o">=</span> <span class="n">boxes</span><span class="o">.</span><span class="n">top</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span>
+        <span class="n">boxes</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">current_box</span><span class="o">.</span><span class="n">count</span><span class="p">:</span>
+            <span class="n">boxes</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">current_box</span><span class="o">.</span><span class="n">copy</span><span class="p">)</span>
+            <span class="k">continue</span>
+        <span class="n">v_boxes</span> <span class="o">=</span> <span class="n">median_cut</span><span class="p">(</span><span class="n">current_box</span><span class="o">.</span><span class="n">copy</span><span class="p">,</span> <span class="n">cmp_type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v_boxes</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">boxes</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">v_boxes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v_boxes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">boxes</span><span class="o">.</span><span class="n">push</span><span class="p">(</span><span class="n">v_boxes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">n_color</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">n_iter</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="get_pos"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.quantization.get_pos">[docs]</a><span class="k">def</span> <span class="nf">get_pos</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">left</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">arr</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="n">x</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">m</span>
+        <span class="k">elif</span> <span class="n">arr</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">x</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">get_pos</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">get_pos</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">right</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">left</span></div>
+
+
+<div class="viewcode-block" id="get_closest_hue"><a class="viewcode-back" href="../../aiartbase.html#aiartbase.quantization.get_closest_hue">[docs]</a><span class="k">def</span> <span class="nf">get_closest_hue</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">hue</span><span class="p">):</span>
+    <span class="n">closest_hue</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3600</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">zone</span> <span class="ow">in</span> <span class="n">template</span><span class="p">:</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">zone</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">degree</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">zone</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">degree</span><span class="p">)</span> <span class="o">%</span> <span class="mi">360</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;=</span> <span class="n">hue</span> <span class="o">&lt;=</span> <span class="n">b</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">hue</span> <span class="o">&lt;=</span> <span class="n">b</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">b</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">hue</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">hue</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">closest_hue</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">closest_hue</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">hue</span><span class="p">),</span> <span class="n">a</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">hue</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">closest_hue</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">closest_hue</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">hue</span><span class="p">),</span> <span class="n">b</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">closest_hue</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2019, aiart.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.8.2.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

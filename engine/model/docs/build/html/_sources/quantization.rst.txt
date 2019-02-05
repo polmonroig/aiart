@@ -1,0 +1,7 @@
+quantization module
+===================
+
+.. automodule:: quantization
+    :members:
+    :undoc-members:
+    :show-inheritance:
