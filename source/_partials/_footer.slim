@@ -40,12 +40,12 @@ javascript:
 script src="js/engine.js"
 
 //FilePond Configuration
+script src="bower_components/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"
 script src="bower_components/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"
 script src="bower_components/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"
 script src="bower_components/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"
 script src="bower_components/filepond-plugin-image-transform/dist/filepond-plugin-image-transform.js"
 script src="bower_components/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"
-script src="bower_components/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.js"
 script src="bower_components/filepond/dist/filepond.js"
 
 javascript:
@@ -97,12 +97,12 @@ javascript:
 javascript:
 
 	FilePond.registerPlugin(
+		FilePondPluginImageExifOrientation,
 		FilePondPluginImageResize,
 		FilePondPluginImageTransform,
 		FilePondPluginImagePreview,
     FilePondPluginFileValidateType,
 		FilePondPluginFileValidateSize,
-		FilePondPluginImageExifOrientation
 	);
 
 	const ponds = FilePond.parse(document.body);
@@ -140,6 +140,7 @@ javascript:
 		styleLoadIndicatorPosition: 'center',
 		styleProgressIndicatorPosition: 'center',
 		acceptedFileTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+		allowImageExifOrientation: true,
 		allowImageResize: true,
 		imageResizeMode: 'contain',
 		imageResizeUpscale: true,

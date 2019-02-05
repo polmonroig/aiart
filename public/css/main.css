@@ -8140,11 +8140,11 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 
 @keyframes colorsampleClicked {
   0% {
-    border-width: 4px; }
+    stroke-width: 4px; }
   50% {
-    border-width: 10px; }
+    stroke-width: 10px; }
   100% {
-    border-width: 4px; } }
+    stroke-width: 4px; } }
 
 .section-anim {
   animation-name: fadeUp;
@@ -13378,16 +13378,32 @@ a.with-avatar span {
         width: 100%;
         position: absolute;
         opacity: 1;
-        padding: 30px; }
+        padding: 30px;
+        /*svg:hover{
+					.tooltip-hex{
+						opacity:1;
+					}
+				}*/ }
         .color-index .color-content-w .color-image-wrapper #color-image-samples svg {
           display: block;
           height: 100%;
           width: 100%; }
-      .color-index .color-content-w .color-image-wrapper canvas {
-        width: 100%;
-        position: absolute;
-        top: 0;
-        z-index: 2; }
+          .color-index .color-content-w .color-image-wrapper #color-image-samples svg .tooltip-hex {
+            position: absolute;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            text-align: center;
+            opacity: 0; }
+            .color-index .color-content-w .color-image-wrapper #color-image-samples svg .tooltip-hex rect {
+              fill: rgba(0, 0, 0, 0.8); }
+            .color-index .color-content-w .color-image-wrapper #color-image-samples svg .tooltip-hex text {
+              font-size: 14px;
+              font-weight: 600;
+              fill: #fff; }
+          .color-index .color-content-w .color-image-wrapper #color-image-samples svg circle:hover + g.tooltip-hex {
+            opacity: 1; }
+          .color-index .color-content-w .color-image-wrapper #color-image-samples svg circle:hover {
+            cursor: pointer; }
     .color-index .color-content-w .color-control {
       padding: 30px 20px;
       border-radius: 20px;
@@ -13523,12 +13539,12 @@ a.with-avatar span {
       -webkit-transition: all 1s;
       transition: all 1s; }
       .filter-w .colorwheel-container #colorwheel button.colorsample-container .colorsample {
-        width: 35px;
-        height: 35px;
+        width: 30px;
+        height: 30px;
         border-radius: 50%;
         border-color: white;
         border-style: solid;
-        border-width: 3px;
+        border-width: 2px;
         box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.4);
         background-color: rgba(1, 1, 1, 0);
         position: absolute;
@@ -13538,11 +13554,6 @@ a.with-avatar span {
         transition: all 1s;
         -webkit-transition: width 0.3s, height 0.3s, border-width 0.3s;
         transition: width 0.3s, height 0.3s, border-width 0.3s; }
-    .filter-w .colorwheel-container #colorwheel button.colorsample-clicked .colorsample {
-      animation-name: colorsampleClicked;
-      animation-duration: 0.5s;
-      animation-delay: 0s;
-      animation-fill-mode: both; }
     .filter-w .colorwheel-container #colorwheel .tooltip-hex {
       position: absolute;
       -webkit-transition: all 0.3s;
@@ -13578,17 +13589,6 @@ a.with-avatar span {
         border-radius: 50%;
         border-style: none;
         display: inline-block; }
-      .filter-w .colorwheel-container #palette .color-row .tooltip-fixed {
-        width: 70px;
-        text-align: center;
-        display: inline-block;
-        font-size: 14px;
-        background-color: #000;
-        border-radius: 4px;
-        color: #fff;
-        padding: 0.25rem 0 0.5rem;
-        position: relative;
-        bottom: 13px; }
 
 .filter-w .button-div {
   width: 100%;
@@ -13637,6 +13637,12 @@ a.with-avatar span {
     r: 28px; }
   to {
     r: 20px; } }
+
+.colorsample-clicked {
+  animation-name: colorsampleClicked;
+  animation-duration: 0.5s;
+  animation-delay: 0s;
+  animation-fill-mode: both; }
 
 .colorsample-image-grow {
   animation-name: colorsampleImageGrow;

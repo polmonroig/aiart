@@ -60,15 +60,39 @@
 					display: block;
 					height: 100%;
 					width: 100%;
-				}
-			}
 
-			canvas{
-				width: 100%;
-				position: absolute;
-				top: 0;
-				z-index: 2;
-			}
+					.tooltip-hex{
+						position: absolute;
+						-webkit-transition: all 0.3s;
+		 				transition: all 0.3s;
+						text-align: center;
+						opacity: 0;
+
+						rect{
+							fill: rgba(0,0,0, 0.8);
+						}
+						text{
+							font-size: 14px;
+							font-weight: 600;
+							fill: #fff;
+						}
+					}
+
+					circle:hover + g.tooltip-hex {
+						opacity:1;
+					}
+					circle:hover{
+						cursor: pointer;
+					}
+				}
+
+				/*svg:hover{
+					.tooltip-hex{
+						opacity:1;
+					}
+				}*/
+	    }
+
 		}
 
 
@@ -250,12 +274,12 @@
  				transition: all 1s;
 
 				.colorsample{
-					width: 35px;
-					height: 35px;
+					width: 30px;
+					height: 30px;
 					border-radius: 50%;
 					border-color: white;
 					border-style: solid;
-					border-width: 3px;
+					border-width: 2px;
 					box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.4);
 					background-color: rgba(1,1,1,0);
 					position: absolute;
@@ -267,15 +291,6 @@
 	 				transition: width 0.3s, height 0.3s, border-width 0.3s;
 				}
       }
-
-			button.colorsample-clicked{
-				.colorsample{
-					animation-name: colorsampleClicked;
-					animation-duration: 0.5s;
-					animation-delay: 0s;
-					animation-fill-mode: both;
-				}
-			}
 
 
 			.tooltip-hex{
@@ -323,19 +338,6 @@
 					border-radius: 50%;
 					border-style: none;
 					display: inline-block;
-				}
-
-				.tooltip-fixed{
-					width: 70px;
-					text-align: center;
-					display: inline-block;
-					font-size: 14px;
-					background-color: #000;
-					border-radius: 4px;
-					color: #fff;
-					padding: 0.25rem 0 0.5rem;
-					position: relative;
-					bottom: 13px;
 				}
 			}
 		}
@@ -402,6 +404,13 @@
     to {
         r: 20px;
     }
+}
+
+.colorsample-clicked{
+	animation-name: colorsampleClicked;
+	animation-duration: 0.5s;
+	animation-delay: 0s;
+	animation-fill-mode: both;
 }
 
 .colorsample-image-grow {

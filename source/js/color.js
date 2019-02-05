@@ -83,14 +83,9 @@ function createColorSamples(colorPalette, colorTemplate){
 	for(var i = 0; i < colorPalette.length/2; i++){
 		html += `
 						<button id="colorsample-${i}" class="colorsample-container" value="${rgb2hex(colorPalette[i])}"  style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px;">
-							<div onclick="copyToClipboard(this.value, ${i})" class="colorsample" style="background: ${rgb2hex(colorPalette[i])};"></div>
+							<div class="colorsample" style="background: ${rgb2hex(colorPalette[i])};"></div>
 						</button>
 							`
-	}
-
-	// Create color tooltips
-	for(var i = 0; i < colorPalette.length/2; i++){
-		html += `<div id="tooltip-${i}" class="tooltip-hex" style="top: ${rgb2posSaturated(colorPalette[i])[0]}px; left:${rgb2posSaturated(colorPalette[i])[1]}px;">${rgb2hex(colorPalette[i])}</div>`
 	}
 
 	document.getElementById("colorwheel").innerHTML = html;
@@ -118,7 +113,12 @@ function createImageSamples(colorPalette){
 							  </defs>
 							`;
 	for(var i = 0; i < colorPalette.length/2; i++){
-		html += `	<circle class="colorsample-image" cx="${colorPositions[i][0]*colorImageSamples.width}" cy="${colorPositions[i][1]*colorImageSamples.height}" r="20" stroke="white" stroke-width="4" fill="${rgb2hex(colorPalette[i])}" /> `;
+		html += `	<circle id="colorsample-${i}" onclick="copyToClipboard(this.getAttribute('fill'), ${i})" class="colorsample-image" cx="${colorPositions[i][0]*colorImageSamples.width}" cy="${colorPositions[i][1]*colorImageSamples.height}" r="20" stroke="white" stroke-width="4" fill="${rgb2hex(colorPalette[i])}" />
+							<g class="tooltip-hex" transform="translate(${colorPositions[i][0]*colorImageSamples.width}, ${colorPositions[i][1]*colorImageSamples.height})">
+						    <rect id="rounded-rectangle" rx="10" x="-45px" y="-70px" width="90px" height="40px"/>
+						    <text id="tooltip-text-${i}" y="-70px" dy="25px" text-anchor="middle" >${rgb2hex(colorPalette[i])}</text>
+						  </g>
+							`;
 	}
 	html += "</svg>";
 
@@ -165,13 +165,10 @@ function harmonizeButton(){
 																																					 left:${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[1]}px;
 																																					 `
 
-			document.getElementsByClassName('tooltip-hex')[i].style = `top: ${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[0]}px;
-																																					 left:${rgb2posSaturated(colorPalette[i+(colorPalette.length/2)])[1]}px;
-																																					 `
-			document.getElementsByClassName('tooltip-hex')[i].innerHTML = `${rgb2hex(colorPalette[i+(colorPalette.length/2)])}`;
 			document.getElementsByClassName('colorsample-container')[i].value = `${rgb2hex(colorPalette[i+(colorPalette.length/2)])}`;
 			document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i+(colorPalette.length/2)])};`
 			document.getElementsByClassName('colorsample-image')[i].setAttribute("fill", rgb2hex(colorPalette[i+(colorPalette.length/2)]));
+			document.getElementsByTagName('text')[i].textContent = `${rgb2hex(colorPalette[i+(colorPalette.length/2)])}`;
 
 			// Check if color is changed
 			if(colorPalette[i+(colorPalette.length/2)][0] != colorPalette[i][0] || colorPalette[i+(colorPalette.length/2)][1] != colorPalette[i][1] || colorPalette[i+(colorPalette.length/2)][2] != colorPalette[i][2]){
@@ -198,13 +195,11 @@ function resetHarmonizeButton(){
 		document.getElementsByClassName('colorsample-container')[i].style = `top: ${rgb2posSaturated(colorPalette[i])[0]}px;
 																																				 left:${rgb2posSaturated(colorPalette[i])[1]}px;
 																																				 `
-		document.getElementsByClassName('tooltip-hex')[i].style = `top: ${rgb2posSaturated(colorPalette[i])[0]}px;
-																															 left:${rgb2posSaturated(colorPalette[i])[1]}px;
-																															`
-		document.getElementsByClassName('tooltip-hex')[i].innerHTML = `${rgb2hex(colorPalette[i])}`;
+
 		document.getElementsByClassName('colorsample-container')[i].value = `${rgb2hex(colorPalette[i])}`;
 		document.getElementsByClassName('colorsample')[i].style = `background: ${rgb2hex(colorPalette[i])};`
 		document.getElementsByClassName('colorsample-image')[i].setAttribute("fill", rgb2hex(colorPalette[i]));
+		document.getElementsByTagName('text')[i].textContent = `${rgb2hex(colorPalette[i])}`;
 
 		document.getElementsByClassName('colorsample-image')[i].setAttribute("stroke-width", 4);
 		if(document.getElementsByClassName('colorsample-image')[i].classList.contains("colorsample-image-grow")){
@@ -232,12 +227,12 @@ function copyToClipboard(value, elementIndex){
 	document.execCommand("copy");
 	document.body.removeChild(tempInput);
 	console.log("Copied: "+value);
-	var tooltipValue = document.getElementById('tooltip-'+elementIndex).innerHTML;
-	document.getElementById('tooltip-'+elementIndex).innerHTML = 'Copied to clipboard!';
+	var tooltipValue = document.getElementById('tooltip-text-'+elementIndex).textContent;
+	document.getElementById('tooltip-text-'+elementIndex).textContent = 'Copied!';
 	document.getElementById('colorsample-'+elementIndex).classList.add('colorsample-clicked');
 
 	setTimeout(function() {
-		document.getElementById('tooltip-'+elementIndex).innerHTML = tooltipValue;
+		document.getElementById('tooltip-text-'+elementIndex).textContent = tooltipValue;
 		document.getElementById('colorsample-'+elementIndex).classList.remove('colorsample-clicked');
 	}, 800);
 

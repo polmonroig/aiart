@@ -12,7 +12,7 @@ I = [[0, 18], [180, 198]]  # diff = 180
 T = [[0, 180]]
 L = [[0, 79.2], [121.6, 138.6]]  # diff = 180
 X = [[0, 93.6], [180, 273.6]]  # diff = 180
-#templates = [X]
+# templates = [V]
 templates = [i, V, X, I, L, X]
 
 
@@ -155,7 +155,7 @@ def get_closest_hue(template, degree, hue):
     for zone in template:
         a = radians(int(zone[0] + degree) % 360)
         b = radians(int(zone[1] + degree) % 360)
-        if (a <= hue <= b and a <= b) or (hue < b < a):
+        if (a <= hue <= b and a <= b) or (hue <= b <= a) or (b <= a <= hue):
             return 0, -1
         if abs(a - hue) < closest_hue[0]:
             closest_hue = [abs(a - hue), a]

@@ -5,7 +5,9 @@ from .segmentation import Segment, Box, box_to_segment, NULL_COLOR
 from .color_mod import ColorGenerator
 from .image_utils import image_resize, composition_level
 from math import sqrt, pi, atan, cos, sin
-from .shared_variables import MAX_SEGMENT_RATIO, GRAVITY, INFINITY, image_size_relation, MAX_SEGMENTS
+from .shared_variables import MAX_SEGMENT_RATIO, GRAVITY, INFINITY, \
+                              image_size_relation, MAX_SEGMENTS, \
+                              OVERLAPPING_SEGMENTS_REDUCTION, GOOGLE_VISION_SEGMENT_REDUCTION
 
 
 class BaseTransformer:
@@ -275,7 +277,7 @@ class BaseTransformer:
         for b in boxes:
             if boxes[b].max != [self.height, self.width] and boxes[b].min != [0, 0]:
                 w = boxes[b].weight
-
+                segments_size += boxes[b].size
                 if not self.google_vision_data:
 
                     mod = sqrt(w['x'] ** 2 + w['y'] ** 2)
@@ -287,8 +289,8 @@ class BaseTransformer:
                     if (mod / boxes[b].size) < self.min_force:
                         self.min_force = (mod / boxes[b].size)
                 else:
-                    w['x'] *= 0.4
-                    w['y'] *= 0.4
+                    w['x'] *= GOOGLE_VISION_SEGMENT_REDUCTION
+                    w['y'] *= GOOGLE_VISION_SEGMENT_REDUCTION
                     mod = sqrt(w['x'] ** 2 + w['y'] ** 2)
                     temporal_segments.append([Segment(boxes[b], (mod / boxes[b].size)), w])
 
@@ -305,8 +307,8 @@ class BaseTransformer:
                         mod = sqrt(w['x'] ** 2 + w['y'] ** 2)
                         size = mod / seg[0].weight
                         if sqrt((a - x_diff) ** 2 + (b - y_diff) ** 2) < radius:
-                            w['x'] *= 0.2
-                            w['y'] *= 0.2
+                            w['x'] *= OVERLAPPING_SEGMENTS_REDUCTION
+                            w['y'] *= OVERLAPPING_SEGMENTS_REDUCTION
                         mod = sqrt(w['x'] ** 2 + w['y'] ** 2)
                         self.force['x'] += w['x']
                         self.force['y'] += w['y']
@@ -394,12 +396,13 @@ class BaseTransformer:
             weight_dir['mod'] = sqrt(weight_dir['x']**2 + weight_dir['y']**2)
             if size == 0:  # uknown erro
                 raise Exception("Balanced circle is empty")
+            weight = 0
             if self.min_force == self.max_force:  # Only 1 segment
                 weight = 0.5
             if self.max_force != self.min_force and size > 0:
                 weight = ((weight_dir['mod'] / size) - self.min_force) / (self.max_force - self.min_force) / 2 + 0.5
             if self.segment_ratio >= MAX_SEGMENT_RATIO:
-                weight = 0
+                weight = -(((weight_dir['mod'] / size) - self.min_force) / (self.max_force - self.min_force) / 2 + 0.5)
             balanced.append((pos_x / self.width, pos_y / self.height,
                              weight, radius / self.width,
                              radius / self.width))

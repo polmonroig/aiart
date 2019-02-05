@@ -67,17 +67,23 @@ class Heatmap{
     var gradientImage = this.gradientImage();
     //heatCtx.filter = `blur(${this.blur*this.canvas.offsetWidth}px)`; This blur is NOT compatible with retina display devices
 		var maxValue = 1.5;
-		var extraValue = 0.3;
+		var extraValue = 0.4;
 
 		// Prefill canvas with black
-		heatCtx.fillStyle = "rgba(0,0,0,1)";
+		heatCtx.fillStyle = "rgba(0,0,0,0)";
 		heatCtx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Fill Cells
     for (var i = 0; i < this.datapoints.length; i++) {
         var point = this.datapoints[i];
+
+				// Checks if point has weight of zero, and avoids adding to it.
+				var weight = point[2] < 0 ? -point[2] : point[2] + extraValue;
+				weight = (255 * (weight / maxValue)) | 0;
+				heatCtx.globalCompositeOperation = point[2] < 0 ? 'destination-out' : 'source-over';
+
 				// Circle draw
-				heatCtx.fillStyle = 'rgba(' + Math.floor((point[2]+extraValue)*255) + ',0,0,1)';
+				heatCtx.fillStyle = 'rgba( 0,0,0,' + (weight / 255) + ')';
 				heatCtx.beginPath();
 				//heatCtx.moveTo(point[0]*this.canvas.width, point[1]*this.canvas.height);
         heatCtx.ellipse(point[0]*this.canvas.width, point[1]*this.canvas.height, point[3]*this.canvas.width, point[4]*this.canvas.width, 0, 0, 2 * Math.PI);
@@ -87,7 +93,7 @@ class Heatmap{
     stackBlurCanvasRGBA(this.canvas.id, 0, 0, this.canvas.width, this.canvas.height, this.blur*this.canvas.width); // This blur is compatible with retina display devices
 
     // Map blurred canvas to heatmap
-    this.colorize(heatCtx, heatCtx, 0, this.canvas.width, this.canvas.height, true);
+    this.colorize(heatCtx, heatCtx, 3, this.canvas.width, this.canvas.height, true);
 
   }
 

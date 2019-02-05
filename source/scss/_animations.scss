@@ -130,13 +130,13 @@
 
 @keyframes colorsampleClicked {
   0% {
-    border-width: 4px;
+    stroke-width: 4px;
   }
   50% {
-    border-width: 10px;
+    stroke-width: 10px;
   }
   100% {
-    border-width: 4px;
+    stroke-width: 4px;
   }
 }
 

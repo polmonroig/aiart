@@ -7,6 +7,7 @@ from .aiartbase.base import BaseTransformer
 from .aiartbase import image_utils
 from .aiartbase import error_management as em
 from numpy import append
+from .aiartbase.shared_variables import MAX_SEGMENTS
 
 # Global variables
 crud = Blueprint('crud', __name__)
@@ -37,8 +38,10 @@ def process_image(file_stream, settings, sigma, n_colors):
     # Resize image
     if image.shape[0] == 800:
         image = image_utils.image_resize(image, height=200)
-    else:
+    elif image.shape[1] == 800:
         image = image_utils.image_resize(image, width=200)
+    else:
+        em.raise_incorrect_size()
     google_vision_data = settings['vision']
     objects = None
     faces = None
@@ -63,12 +66,12 @@ def process_image(file_stream, settings, sigma, n_colors):
 
     color_palette = append(color_palette, harmonized_palette).reshape(-1, 3).tolist()
 
-    # Error and warning management0
+    # Error and warning management
     if image_pipeline.n_segments == 0:
         messages['composition']['type'] = em.ERROR_TYPE
         messages['composition']['message'] = em.NO_SEGMENTS
 
-    if image_pipeline.n_segments > 15:
+    if image_pipeline.n_segments >= MAX_SEGMENTS:
         messages['composition']['type'] = em.ERROR_TYPE
         messages['composition']['message'] = em.MANY_SEGMENTS
 
@@ -121,7 +124,7 @@ def submit():
     # to the size of the screen
 
     color_palette, datapoints, datapoints_balanced, color_positions, messages, score, color_template = \
-        process_image(file_stream, settings, sigma=500, n_colors=8)
+        process_image(file_stream, settings, sigma=500, n_colors=10)
 
     # Create data for database
     data = jsonify(color_palette=color_palette, datapoints=datapoints,
