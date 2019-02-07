@@ -1,6 +1,6 @@
 .onboarding-modal {
 	.modal-content{
-		padding: 40px;
+		padding: 0;
 		background-image: url(../img/onboarding-gradient-ver.png);
     background-size: auto 100%;
     background-position: 32% 50%;
@@ -40,7 +40,7 @@
 	.onboarding-content {
 		padding: 40px 50px;
 		&.with-gradient {
-			padding: 70px 50px 40px;
+			padding: 20px 10px 10px;
 		}
 		h1, h2, h3, h4 {
 			color: #005dbe;

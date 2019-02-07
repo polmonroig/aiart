@@ -13788,7 +13788,7 @@ a.with-avatar span {
 
 /* 23. Onboarding */
 .onboarding-modal .modal-content {
-  padding: 40px;
+  padding: 0;
   background-image: url(../img/onboarding-gradient-ver.png);
   background-size: auto 100%;
   background-position: 32% 50%;
@@ -13824,7 +13824,7 @@ a.with-avatar span {
 .onboarding-modal .onboarding-content {
   padding: 40px 50px; }
   .onboarding-modal .onboarding-content.with-gradient {
-    padding: 70px 50px 40px; }
+    padding: 20px 10px 10px; }
   .onboarding-modal .onboarding-content h1, .onboarding-modal .onboarding-content h2, .onboarding-modal .onboarding-content h3, .onboarding-modal .onboarding-content h4 {
     color: #005dbe;
     margin-bottom: 1.3rem; }

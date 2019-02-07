@@ -399,9 +399,9 @@ class BaseTransformer:
             weight = 0
             if self.min_force == self.max_force:  # Only 1 segment
                 weight = 0.5
-            if self.max_force != self.min_force and size > 0:
+            elif self.max_force != self.min_force and size > 0:
                 weight = ((weight_dir['mod'] / size) - self.min_force) / (self.max_force - self.min_force) / 2 + 0.5
-            if self.segment_ratio >= MAX_SEGMENT_RATIO:
+            elif self.segment_ratio >= MAX_SEGMENT_RATIO:
                 weight = -(((weight_dir['mod'] / size) - self.min_force) / (self.max_force - self.min_force) / 2 + 0.5)
             balanced.append((pos_x / self.width, pos_y / self.height,
                              weight, radius / self.width,
