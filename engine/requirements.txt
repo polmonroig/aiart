@@ -4,5 +4,5 @@ google-cloud-firestore
 google-cloud-storage
 flask_cors
 opencv-python
-numpy==1.15.4
+numpy==1.22.0
 scikit-image
